@@ -69,6 +69,8 @@ npm run build && npm run check:links     # linkinator : zéro lien cassé (EXTER
 npm run build && npm run shots           # captures 375 / 768 / 1440 px FR+EN + test « hero visible sans scroller » → .review/shots/
 npm run build && npm run figures         # captures des schémas SVG → .review/figs/
 npm run build && npm run lighthouse      # Lighthouse mobile → .review/lighthouse/ (seuil 95 partout)
+npm run build && npm run a11y            # axe-core (WCAG 2.1 AA) sur toutes les pages, 375 et 1280 px
+npm run build && npm run keyboard        # navigation au clavier : ordre, focus visible, menu mobile
 ```
 
 Les scripts Playwright utilisent Chromium : `npx playwright install chromium` la première fois.
