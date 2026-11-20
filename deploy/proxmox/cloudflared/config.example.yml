@@ -1,0 +1,16 @@
+# Variante « tunnel géré en local » (alternative au token du tableau de bord).
+# À placer dans le CT : /etc/cloudflared/config.yml, après :
+#   cloudflared tunnel login
+#   cloudflared tunnel create portfolio
+#   cloudflared tunnel route dns portfolio TODO_SOLAL-domaine.fr
+# puis : cloudflared service install && systemctl enable --now cloudflared
+tunnel: portfolio
+credentials-file: /root/.cloudflared/TODO_SOLAL-UUID-DU-TUNNEL.json
+
+ingress:
+  - hostname: TODO_SOLAL-domaine.fr
+    service: http://localhost:80
+  - hostname: www.TODO_SOLAL-domaine.fr
+    service: http://localhost:80
+  # Tout le reste : refusé
+  - service: http_status:404

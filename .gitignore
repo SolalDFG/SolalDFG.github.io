@@ -7,3 +7,6 @@ dist/
 All_certificate.zip
 # Sorties de l'auto-revue (captures, rapports Lighthouse)
 .review/
+deploy/proxmox/deploy.env
+# Profils Chrome temporaires de Lighthouse sous WSL
+C:*

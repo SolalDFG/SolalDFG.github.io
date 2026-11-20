@@ -1,0 +1,12 @@
+# Tuile Homepage à ajouter dans services.yaml (config de ton conteneur Homepage).
+# Remplace les valeurs TODO_SOLAL. L'intégration Proxmox (stats CPU/RAM du CT) nécessite
+# que proxmox.yaml soit déjà configuré dans Homepage ; sinon supprime les 3 lignes proxmox*.
+- Web:
+    - Portfolio:
+        icon: nginx.png
+        href: https://TODO_SOLAL-domaine.fr
+        description: Portfolio statique · CT 107 · nginx + Cloudflare Tunnel
+        siteMonitor: http://TODO_SOLAL_IP_DU_CT_107
+        proxmoxNode: TODO_SOLAL_nom_du_noeud
+        proxmoxVMID: 107
+        proxmoxType: lxc

@@ -1,0 +1,74 @@
+# Option B (repli) : déploiement sur GitHub Pages à chaque push sur main.
+# Activer une seule fois : dépôt GitHub → Settings → Pages → Source : « GitHub Actions ».
+#
+# Dépôt « SolalDFG.github.io »   → site servi à https://solaldfg.github.io/       (BASE_PATH = /)
+# Dépôt d'un autre nom (ex. portfolio) → https://solaldfg.github.io/portfolio/  (BASE_PATH = /portfolio)
+# Domaine personnalisé : définis la variable de dépôt SITE_URL (Settings → Variables → Actions)
+# et BASE_PATH="/" ; ajoute aussi le domaine dans Settings → Pages.
+name: Déploiement GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Calcul de l'URL du site
+        id: site
+        run: |
+          owner="$(echo "${GITHUB_REPOSITORY_OWNER}" | tr '[:upper:]' '[:lower:]')"
+          repo="${GITHUB_REPOSITORY#*/}"
+          if [ -n "${{ vars.SITE_URL }}" ]; then
+            echo "url=${{ vars.SITE_URL }}" >> "$GITHUB_OUTPUT"
+            echo "base=${{ vars.BASE_PATH || '/' }}" >> "$GITHUB_OUTPUT"
+          elif [ "$(echo "$repo" | tr '[:upper:]' '[:lower:]')" = "${owner}.github.io" ]; then
+            echo "url=https://${owner}.github.io" >> "$GITHUB_OUTPUT"
+            echo "base=/" >> "$GITHUB_OUTPUT"
+          else
+            echo "url=https://${owner}.github.io" >> "$GITHUB_OUTPUT"
+            echo "base=/${repo}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - run: npm ci
+
+      - name: Build
+        run: npm run build
+        env:
+          SITE_URL: ${{ steps.site.outputs.url }}
+          BASE_PATH: ${{ steps.site.outputs.base }}
+
+      - name: Vérification confidentialité
+        run: npm run check:privacy
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
