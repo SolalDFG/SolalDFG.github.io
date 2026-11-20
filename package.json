@@ -16,7 +16,9 @@
     "certs": "node scripts/certs.mjs",
     "og": "node scripts/og.mjs",
     "cv": "node scripts/cv.mjs",
-    "deploy:proxmox": "bash deploy/proxmox/deploy.sh"
+    "deploy:proxmox": "bash deploy/proxmox/deploy.sh",
+    "a11y": "node scripts/a11y.mjs",
+    "keyboard": "node scripts/keyboard.mjs"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.5",
@@ -28,6 +30,7 @@
     "@fontsource-variable/inter": "^5.3.0",
     "@fontsource-variable/jetbrains-mono": "^5.3.0",
     "@types/node": "^22.20.5",
+    "axe-core": "^4.14.1",
     "linkinator": "^8.1.0",
     "playwright": "^1.65.1",
     "sharp": "^0.35.5",

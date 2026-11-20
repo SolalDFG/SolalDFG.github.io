@@ -1,7 +1,7 @@
 {
   "_comment": "Niveaux : prod = utilisé en production (en entreprise ou sur mon homelab en service continu) ; projects = TP, projets d'école ou perso ; notions = bases. Reste honnête : ce fichier est lu par des recruteurs techniques.",
   "levels": {
-    "prod": { "fr": "Utilisé en prod", "en": "Used in production", "hintFr": "en entreprise ou sur mon homelab en service continu", "hintEn": "at work or on my always-on homelab" },
+    "prod": { "fr": "Utilisé en prod", "en": "Used in prod", "hintFr": "en entreprise ou sur mon homelab en service continu", "hintEn": "at work or on my always-on homelab" },
     "projects": { "fr": "Projets", "en": "Projects", "hintFr": "TP, projets d'école ou perso", "hintEn": "labs, school or personal projects" },
     "notions": { "fr": "Notions", "en": "Basics", "hintFr": "bases, à approfondir", "hintEn": "fundamentals, still learning" }
   },
