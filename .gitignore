@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.astro/
+.env
+.env.*
+# Archive d'origine : les noms de fichiers contiennent une adresse mail d'école
+All_certificate.zip
+# Sorties de l'auto-revue (captures, rapports Lighthouse)
+.review/

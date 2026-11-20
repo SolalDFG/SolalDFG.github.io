@@ -1,0 +1,29 @@
+{
+  "name": "solal-diedhiou-portfolio",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "certs": "node scripts/certs.mjs",
+    "og": "node scripts/og.mjs",
+    "check:privacy": "node scripts/check-privacy.mjs",
+    "check:links": "node scripts/check-links.mjs",
+    "shots": "node scripts/screenshots.mjs"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.3.5",
+    "astro": "^7.4.13",
+    "tailwindcss": "^4.3.5"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.12",
+    "@fontsource-variable/inter": "^5.3.0",
+    "@fontsource-variable/jetbrains-mono": "^5.3.0",
+    "linkinator": "^8.1.0",
+    "playwright": "^1.65.1",
+    "typescript": "^6.0.3"
+  }
+}
