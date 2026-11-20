@@ -41,10 +41,10 @@ const colon = lang === 'fr' ? '\u00a0:' : ':';
 
     <h3 class="sr-only">{t.education.certs}</h3>
 
-    <div class="flex flex-col gap-12">
+    <div class="grid gap-12 lg:grid-cols-2 lg:gap-x-6">
       {
         certs.groups.map((g) => (
-          <section aria-labelledby={`cg-${g.id}`}>
+          <section aria-labelledby={`cg-${g.id}`} class={g.id === 'cisco' || g.id === 'udemy' ? 'lg:col-span-2' : ''}>
             <div class="mb-5 border-b border-line pb-3">
               <h4 id={`cg-${g.id}`} class="flex items-center gap-2 text-lg font-semibold text-text">
                 <span class="font-mono text-accent" aria-hidden="true">
@@ -55,13 +55,13 @@ const colon = lang === 'fr' ? '\u00a0:' : ':';
               {g[lang].note && <p class="mt-1 max-w-3xl text-sm text-muted">{g[lang].note}</p>}
             </div>
 
-            <ul class={`grid gap-4 ${g.id === 'cnil' || g.id === 'languages' ? 'lg:grid-cols-2' : 'sm:grid-cols-2 lg:grid-cols-3'}`}>
+            <ul class={`grid gap-4 ${g.id === 'cnil' || g.id === 'languages' ? '' : 'sm:grid-cols-2 lg:grid-cols-3'}`}>
               {g.items.map((c: any) => {
                 const title = c[lang] as string;
                 return (
-                  <li class="card flex flex-col overflow-hidden">
+                  <li class={`card overflow-hidden ${c.file && !c.modules ? 'grid grid-cols-[6.5rem_minmax(0,1fr)] sm:flex sm:flex-col' : 'flex flex-col'}`}>
                     {c.file && (
-                      <a href={pdf(c.file)} target="_blank" rel="noopener" class="block border-b border-line bg-white/95" tabindex="-1" aria-hidden="true">
+                      <a href={pdf(c.file)} target="_blank" rel="noopener" class={`block border-line ${c.modules ? 'bg-white border-b' : 'bg-surface-2 border-r sm:border-r-0 sm:border-b sm:bg-white'}`} tabindex="-1" aria-hidden="true">
                         <img
                           src={thumb(c.file)}
                           alt=""
@@ -69,11 +69,11 @@ const colon = lang === 'fr' ? '\u00a0:' : ':';
                           height="320"
                           loading="lazy"
                           decoding="async"
-                          class="aspect-[3/2] w-full object-cover object-top"
+                          class={c.modules ? 'aspect-[3/1] w-full object-cover object-top' : 'h-full w-full object-contain p-1.5 sm:aspect-[3/2] sm:h-auto sm:object-cover sm:object-top sm:p-0'}
                         />
                       </a>
                     )}
-                    <div class="flex flex-1 flex-col p-4 sm:p-5">
+                    <div class="flex min-w-0 flex-1 flex-col p-3.5 sm:p-5">
                       <p class="font-mono text-xs text-dim">{c.org}</p>
                       <h5 class="mt-1 leading-snug font-semibold text-text">{title}</h5>
 
@@ -131,7 +131,7 @@ const colon = lang === 'fr' ? '\u00a0:' : ':';
 
                       {c.file && (
                         <div class="mt-auto flex flex-wrap items-center gap-x-4 gap-y-2 pt-4">
-                          <a href={pdf(c.file)} target="_blank" rel="noopener" class="btn btn-ghost min-h-10 px-3 py-2 text-sm">
+                          <a href={pdf(c.file)} target="_blank" rel="noopener" class="btn btn-ghost min-h-10 px-3 py-2 text-[0.8125rem] sm:text-sm">
                             <Icon name="file" class="h-4 w-4" />
                             {tc.view}
                             <span class="sr-only">

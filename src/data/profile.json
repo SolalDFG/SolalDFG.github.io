@@ -33,36 +33,94 @@
       "online": "online"
     }
   },
-  "heroBadges": ["Linux", "Réseau Cisco", "Proxmox / Virtualisation", "Docker", "Windows / AD", "Support N1/N2"],
-  "heroBadgesEn": ["Linux", "Cisco networking", "Proxmox / Virtualisation", "Docker", "Windows / AD", "L1/L2 support"],
+  "heroBadges": [
+    "Linux",
+    "Réseau Cisco",
+    "Proxmox / Virtualisation",
+    "Docker",
+    "Windows / AD",
+    "Support N1/N2"
+  ],
+  "heroBadgesEn": [
+    "Linux",
+    "Cisco networking",
+    "Proxmox / Virtualisation",
+    "Docker",
+    "Windows / AD",
+    "L1/L2 support"
+  ],
   "terminal": {
     "fr": [
-      { "k": "poste", "v": "Technicien systèmes & réseaux · Support N2" },
-      { "k": "exp", "v": "Alternance MGEN · oct. 2024 → sept. 2026" },
-      { "k": "école", "v": "Bachelor SRC · ESGI" },
-      { "k": "anglais", "v": "TOEIC 885/990" },
-      { "k": "homelab", "v": "Proxmox VE · ZFS · LXC · en production" },
-      { "k": "cap", "v": "réseau → cybersécurité" }
+      {
+        "k": "exp",
+        "v": "MGEN · 2 ans d'alternance"
+      },
+      {
+        "k": "école",
+        "v": "Bachelor SRC · ESGI"
+      },
+      {
+        "k": "cisco",
+        "v": "NetAcad ITN + ENSA"
+      },
+      {
+        "k": "anglais",
+        "v": "TOEIC 885/990"
+      },
+      {
+        "k": "homelab",
+        "v": "Proxmox · ZFS · LXC"
+      },
+      {
+        "k": "cap",
+        "v": "réseau → cybersécurité"
+      }
     ],
     "en": [
-      { "k": "role", "v": "Systems & network technician · L2 support" },
-      { "k": "exp", "v": "MGEN work-study · Oct 2024 → Sep 2026" },
-      { "k": "school", "v": "Bachelor SRC · ESGI" },
-      { "k": "english", "v": "TOEIC 885/990" },
-      { "k": "homelab", "v": "Proxmox VE · ZFS · LXC · in production" },
-      { "k": "next", "v": "networking → cybersecurity" }
+      {
+        "k": "exp",
+        "v": "MGEN · 2-year work-study"
+      },
+      {
+        "k": "school",
+        "v": "Bachelor SRC · ESGI"
+      },
+      {
+        "k": "cisco",
+        "v": "NetAcad ITN + ENSA"
+      },
+      {
+        "k": "english",
+        "v": "TOEIC 885/990"
+      },
+      {
+        "k": "homelab",
+        "v": "Proxmox · ZFS · LXC"
+      },
+      {
+        "k": "next",
+        "v": "networking → cybersecurity"
+      }
     ]
   },
   "seeking": {
     "fr": {
-      "roles": ["Technicien / administrateur systèmes et réseaux", "Support N2", "Technicien de proximité"],
+      "roles": [
+        "Technicien / administrateur systèmes et réseaux",
+        "Support N2",
+        "Technicien de proximité"
+      ],
       "contract": "CDI",
       "area": "Île-de-France · permis B, véhiculé",
       "availability": "Disponible immédiatement",
       "longTerm": "Objectif : évoluer vers le réseau, puis la cybersécurité."
     },
     "en": {
-      "roles": ["Systems & network technician / administrator", "Level 2 support", "On-site IT technician"],
+      "roles": [
+        "Systems & network technician / administrator",
+        "Level 2 support",
+        "On-site IT technician"
+      ],
       "contract": "Permanent contract (CDI)",
       "area": "Paris area (Île-de-France) · driving licence, own car",
       "availability": "Available now",
