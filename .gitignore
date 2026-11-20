@@ -10,3 +10,5 @@ All_certificate.zip
 deploy/proxmox/deploy.env
 # Profils Chrome temporaires de Lighthouse sous WSL
 C:*
+# Brief de mission (contient des informations à ne pas publier)
+PROMPT.md
