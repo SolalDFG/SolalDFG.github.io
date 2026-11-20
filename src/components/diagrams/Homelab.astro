@@ -37,7 +37,7 @@ const lxc = [
   { x: 668, y: 282, n: 'Docker', s: fr ? 'stack multimédia' : 'media stack' },
   { x: 804, y: 282, n: 'Crafty', s: 'Minecraft' },
   { x: 396, y: 340, n: 'Tailscale', s: fr ? 'accès distant' : 'remote access', accent: true },
-  { x: 532, y: 340, n: 'Uptime Kuma', s: 'supervision' },
+  { x: 532, y: 340, n: 'Uptime Kuma', s: fr ? 'supervision' : 'monitoring' },
   { x: 668, y: 340, n: 'Homepage', s: 'dashboard' },
 ];
 ---
@@ -78,11 +78,11 @@ const lxc = [
 
   <!-- Accès distant via Tailscale -->
   <rect class="box" x="20" y="438" width="160" height="56" rx="8"></rect>
-  <text class="t" x="100" y="462" text-anchor="middle">{T.remote}</text>
+  <text class="t-sm" x="100" y="462" text-anchor="middle" font-weight="600">{T.remote}</text>
   <text class="t-xs" x="100" y="481" text-anchor="middle">Tailscale · WireGuard</text>
   <path class="wire-dash" d="M180 466 H300 V363 H392"></path>
   <polygon class="arrow-head-accent" points="392,357 404,363 392,369"></polygon>
-  <text class="t-accent" x="196" y="456">{T.remoteSub}</text>
+  <text class="t-accent" x="190" y="488">{T.remoteSub}</text>
 
   <!-- Hôte Proxmox -->
   <rect class="zone" x="380" y="236" width="560" height="304" rx="12"></rect>
@@ -101,19 +101,18 @@ const lxc = [
       </g>
     ))
   }
-  <text class="t-xs" x="866" y="360" text-anchor="middle">LXC ×7</text>
   <text class="t-xs" x="396" y="412">{T.rule}</text>
 
   <!-- ZFS -->
   <line class="wire" x1="396" y1="426" x2="924" y2="426"></line>
   <text class="t-sm" x="396" y="448" font-weight="600">{T.zfs}</text>
-  <rect class="box" x="396" y="460" width="160" height="60" rx="6"></rect>
-  <text class="t-sm" x="476" y="485" text-anchor="middle" font-weight="600">{T.nvme}</text>
-  <text class="t-xs" x="476" y="505" text-anchor="middle">{T.nvmeSub}</text>
-  <rect class="box" x="568" y="460" width="210" height="60" rx="6"></rect>
-  <text class="t-sm" x="673" y="485" text-anchor="middle" font-weight="600">{T.hdd}</text>
-  <text class="t-xs" x="673" y="505" text-anchor="middle">{T.hddSub}</text>
-  <rect class="box" x="790" y="460" width="134" height="60" rx="6"></rect>
-  <text class="t-sm" x="857" y="485" text-anchor="middle" font-weight="600">{T.ext}</text>
-  <text class="t-xs" x="857" y="505" text-anchor="middle">{T.extSub}</text>
+  <rect class="box" x="396" y="460" width="150" height="60" rx="6"></rect>
+  <text class="t-sm" x="471" y="485" text-anchor="middle" font-weight="600">{T.nvme}</text>
+  <text class="t-xs" x="471" y="505" text-anchor="middle">{T.nvmeSub}</text>
+  <rect class="box" x="556" y="460" width="210" height="60" rx="6"></rect>
+  <text class="t-sm" x="661" y="485" text-anchor="middle" font-weight="600">{T.hdd}</text>
+  <text class="t-xs" x="661" y="505" text-anchor="middle">{T.hddSub}</text>
+  <rect class="box" x="776" y="460" width="148" height="60" rx="6"></rect>
+  <text class="t-sm" x="850" y="485" text-anchor="middle" font-weight="600">{T.ext}</text>
+  <text class="t-xs" x="850" y="505" text-anchor="middle">{T.extSub}</text>
 </svg>

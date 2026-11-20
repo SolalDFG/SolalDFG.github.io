@@ -26,15 +26,15 @@ const T = {
   mail: fr ? 'Messagerie' : 'Email',
   files: fr ? 'Partage de fichiers' : 'File sharing',
   voip: fr ? 'Téléphonie IP' : 'IP telephony',
-  sup: 'Supervision',
+  sup: fr ? 'Supervision' : 'Monitoring',
   metro: fr ? 'Métrologie' : 'Metrics',
   siem: 'SIEM / syslog',
   pm: fr ? 'Pilotage : WBS · RBS · RACI · PBS · PERT · Gantt' : 'Management: WBS · RBS · RACI · PBS · PERT · Gantt',
 };
 const cols = [
-  { x: 44, title: T.virt, items: [T.ha, T.san, T.bkp] },
+  { x: 40, title: T.virt, items: [T.ha, T.san, T.bkp] },
   { x: 254, title: T.svc, items: [T.ad, T.mail, T.files, T.voip] },
-  { x: 464, title: T.ops, items: [T.sup, T.metro, T.siem] },
+  { x: 468, title: T.ops, items: [T.sup, T.metro, T.siem] },
 ];
 ---
 
@@ -46,7 +46,7 @@ const cols = [
   <rect class="box" x="740" y="24" width="200" height="46" rx="23"></rect>
   <text class="t" x="840" y="52" text-anchor="middle">Internet</text>
   <rect class="box" x="740" y="190" width="200" height="64" rx="8"></rect>
-  <text class="t" x="840" y="218" text-anchor="middle">{T.remote}</text>
+  <text class="t-sm" x="840" y="218" text-anchor="middle" font-weight="600">{T.remote}</text>
   <text class="t-xs" x="840" y="238" text-anchor="middle">VPN IPSec</text>
   <line class="wire" x1="840" y1="70" x2="840" y2="190"></line>
 
@@ -69,20 +69,20 @@ const cols = [
   <text class="t-xs" x="350" y="196" text-anchor="middle">{T.eve}</text>
 
   <line class="wire" x1="350" y1="210" x2="350" y2="240"></line>
-  <line class="wire" x1="139" y1="240" x2="559" y2="240"></line>
+  <line class="wire" x1="140" y1="240" x2="568" y2="240"></line>
 
   {
     cols.map((c) => (
       <g>
-        <line class="wire" x1={c.x + 95} y1="240" x2={c.x + 95} y2="262" />
-        <rect class="box" x={c.x} y="262" width="190" height={c.items.length * 36 + 52} rx="8" />
+        <line class="wire" x1={c.x + 100} y1="240" x2={c.x + 100} y2="262" />
+        <rect class="box" x={c.x} y="262" width="200" height={c.items.length * 36 + 52} rx="8" />
         <text class="t-accent" x={c.x + 16} y="288">
           {c.title}
         </text>
         {c.items.map((it, i) => (
           <g>
-            <rect class="box" x={c.x + 12} y={300 + i * 36} width="166" height="28" rx="5" />
-            <text class="t-sm" x={c.x + 24} y={319 + i * 36}>
+            <rect class="box" x={c.x + 12} y={300 + i * 36} width="176" height="28" rx="5" />
+            <text class="t-sm" x={c.x + 22} y={319 + i * 36}>
               {it}
             </text>
           </g>

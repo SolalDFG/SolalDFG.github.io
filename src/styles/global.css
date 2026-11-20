@@ -251,6 +251,11 @@
     stroke: var(--color-accent);
     stroke-width: 1.5;
   }
+  .diagram .node {
+    fill: var(--color-surface);
+    stroke: var(--color-accent);
+    stroke-width: 1.5;
+  }
   .diagram .zone {
     fill: none;
     stroke: var(--color-line-strong);
