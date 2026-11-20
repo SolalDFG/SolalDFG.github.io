@@ -110,7 +110,10 @@ const H = Object.fromEntries(sections.map((s, n) => [s.id, { ...s, n: String(n +
                 <div class="card overflow-x-auto p-3 sm:p-5" tabindex="0" role="region" aria-label={tp.diagram}>
                   <Diagram lang={lang} />
                 </div>
-                <figcaption class="mt-2 font-mono text-xs text-dim">
+                <p class="mt-2 font-mono text-xs text-accent md:hidden" aria-hidden="true">
+                  ⇆ {lang === 'fr' ? 'Faire défiler le schéma horizontalement' : 'Scroll the diagram sideways'}
+                </p>
+                <figcaption class="mt-1 font-mono text-xs text-dim md:mt-2">
                   {tp.diagram}
                   {c.diagramCaption ? ` · ${c.diagramCaption}` : ''}
                 </figcaption>
