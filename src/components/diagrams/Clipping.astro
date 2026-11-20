@@ -1,0 +1,98 @@
+---
+import type { Lang } from '../../i18n/ui';
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const fr = lang === 'fr';
+const T = {
+  title: fr ? 'Pipeline de clipping Zone du clip' : 'Zone du clip clipping pipeline',
+  desc: fr
+    ? "Les streams Twitch, Kick et YouTube sont récupérés et stockés sur le NAS, qui héberge aussi la base PostgreSQL et le bot Discord. Le PC équipé d'un GPU rend les clips au format 9:16 (fond flouté, bandeau, sous-titres karaoké, crédit du streamer) et les renvoie au NAS. Le bot Discord soumet chaque clip à une validation humaine. Les clips validés sont publiés sur TikTok, YouTube Shorts et Instagram ; les vues sont suivies automatiquement et enregistrées dans PostgreSQL. Uptime Kuma et une tuile Homepage supervisent l'ensemble."
+    : 'Twitch, Kick and YouTube streams are fetched and stored on the NAS, which also hosts the PostgreSQL database and the Discord bot. The GPU PC renders 9:16 clips (blurred background, banner, karaoke subtitles, streamer credit) and sends them back to the NAS. The Discord bot submits each clip for human approval. Approved clips are published to TikTok, YouTube Shorts and Instagram; views are tracked automatically and stored in PostgreSQL. Uptime Kuma and a Homepage tile monitor the whole chain.',
+  sources: 'Sources',
+  nas: fr ? 'NAS · stockage & services' : 'NAS · storage & services',
+  store: fr ? 'Stockage des vidéos' : 'Video storage',
+  db: fr ? 'PostgreSQL · état du pipeline' : 'PostgreSQL · pipeline state',
+  bot: fr ? 'Bot Discord' : 'Discord bot',
+  gpu: fr ? 'PC + GPU' : 'GPU PC',
+  gpuSub: fr ? 'worker de rendu' : 'render worker',
+  r1: fr ? '9:16 · fond flouté' : '9:16 · blurred bg',
+  r2: fr ? 'bandeau · karaoké' : 'banner · karaoke',
+  r3: fr ? 'crédit streamer' : 'streamer credit',
+  toRender: fr ? 'à rendre' : 'to render',
+  rendered: fr ? 'clip rendu' : 'rendered clip',
+  human: fr ? 'Validation humaine' : 'Human approval',
+  humanSub: fr ? '✓ publier · ✗ rejeter' : '✓ publish · ✗ reject',
+  pub: 'Publication',
+  views: fr ? 'suivi automatique des vues' : 'automatic view tracking',
+  sup: fr ? 'Supervision : Uptime Kuma + tuile Homepage' : 'Monitoring: Uptime Kuma + Homepage tile',
+};
+---
+
+<svg class="diagram min-w-[680px]" viewBox="0 0 960 440" role="img" aria-labelledby="dg-clip-t dg-clip-d">
+  <title id="dg-clip-t">{T.title}</title>
+  <desc id="dg-clip-d">{T.desc}</desc>
+
+  <!-- Sources -->
+  <rect class="box" x="20" y="50" width="140" height="124" rx="8"></rect>
+  <text class="t" x="90" y="78" text-anchor="middle">{T.sources}</text>
+  <text class="t-sm" x="90" y="104" text-anchor="middle">Twitch</text>
+  <text class="t-sm" x="90" y="126" text-anchor="middle">Kick</text>
+  <text class="t-sm" x="90" y="148" text-anchor="middle">YouTube</text>
+  <line class="wire" x1="160" y1="112" x2="208" y2="112"></line>
+  <polygon class="arrow-head" points="206,106 218,112 206,118"></polygon>
+
+  <!-- NAS -->
+  <rect class="zone" x="220" y="30" width="290" height="236" rx="12"></rect>
+  <text class="t-accent" x="236" y="56">{T.nas}</text>
+  <rect class="box" x="236" y="72" width="258" height="44" rx="6"></rect>
+  <text class="t-sm" x="365" y="99" text-anchor="middle" font-weight="600">{T.store}</text>
+  <rect class="box-accent" x="236" y="128" width="258" height="44" rx="6"></rect>
+  <text class="t-sm" x="365" y="155" text-anchor="middle" font-weight="600">{T.db}</text>
+  <rect class="box" x="236" y="184" width="258" height="44" rx="6"></rect>
+  <text class="t-sm" x="365" y="211" text-anchor="middle" font-weight="600">{T.bot}</text>
+
+  <!-- NAS <-> GPU -->
+  <path class="wire" d="M510 80 H596"></path>
+  <polygon class="arrow-head" points="594,74 606,80 594,86"></polygon>
+  <text class="t-xs" x="556" y="70" text-anchor="middle">{T.toRender}</text>
+  <path class="wire-accent" d="M606 124 H520"></path>
+  <polygon class="arrow-head-accent" points="522,118 510,124 522,130"></polygon>
+  <text class="t-xs" x="556" y="144" text-anchor="middle">{T.rendered}</text>
+
+  <!-- GPU worker -->
+  <rect class="box-accent" x="606" y="40" width="160" height="116" rx="8"></rect>
+  <text class="t" x="686" y="64" text-anchor="middle">{T.gpu}</text>
+  <text class="t-xs" x="686" y="82" text-anchor="middle">{T.gpuSub}</text>
+  <text class="t-sm" x="686" y="106" text-anchor="middle">{T.r1}</text>
+  <text class="t-sm" x="686" y="124" text-anchor="middle">{T.r2}</text>
+  <text class="t-sm" x="686" y="142" text-anchor="middle">{T.r3}</text>
+
+  <!-- Bot -> validation humaine -->
+  <path class="wire" d="M494 206 H596"></path>
+  <polygon class="arrow-head" points="594,200 606,206 594,212"></polygon>
+  <rect class="box" x="606" y="180" width="160" height="56" rx="8"></rect>
+  <text class="t-sm" x="686" y="203" text-anchor="middle" font-weight="600">{T.human}</text>
+  <text class="t-xs" x="686" y="222" text-anchor="middle">{T.humanSub}</text>
+
+  <!-- Validation -> publication -->
+  <path class="wire-accent" d="M766 208 H800 V150 H808"></path>
+  <polygon class="arrow-head-accent" points="806,144 818,150 806,156"></polygon>
+  <rect class="box" x="818" y="80" width="126" height="128" rx="8"></rect>
+  <text class="t" x="881" y="106" text-anchor="middle">{T.pub}</text>
+  <text class="t-sm" x="881" y="132" text-anchor="middle">TikTok</text>
+  <text class="t-sm" x="881" y="154" text-anchor="middle">YT Shorts</text>
+  <text class="t-sm" x="881" y="176" text-anchor="middle">Instagram</text>
+
+  <!-- Retour des vues vers PostgreSQL -->
+  <path class="wire-dash" d="M881 208 V300 H365 V278"></path>
+  <polygon class="arrow-head-accent" points="359,280 365,268 371,280"></polygon>
+  <text class="t-accent" x="623" y="292" text-anchor="middle">{T.views}</text>
+
+  <!-- Supervision -->
+  <rect class="box" x="220" y="352" width="546" height="52" rx="8"></rect>
+  <text class="t-sm" x="493" y="383" text-anchor="middle" font-weight="600">{T.sup}</text>
+  <line class="wire" x1="300" y1="352" x2="300" y2="266" stroke-dasharray="3 4"></line>
+  <line class="wire" x1="686" y1="352" x2="686" y2="236" stroke-dasharray="3 4"></line>
+</svg>

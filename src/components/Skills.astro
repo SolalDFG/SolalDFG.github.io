@@ -1,0 +1,72 @@
+---
+import skills from '../data/skills.json';
+import { ui, anchors, type Lang } from '../i18n/ui';
+import SectionHeading from './SectionHeading.astro';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = ui[lang];
+type Level = keyof typeof skills.levels;
+const levelKeys = Object.keys(skills.levels) as Level[];
+// Jauge 3 crans : prod = 3, projets = 2, notions = 1
+const pips: Record<Level, number> = { prod: 3, projects: 2, notions: 1 };
+---
+
+<section class="container-page py-16 sm:py-20">
+  <SectionHeading id={anchors[lang].skills} kicker={t.sections.skills.kicker} title={t.sections.skills.title} intro={t.sections.skills.intro} />
+
+  <dl class="mb-8 flex flex-wrap gap-x-6 gap-y-2 text-sm">
+    {
+      levelKeys.map((k) => (
+        <div class="flex items-center gap-2">
+          <dt class="flex items-center gap-2 font-mono text-xs text-text">
+            <span class="flex gap-0.5" aria-hidden="true">
+              {[1, 2, 3].map((i) => (
+                <span class={`h-2 w-3 rounded-sm ${i <= pips[k] ? 'bg-accent' : 'bg-line-strong'}`} />
+              ))}
+            </span>
+            {skills.levels[k][lang]}
+          </dt>
+          <dd class="text-dim">: {lang === 'fr' ? skills.levels[k].hintFr : skills.levels[k].hintEn}</dd>
+        </div>
+      ))
+    }
+  </dl>
+
+  <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+    {
+      skills.groups.map((g) => (
+        <section class="card p-5" aria-labelledby={`sk-${g.id}`}>
+          <h3 id={`sk-${g.id}`} class="font-mono text-sm font-semibold text-accent">
+            {g[lang]}
+          </h3>
+          <ul class="mt-3 divide-y divide-line">
+            {g.items.map((it) => {
+              const lvl = it.level as Level;
+              const name = lang === 'en' && 'nameEn' in it && it.nameEn ? it.nameEn : it.name;
+              const detail = lang === 'fr' ? it.detailFr : it.detailEn;
+              return (
+                <li class="flex items-start justify-between gap-3 py-2.5">
+                  <div class="min-w-0">
+                    <p class="text-[0.9375rem] font-medium text-text">{name}</p>
+                    {detail && <p class="text-sm text-dim">{detail}</p>}
+                  </div>
+                  <p class="flex shrink-0 flex-col items-end gap-1 pt-1">
+                    <span class="flex gap-0.5" aria-hidden="true">
+                      {[1, 2, 3].map((i) => (
+                        <span class={`h-1.5 w-2.5 rounded-sm ${i <= pips[lvl] ? 'bg-accent' : 'bg-line-strong'}`} />
+                      ))}
+                    </span>
+                    <span class="font-mono text-[0.6875rem] whitespace-nowrap text-muted">{skills.levels[lvl][lang]}</span>
+                  </p>
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+      ))
+    }
+  </div>
+</section>

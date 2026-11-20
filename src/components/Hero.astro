@@ -1,0 +1,102 @@
+---
+import profile from '../data/profile.json';
+import { ui, url, anchors, type Lang } from '../i18n/ui';
+import Icon from './Icon.astro';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = ui[lang];
+const h = profile.hero[lang];
+const badges = lang === 'fr' ? profile.heroBadges : profile.heroBadgesEn;
+const term = profile.terminal[lang];
+---
+
+<section aria-labelledby="hero-title" class="relative overflow-hidden border-b border-line">
+  <!-- Grille de fond discrète (décorative) -->
+  <div
+    class="pointer-events-none absolute inset-0 opacity-[0.35] [background-image:linear-gradient(var(--color-line)_1px,transparent_1px),linear-gradient(90deg,var(--color-line)_1px,transparent_1px)] [background-size:44px_44px] [mask-image:radial-gradient(ellipse_at_top_left,black_10%,transparent_65%)]"
+    aria-hidden="true"
+  >
+  </div>
+
+  <div class="container-page relative grid gap-10 pt-5 pb-8 sm:pt-12 sm:pb-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,25rem)] lg:items-center lg:gap-12 lg:pt-20 lg:pb-20">
+    <div class="reveal">
+      <p class="flex items-center gap-2 font-mono text-[0.8125rem] text-accent">
+        <span class="pulse-dot" aria-hidden="true"></span>
+        <span>{h.status}</span>
+      </p>
+
+      <h1 id="hero-title" class="mt-2 text-[2rem] leading-[1.1] font-bold tracking-tight text-text sm:mt-3 sm:text-5xl lg:text-6xl">
+        {profile.name}
+      </h1>
+
+      <p class="mt-2 text-[1.0625rem] leading-snug font-semibold text-text sm:mt-3 sm:text-2xl">
+        {h.role} <span class="font-normal text-muted">({h.level})</span>
+      </p>
+
+      <p class="mt-2 text-[0.9375rem] leading-snug text-muted sm:text-lg">
+        <strong class="font-semibold text-text">{h.search}</strong> · {h.mobility}
+      </p>
+
+      <p class="mt-3 border-l-2 border-accent pl-3 text-[0.9375rem] leading-snug text-muted sm:mt-5 sm:text-lg">
+        <strong class="text-accent-strong">{h.proofLead}</strong>
+        {h.proof}
+      </p>
+
+      <div class="mt-4 flex flex-wrap gap-2 sm:mt-7 sm:gap-3">
+        <a href={url(profile.cv)} class="btn btn-primary max-[380px]:px-3 max-[380px]:text-sm" download="CV-Solal-Diedhiou.pdf">
+          <Icon name="download" class="h-4 w-4" />
+          {t.hero.cv}
+        </a>
+        <a href={`#${anchors[lang].contact}`} class="btn btn-ghost max-[380px]:px-3 max-[380px]:text-sm">
+          <Icon name="mail" class="h-4 w-4" />
+          {t.hero.contact}
+        </a>
+      </div>
+
+      <ul class="mt-4 flex flex-wrap gap-1.5 sm:mt-7 sm:gap-2" aria-label={t.hero.skillsLabel}>
+        {
+          badges.map((b) => (
+            <li class="badge border-accent/40 text-text">
+              <span class="text-accent" aria-hidden="true">
+                ▸
+              </span>
+              {b}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <!-- Carte terminal : résumé factuel (desktop / tablette) -->
+    <div class="reveal hidden sm:block" aria-hidden="false">
+      <div class="card overflow-hidden shadow-2xl shadow-black/40">
+        <div class="flex items-center gap-2 border-b border-line bg-surface-2 px-4 py-2.5">
+          <span class="h-2.5 w-2.5 rounded-full bg-line-strong" aria-hidden="true"></span>
+          <span class="h-2.5 w-2.5 rounded-full bg-line-strong" aria-hidden="true"></span>
+          <span class="h-2.5 w-2.5 rounded-full bg-line-strong" aria-hidden="true"></span>
+          <span class="ml-2 font-mono text-xs text-dim">solal@homelab: ~</span>
+        </div>
+        <div class="p-5 font-mono text-[0.8125rem] leading-relaxed">
+          <p><span class="text-accent">$</span> <span class="text-text">whoami --short</span></p>
+          <dl class="mt-3 grid grid-cols-[auto_1fr] gap-x-4 gap-y-1.5">
+            {
+              term.map((row) => (
+                <>
+                  <dt class="text-dim">{row.k}</dt>
+                  <dd class="text-muted">{row.v}</dd>
+                </>
+              ))
+            }
+          </dl>
+          <p class="mt-4 flex items-center gap-2 text-accent">
+            <span class="pulse-dot" aria-hidden="true"></span>
+            <span>status: {h.online}</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,72 @@
+# Projet 5 — Serveur de logs centralisé + automatisation Linux (LPIC-102, projet d'école)
+# TODO_SOLAL : confirmer qu'il s'agit d'un projet ESGI individuel.
+order: 5
+category: network
+status: done
+kind: school
+diagram: logs
+stack:
+  - Debian 13
+  - VMware Workstation
+  - rsyslog
+  - RELP
+  - TLS · GnuTLS
+  - systemd timers
+  - cron · at
+  - Bash
+
+fr:
+  title: "Logs centralisés et automatisation Linux (LPIC-102)"
+  impact: "Un collecteur rsyslog qui reçoit les logs en RELP chiffré TLS avec authentification mutuelle, sans perte même quand le serveur tombe."
+  context: "Projet du module LPIC-102 : mettre en œuvre la journalisation centralisée et l'automatisation des tâches d'administration sur Debian."
+  goal: "Centraliser les journaux d'un client sur un collecteur de façon fiable et sécurisée, puis automatiser l'administration courante."
+  done:
+    - "Monté **2 VM Debian 13** sous VMware : un collecteur et un client."
+    - "Configuré **rsyslog en RELP** (port 2514), avec des logs rangés automatiquement par hôte et par programme."
+    - "Ajouté une **file d'attente disque côté client** : aucun message perdu pendant une coupure du serveur."
+    - "Chiffré le transport en **TLS** avec une mini-autorité de certification **GnuTLS** et une **authentification mutuelle par certificats**."
+    - "Planifié **5 tâches** avec cron, at et des **timers systemd** (exécution aléatoire et à la seconde, ce que cron ne sait pas faire)."
+    - "Écrit le script bash `user-and-ui` : contrôle des droits root, création **idempotente** de 10 utilisateurs, menu d'installation d'un environnement graphique avec détection de l'existant."
+  challenges:
+    - problem: "En syslog classique, les messages émis pendant une indisponibilité du collecteur sont perdus."
+      solution: "RELP (accusé de réception applicatif) + file d'attente disque côté client. Démonstration : serveur coupé, 6 messages émis pendant la coupure, les 6 reçus à son retour."
+    - problem: "Par défaut les logs circulent en clair et n'importe quelle machine peut écrire sur le collecteur."
+      solution: "TLS avec une mini-CA GnuTLS et authentification mutuelle : seuls les clients porteurs d'un certificat signé sont acceptés."
+    - problem: "cron ne sait ni déclencher à la seconde, ni ajouter un délai aléatoire."
+      solution: "Timers systemd (`OnCalendar` à la seconde, `RandomizedDelaySec`) pour ces deux cas, cron et at pour le reste."
+    - problem: "Un script d'administration relancé deux fois ne doit rien casser."
+      solution: "Chaque utilisateur et chaque environnement est vérifié avant création ou installation : le script est rejouable sans effet de bord."
+  result: "Terminé. Zéro perte démontrée : 6 messages émis pendant la coupure du serveur, 6 messages reçus à son redémarrage. Transport chiffré et authentifié des deux côtés."
+  learnings:
+    - "La fiabilité se prouve par un test de panne, pas par un fichier de configuration."
+    - "Les timers systemd remplacent cron dès qu'il faut de la précision."
+    - "Un bon script est idempotent : on peut le relancer sans risque."
+  diagramCaption: "Chaîne de journalisation : client → collecteur en RELP sur TLS."
+
+en:
+  title: "Centralised logging and Linux automation (LPIC-102)"
+  impact: "An rsyslog collector receiving logs over TLS-encrypted RELP with mutual authentication, with zero loss even when the server goes down."
+  context: "LPIC-102 course project: implement centralised logging and automate admin tasks on Debian."
+  goal: "Ship a client's logs to a collector reliably and securely, then automate routine administration."
+  done:
+    - "Built **2 Debian 13 VMs** on VMware: a collector and a client."
+    - "Configured **rsyslog over RELP** (port 2514), with logs automatically sorted by host and program."
+    - "Added a **client-side disk queue**: no message lost while the server is down."
+    - "Encrypted transport with **TLS** using a small **GnuTLS** certificate authority and **mutual certificate authentication**."
+    - "Scheduled **5 tasks** with cron, at and **systemd timers** (random and per-second execution, which cron can't do)."
+    - "Wrote the `user-and-ui` bash script: root check, **idempotent** creation of 10 users, menu to install a desktop environment with detection of what's already there."
+  challenges:
+    - problem: "With plain syslog, messages sent while the collector is unavailable are lost."
+      solution: "RELP (application-level acknowledgements) + a client-side disk queue. Demo: server stopped, 6 messages sent during the outage, all 6 received when it came back."
+    - problem: "By default logs travel in clear text and any machine can write to the collector."
+      solution: "TLS with a GnuTLS mini-CA and mutual authentication: only clients holding a signed certificate are accepted."
+    - problem: "cron can't trigger at the second, nor add a random delay."
+      solution: "systemd timers (`OnCalendar` to the second, `RandomizedDelaySec`) for those two cases, cron and at for the rest."
+    - problem: "An admin script run twice must not break anything."
+      solution: "Every user and environment is checked before being created or installed: the script can be re-run safely."
+  result: "Completed. Zero loss demonstrated: 6 messages sent during the server outage, 6 messages received on restart. Encrypted, mutually authenticated transport."
+  learnings:
+    - "Reliability is proven with a failure test, not with a config file."
+    - "systemd timers take over from cron as soon as you need precision."
+    - "A good script is idempotent: you can run it again without risk."
+  diagramCaption: "Logging chain: client → collector over RELP on TLS."

@@ -1,0 +1,46 @@
+{
+  "_comment": "Expériences professionnelles. Aucun chiffre inventé : les TODO_SOLAL marquent les endroits où un chiffre réel renforcerait le texte.",
+  "items": [
+    {
+      "id": "mgen",
+      "org": "MGEN, Centre Médical et Dentaire",
+      "place": "Paris 15e",
+      "start": "2024-10",
+      "end": "2026-09",
+      "tags": ["Windows 11", "Postes & périphériques", "Réseau local", "Support N1/N2", "Gestion d'incidents"],
+      "tagsEn": ["Windows 11", "Workstations & peripherals", "Local network", "L1/L2 support", "Incident management"],
+      "fr": {
+        "title": "Technicien support informatique N1/N2",
+        "type": "Alternance",
+        "period": "oct. 2024 → sept. 2026 · 2 ans",
+        "summary": "Référent IT de fait pour l'ensemble du centre (~150 personnes) : je suis le premier interlocuteur pour tout problème informatique, sur place.",
+        "missions": [
+          "Traiter les demandes de support N1/N2 des équipes médicales, dentaires et administratives : diagnostic, résolution, escalade documentée quand l'incident dépasse le périmètre local.",
+          "Préparer, installer et maintenir les postes de travail Windows 11 et leurs périphériques (imprimantes, scanners, lecteurs de cartes).",
+          "Diagnostiquer les incidents du réseau local : câblage, brassage, Wi-Fi, connectivité des postes et des équipements.",
+          "Suivre chaque incident de bout en bout : prise en charge, communication avec l'utilisateur, résolution, clôture.",
+          "Préparer les postes et les accès des nouveaux arrivants, récupérer le matériel au départ.",
+          "Rédiger des procédures et des fiches pratiques pour rendre les utilisateurs autonomes sur les demandes simples.",
+          "Travailler avec les contraintes d'un centre de santé : confidentialité des données patients, interventions sans bloquer les consultations."
+        ],
+        "figures": "Chiffres clés : TODO_SOLAL (nombre de postes gérés, volume de demandes par mois, outil de ticketing utilisé)."
+      },
+      "en": {
+        "title": "IT Support Technician, L1/L2",
+        "type": "Work-study",
+        "period": "Oct 2024 → Sep 2026 · 2 years",
+        "summary": "De facto IT lead for the whole centre (~150 staff): the first on-site contact for any IT issue.",
+        "missions": [
+          "Handle L1/L2 support requests from medical, dental and administrative staff: diagnose, fix, and escalate with documentation when an issue goes beyond local scope.",
+          "Prepare, deploy and maintain Windows 11 workstations and their peripherals (printers, scanners, card readers).",
+          "Troubleshoot local network issues: cabling, patching, Wi-Fi, workstation and device connectivity.",
+          "Own each incident end to end: intake, user communication, resolution, closure.",
+          "Set up workstations and access for new staff, collect equipment when people leave.",
+          "Write procedures and quick guides so users can solve simple issues on their own.",
+          "Work within healthcare constraints: patient data confidentiality, interventions that never block consultations."
+        ],
+        "figures": "Key figures: TODO_SOLAL (number of workstations, monthly request volume, ticketing tool used)."
+      }
+    }
+  ]
+}

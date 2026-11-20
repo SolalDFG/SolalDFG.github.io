@@ -1,0 +1,161 @@
+---
+import education from '../data/education.json';
+import certs from '../data/certifications.json';
+import { ui, anchors, url, inline, formatDate, type Lang } from '../i18n/ui';
+import SectionHeading from './SectionHeading.astro';
+import Icon from './Icon.astro';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = ui[lang];
+const tc = t.certs;
+const pdf = (file: string) => url(`/certificats/${file}.pdf`);
+const thumb = (file: string) => url(`/certificats/thumbs/${file}.webp`);
+const newTab = lang === 'fr' ? '(PDF, nouvel onglet)' : '(PDF, new tab)';
+const colon = lang === 'fr' ? '\u00a0:' : ':';
+---
+
+<section class="border-y border-line bg-surface/40">
+  <div class="container-page py-16 sm:py-20">
+    <SectionHeading id={anchors[lang].education} kicker={t.sections.education.kicker} title={t.sections.education.title} />
+
+    <!-- Diplôme -->
+    {
+      education.items.map((e) => (
+        <article class="card mb-12 flex flex-col gap-3 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6" aria-labelledby={`edu-${e.id}`}>
+          <div>
+            <p class="font-mono text-xs text-dim">{t.education.degree}</p>
+            <h3 id={`edu-${e.id}`} class="mt-1 text-lg font-semibold text-text">
+              {e[lang].title}
+            </h3>
+            <p class="mt-1 text-muted">
+              <span class="font-medium text-text">{e.school}</span> · {e[lang].mode}
+            </p>
+          </div>
+          <p class="text-sm text-dim" set:html={inline(e[lang].status)} />
+        </article>
+      ))
+    }
+
+    <h3 class="sr-only">{t.education.certs}</h3>
+
+    <div class="flex flex-col gap-12">
+      {
+        certs.groups.map((g) => (
+          <section aria-labelledby={`cg-${g.id}`}>
+            <div class="mb-5 border-b border-line pb-3">
+              <h4 id={`cg-${g.id}`} class="flex items-center gap-2 text-lg font-semibold text-text">
+                <span class="font-mono text-accent" aria-hidden="true">
+                  #
+                </span>
+                {g[lang].title}
+              </h4>
+              {g[lang].note && <p class="mt-1 max-w-3xl text-sm text-muted">{g[lang].note}</p>}
+            </div>
+
+            <ul class={`grid gap-4 ${g.id === 'cnil' || g.id === 'languages' ? 'lg:grid-cols-2' : 'sm:grid-cols-2 lg:grid-cols-3'}`}>
+              {g.items.map((c: any) => {
+                const title = c[lang] as string;
+                return (
+                  <li class="card flex flex-col overflow-hidden">
+                    {c.file && (
+                      <a href={pdf(c.file)} target="_blank" rel="noopener" class="block border-b border-line bg-white/95" tabindex="-1" aria-hidden="true">
+                        <img
+                          src={thumb(c.file)}
+                          alt=""
+                          width="480"
+                          height="320"
+                          loading="lazy"
+                          decoding="async"
+                          class="aspect-[3/2] w-full object-cover object-top"
+                        />
+                      </a>
+                    )}
+                    <div class="flex flex-1 flex-col p-4 sm:p-5">
+                      <p class="font-mono text-xs text-dim">{c.org}</p>
+                      <h5 class="mt-1 leading-snug font-semibold text-text">{title}</h5>
+
+                      {c.id === 'toeic' ? (
+                        <>
+                          <p class="mt-3 font-mono text-4xl font-bold text-accent">
+                            885<span class="text-xl text-dim">/990</span>
+                          </p>
+                          <p class="mt-2 text-sm text-dim">
+                            Date{colon} <span set:html={inline(c.dateText)} />
+                          </p>
+                          <p class="text-sm text-dim" set:html={inline(lang === 'fr' ? c.proofFr : c.proofEn)} />
+                        </>
+                      ) : (
+                        <p class="mt-1 text-sm text-muted">
+                          {c.dateFrom ? (
+                            <>
+                              {formatDate(c.dateFrom, lang)} → {formatDate(c.date, lang)}
+                            </>
+                          ) : (
+                            <>
+                              {tc.completed} {formatDate(c.date, lang)}
+                            </>
+                          )}
+                          {c.hours && <> · {tc.duration} {lang === 'fr' ? c.hours : c.hoursEn}</>}
+                          {c.score && (
+                            <>
+                              {' '}
+                              · {tc.score}{colon} <strong class="text-accent">{c.score}</strong>
+                            </>
+                          )}
+                        </p>
+                      )}
+
+                      {c.modules && (
+                        <div class="mt-4">
+                          <p class="font-mono text-xs text-dim">{tc.modules}</p>
+                          <ul class="mt-2 divide-y divide-line rounded-lg border border-line">
+                            {c.modules.map((m: any) => (
+                              <li class="flex items-center justify-between gap-3 px-3 py-2 text-sm">
+                                <span class="text-muted">
+                                  {m[lang]} <span class="text-dim">· {formatDate(m.date, lang)}</span>
+                                </span>
+                                <a href={pdf(m.file)} target="_blank" rel="noopener" class="link inline-flex shrink-0 items-center gap-1 font-mono text-xs">
+                                  {tc.pdf}
+                                  <span class="sr-only">
+                                    {m[lang]} {newTab}
+                                  </span>
+                                </a>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+
+                      {c.file && (
+                        <div class="mt-auto flex flex-wrap items-center gap-x-4 gap-y-2 pt-4">
+                          <a href={pdf(c.file)} target="_blank" rel="noopener" class="btn btn-ghost min-h-10 px-3 py-2 text-sm">
+                            <Icon name="file" class="h-4 w-4" />
+                            {tc.view}
+                            <span class="sr-only">
+                              {colon} {title} {newTab}
+                            </span>
+                          </a>
+                          {c.extras?.map((x: any) => (
+                            <a href={pdf(x.file)} target="_blank" rel="noopener" class="link inline-flex items-center gap-1 text-sm">
+                              {x[lang]} · {formatDate(x.date, lang)}
+                              <span class="sr-only">
+                                {colon} {title} {newTab}
+                              </span>
+                            </a>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+          </section>
+        ))
+      }
+    </div>
+  </div>
+</section>

@@ -1,0 +1,81 @@
+{
+  "_comment": "Niveaux : prod = utilisé en production (en entreprise ou sur mon homelab en service continu) ; projects = TP, projets d'école ou perso ; notions = bases. Reste honnête : ce fichier est lu par des recruteurs techniques.",
+  "levels": {
+    "prod": { "fr": "Utilisé en prod", "en": "Used in production", "hintFr": "en entreprise ou sur mon homelab en service continu", "hintEn": "at work or on my always-on homelab" },
+    "projects": { "fr": "Projets", "en": "Projects", "hintFr": "TP, projets d'école ou perso", "hintEn": "labs, school or personal projects" },
+    "notions": { "fr": "Notions", "en": "Basics", "hintFr": "bases, à approfondir", "hintEn": "fundamentals, still learning" }
+  },
+  "groups": [
+    {
+      "id": "systems",
+      "fr": "Systèmes",
+      "en": "Systems",
+      "items": [
+        { "name": "Linux Debian", "detailFr": "durcissement, rsyslog, systemd timers, cron, bash", "detailEn": "hardening, rsyslog, systemd timers, cron, bash", "level": "prod" },
+        { "name": "Windows 11", "detailFr": "postes utilisateurs, périphériques, support", "detailEn": "user workstations, peripherals, support", "level": "prod" },
+        { "name": "Windows Server / Active Directory", "detailFr": "", "detailEn": "", "level": "projects" },
+        { "name": "WSL", "detailFr": "", "detailEn": "", "level": "projects" }
+      ]
+    },
+    {
+      "id": "network",
+      "fr": "Réseau",
+      "en": "Networking",
+      "items": [
+        { "name": "Dépannage réseau local", "nameEn": "Local network troubleshooting", "detailFr": "câblage, brassage, Wi-Fi", "detailEn": "cabling, patching, Wi-Fi", "level": "prod" },
+        { "name": "Commutation", "nameEn": "Switching", "detailFr": "VLAN, VTP, STP, EtherChannel LACP, routage inter-VLAN", "detailEn": "VLAN, VTP, STP, EtherChannel LACP, inter-VLAN routing", "level": "projects" },
+        { "name": "Routage & services", "nameEn": "Routing & services", "detailFr": "OSPF, NAT/PAT, ACL, DHCP", "detailEn": "OSPF, NAT/PAT, ACL, DHCP", "level": "projects" },
+        { "name": "iptables", "detailFr": "routage, NAT, filtrage", "detailEn": "routing, NAT, filtering", "level": "projects" },
+        { "name": "VPN IPSec", "detailFr": "", "detailEn": "", "level": "projects" },
+        { "name": "Cisco Packet Tracer · EVE-NG", "detailFr": "maquettage", "detailEn": "network labs", "level": "projects" }
+      ]
+    },
+    {
+      "id": "virt",
+      "fr": "Virtualisation & infra",
+      "en": "Virtualisation & infrastructure",
+      "items": [
+        { "name": "Proxmox VE", "detailFr": "hyperviseur + NAS", "detailEn": "hypervisor + NAS", "level": "prod" },
+        { "name": "Conteneurs LXC", "nameEn": "LXC containers", "detailFr": "non privilégiés, un service par conteneur", "detailEn": "unprivileged, one service per container", "level": "prod" },
+        { "name": "ZFS", "detailFr": "pools en miroir", "detailEn": "mirrored pools", "level": "prod" },
+        { "name": "Samba", "detailFr": "partages montés sous Windows", "detailEn": "shares mounted on Windows", "level": "prod" },
+        { "name": "Docker", "detailFr": "", "detailEn": "", "level": "prod" },
+        { "name": "VMware Workstation", "detailFr": "", "detailEn": "", "level": "projects" }
+      ]
+    },
+    {
+      "id": "ops",
+      "fr": "Supervision & services",
+      "en": "Monitoring & services",
+      "items": [
+        { "name": "Uptime Kuma", "detailFr": "supervision", "detailEn": "monitoring", "level": "prod" },
+        { "name": "Homepage", "detailFr": "tableau de bord", "detailEn": "dashboard", "level": "prod" },
+        { "name": "Pi-hole + Unbound", "detailFr": "DNS filtrant + résolveur récursif", "detailEn": "filtering DNS + recursive resolver", "level": "prod" },
+        { "name": "Tailscale", "detailFr": "accès distant sans port ouvert", "detailEn": "remote access, no open port", "level": "prod" }
+      ]
+    },
+    {
+      "id": "cloud",
+      "fr": "Cloud",
+      "en": "Cloud",
+      "items": [
+        { "name": "Microsoft Azure", "detailFr": "App Service, Static Web Apps, Azure SQL, Key Vault, Entra ID", "detailEn": "App Service, Static Web Apps, Azure SQL, Key Vault, Entra ID", "level": "projects" }
+      ]
+    },
+    {
+      "id": "dev",
+      "fr": "Dev & automatisation",
+      "en": "Dev & automation",
+      "items": [
+        { "name": "Bash", "detailFr": "scripts d'administration", "detailEn": "admin scripts", "level": "projects" },
+        { "name": "Python", "detailFr": "", "detailEn": "", "level": "projects" },
+        { "name": "PostgreSQL", "detailFr": "base du pipeline de clipping", "detailEn": "clipping pipeline database", "level": "prod" },
+        { "name": "JavaScript · React · Node.js/Express", "detailFr": "", "detailEn": "", "level": "projects" },
+        { "name": "Laravel · SQLite", "detailFr": "", "detailEn": "", "level": "projects" },
+        { "name": "C", "detailFr": "", "detailEn": "", "level": "projects" },
+        { "name": "Git / GitHub", "detailFr": "", "detailEn": "", "level": "projects" },
+        { "name": "Dév. assisté par IA", "nameEn": "AI-assisted development", "detailFr": "Claude Code, sessions parallèles", "detailEn": "Claude Code, parallel sessions", "level": "projects" }
+      ]
+    }
+  ]
+}

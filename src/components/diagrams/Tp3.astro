@@ -1,0 +1,85 @@
+---
+import type { Lang } from '../../i18n/ui';
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const fr = lang === 'fr';
+const T = {
+  title: fr ? 'Topologie du TP3 : 4 VM, 3 réseaux virtuels' : 'Lab 3 topology: 4 VMs, 3 virtual networks',
+  desc: fr
+    ? "L'hôte A est sur le LAN A, relié au routeur 1. Le routeur 1 et le routeur 2 sont reliés par le réseau WAN. Le routeur 2 dessert le LAN B où se trouve l'hôte B. Sur chaque routeur, la chaîne POSTROUTING contient d'abord une règle RETURN pour le trafic vers l'autre LAN, puis MASQUERADE pour le trafic sortant vers le WAN. Un traceroute de l'hôte A vers l'hôte B passe en 3 sauts (routeur 1, routeur 2, hôte B) et affiche les vraies adresses : le trafic inter-LAN n'est pas NATé."
+    : 'Host A sits on LAN A, connected to router 1. Router 1 and router 2 are linked by the WAN network. Router 2 serves LAN B where host B lives. On each router, the POSTROUTING chain first has a RETURN rule for traffic to the other LAN, then MASQUERADE for traffic leaving to the WAN. A traceroute from host A to host B takes 3 hops (router 1, router 2, host B) and shows the real addresses: inter-LAN traffic is not NATed.',
+  hostA: fr ? 'Hôte A' : 'Host A',
+  hostB: fr ? 'Hôte B' : 'Host B',
+  r1: fr ? 'Routeur 1' : 'Router 1',
+  r2: fr ? 'Routeur 2' : 'Router 2',
+  deb: 'Debian · iptables',
+  rule1: fr ? '1. RETURN  → vers l’autre LAN : pas de NAT' : '1. RETURN  → to the other LAN: no NAT',
+  rule2: fr ? '2. MASQUERADE → sortie WAN' : '2. MASQUERADE → out to WAN',
+  chain: 'nat / POSTROUTING',
+  trace: fr ? 'traceroute A → B : 3 sauts, adresses réelles' : 'traceroute A → B: 3 hops, real addresses',
+  tcpdump: fr ? 'vérifié au tcpdump dans les deux sens' : 'checked with tcpdump in both directions',
+  hop: fr ? 'saut' : 'hop',
+};
+---
+
+<svg class="diagram min-w-[680px]" viewBox="0 0 960 360" role="img" aria-labelledby="dg-tp3-t dg-tp3-d">
+  <title id="dg-tp3-t">{T.title}</title>
+  <desc id="dg-tp3-d">{T.desc}</desc>
+
+  <!-- Règles NAT -->
+  <rect class="box" x="250" y="14" width="460" height="78" rx="8"></rect>
+  <text class="t-xs" x="266" y="36">{T.chain}</text>
+  <text class="t-accent" x="266" y="58">{T.rule1}</text>
+  <text class="t-sm" x="266" y="80">{T.rule2}</text>
+  <line class="wire" x1="330" y1="92" x2="330" y2="128" stroke-dasharray="3 4"></line>
+  <line class="wire" x1="630" y1="92" x2="630" y2="128" stroke-dasharray="3 4"></line>
+
+  <!-- Réseaux -->
+  <text class="t-xs" x="190" y="160" text-anchor="middle">LAN A</text>
+  <text class="t-xs" x="480" y="160" text-anchor="middle">WAN</text>
+  <text class="t-xs" x="770" y="160" text-anchor="middle">LAN B</text>
+  <line class="wire-accent" x1="160" y1="172" x2="250" y2="172"></line>
+  <line class="wire" x1="410" y1="172" x2="550" y2="172"></line>
+  <line class="wire-accent" x1="710" y1="172" x2="800" y2="172"></line>
+
+  <!-- Machines -->
+  <rect class="box" x="20" y="138" width="140" height="68" rx="8"></rect>
+  <text class="t" x="90" y="168" text-anchor="middle">{T.hostA}</text>
+  <text class="t-xs" x="90" y="188" text-anchor="middle">VM · LAN A</text>
+
+  <rect class="box-accent" x="250" y="128" width="160" height="88" rx="8"></rect>
+  <text class="t" x="330" y="162" text-anchor="middle">{T.r1}</text>
+  <text class="t-xs" x="330" y="184" text-anchor="middle">{T.deb}</text>
+
+  <rect class="box-accent" x="550" y="128" width="160" height="88" rx="8"></rect>
+  <text class="t" x="630" y="162" text-anchor="middle">{T.r2}</text>
+  <text class="t-xs" x="630" y="184" text-anchor="middle">{T.deb}</text>
+
+  <rect class="box" x="800" y="138" width="140" height="68" rx="8"></rect>
+  <text class="t" x="870" y="168" text-anchor="middle">{T.hostB}</text>
+  <text class="t-xs" x="870" y="188" text-anchor="middle">VM · LAN B</text>
+
+  <!-- Traceroute -->
+  <path class="wire-dash" d="M90 206 V270 H870 V218"></path>
+  <polygon class="arrow-head-accent" points="864,220 870,208 876,220"></polygon>
+  {
+    [
+      { x: 330, n: 1 },
+      { x: 630, n: 2 },
+      { x: 870, n: 3 },
+    ].map((h) => (
+      <g>
+        <circle cx={h.x} cy="270" r="13" class="box-accent" />
+        <text class="t-accent" x={h.x} y="275" text-anchor="middle">
+          {h.n}
+        </text>
+      </g>
+    ))
+  }
+  <line class="wire" x1="330" y1="216" x2="330" y2="257" stroke-dasharray="3 4"></line>
+  <line class="wire" x1="630" y1="216" x2="630" y2="257" stroke-dasharray="3 4"></line>
+  <text class="t-accent" x="480" y="310" text-anchor="middle">{T.trace}</text>
+  <text class="t-xs" x="480" y="332" text-anchor="middle">{T.tcpdump}</text>
+</svg>

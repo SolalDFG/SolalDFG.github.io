@@ -1,0 +1,68 @@
+---
+import type { Lang } from '../../i18n/ui';
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const fr = lang === 'fr';
+const T = {
+  title: fr ? 'Journalisation centralisée en RELP sur TLS' : 'Centralised logging over RELP on TLS',
+  desc: fr
+    ? "La VM cliente Debian 13 envoie ses journaux avec rsyslog en RELP sur le port 2514 vers la VM collecteur Debian 13. Côté client, une file d'attente sur disque garde les messages si le collecteur est coupé. Le transport est chiffré en TLS ; une mini-autorité de certification GnuTLS signe le certificat du client et celui du serveur pour une authentification mutuelle. Le collecteur range les journaux par hôte et par programme. Test de panne : 6 messages émis pendant la coupure, 6 reçus au redémarrage."
+    : 'The Debian 13 client VM ships its logs with rsyslog over RELP on port 2514 to the Debian 13 collector VM. On the client, a disk queue keeps messages while the collector is down. Transport is TLS-encrypted; a GnuTLS mini certificate authority signs both the client and the server certificates for mutual authentication. The collector sorts logs by host and program. Failure test: 6 messages sent during the outage, 6 received on restart.',
+  client: fr ? 'VM client · Debian 13' : 'Client VM · Debian 13',
+  server: fr ? 'VM collecteur · Debian 13' : 'Collector VM · Debian 13',
+  queue: fr ? "File d'attente disque" : 'Disk queue',
+  sort: fr ? 'Rangement hôte / programme' : 'Sorted by host / program',
+  certC: fr ? 'Certificat client' : 'Client certificate',
+  certS: fr ? 'Certificat serveur' : 'Server certificate',
+  ca: fr ? 'Mini-CA GnuTLS' : 'GnuTLS mini-CA',
+  signs: fr ? 'signe' : 'signs',
+  link: 'RELP · TCP 2514',
+  tls: fr ? 'TLS · authentification mutuelle' : 'TLS · mutual authentication',
+  test: fr ? 'coupure du collecteur : 6 messages émis → 6 reçus' : 'collector outage: 6 messages sent → 6 received',
+  timers: fr ? '+ 5 tâches planifiées : cron, at, timers systemd' : '+ 5 scheduled tasks: cron, at, systemd timers',
+};
+---
+
+<svg class="diagram min-w-[680px]" viewBox="0 0 960 330" role="img" aria-labelledby="dg-logs-t dg-logs-d">
+  <title id="dg-logs-t">{T.title}</title>
+  <desc id="dg-logs-d">{T.desc}</desc>
+
+  <!-- Mini-CA -->
+  <rect class="box" x="380" y="14" width="200" height="46" rx="8"></rect>
+  <text class="t" x="480" y="43" text-anchor="middle">{T.ca}</text>
+  <path class="wire" d="M380 37 H160 V96" stroke-dasharray="3 4"></path>
+  <path class="wire" d="M580 37 H800 V96" stroke-dasharray="3 4"></path>
+  <text class="t-xs" x="270" y="30" text-anchor="middle">{T.signs}</text>
+  <text class="t-xs" x="690" y="30" text-anchor="middle">{T.signs}</text>
+
+  <!-- Client -->
+  <rect class="zone" x="20" y="80" width="280" height="200" rx="12"></rect>
+  <text class="t-accent" x="36" y="106">{T.client}</text>
+  <rect class="box" x="36" y="120" width="248" height="40" rx="6"></rect>
+  <text class="t-sm" x="160" y="145" text-anchor="middle" font-weight="600">rsyslog · omrelp</text>
+  <rect class="box-accent" x="36" y="170" width="248" height="40" rx="6"></rect>
+  <text class="t-sm" x="160" y="195" text-anchor="middle" font-weight="600">{T.queue}</text>
+  <rect class="box" x="36" y="220" width="248" height="40" rx="6"></rect>
+  <text class="t-sm" x="160" y="245" text-anchor="middle">{T.certC}</text>
+
+  <!-- Lien RELP/TLS -->
+  <line class="wire-accent" x1="300" y1="180" x2="648" y2="180"></line>
+  <polygon class="arrow-head-accent" points="646,173 660,180 646,187"></polygon>
+  <text class="t-accent" x="480" y="166" text-anchor="middle">{T.link}</text>
+  <text class="t-sm" x="480" y="204" text-anchor="middle">{T.tls}</text>
+
+  <!-- Collecteur -->
+  <rect class="zone" x="660" y="80" width="280" height="200" rx="12"></rect>
+  <text class="t-accent" x="676" y="106">{T.server}</text>
+  <rect class="box" x="676" y="120" width="248" height="40" rx="6"></rect>
+  <text class="t-sm" x="800" y="145" text-anchor="middle" font-weight="600">rsyslog · imrelp :2514</text>
+  <rect class="box" x="676" y="170" width="248" height="40" rx="6"></rect>
+  <text class="t-sm" x="800" y="195" text-anchor="middle" font-weight="600">{T.sort}</text>
+  <rect class="box" x="676" y="220" width="248" height="40" rx="6"></rect>
+  <text class="t-sm" x="800" y="245" text-anchor="middle">{T.certS}</text>
+
+  <text class="t-sm" x="480" y="246" text-anchor="middle">{T.test}</text>
+  <text class="t-xs" x="480" y="312" text-anchor="middle">{T.timers}</text>
+</svg>

@@ -1,0 +1,53 @@
+# Projet 4 — BrickPile (perso, en cours)
+# TODO_SOLAL : framework / langage, méthode de reconnaissance actuelle, lien du dépôt s'il est public.
+order: 4
+category: dev
+status: in-progress
+kind: personal
+stack:
+  - API Rebrickable
+  - Web / mobile
+  - Reconnaissance d'images
+  - Claude Code
+  - "TODO_SOLAL : framework"
+
+fr:
+  title: "BrickPile : quels sets construire avec un tas de LEGO ?"
+  impact: "Une app web/mobile qui scanne un tas de LEGO, identifie les pièces et indique les sets officiels constructibles."
+  context: "Un tas de LEGO en vrac : impossible de savoir quels sets on peut reconstruire sans passer des heures à trier."
+  goal: "Scanner le tas, identifier les pièces, puis croiser l'inventaire avec la base Rebrickable pour proposer les sets constructibles."
+  done:
+    - "Scan d'un tas de pièces et identification des pièces détectées."
+    - "Calcul des **sets officiels constructibles** à partir de l'inventaire, via l'**API Rebrickable**."
+    - "Recherche d'une pièce ou d'un set."
+    - "Développement assisté par IA avec **Claude Code**."
+  # TODO_SOLAL : difficultés déduites, à confirmer.
+  challenges:
+    - problem: "Beaucoup de pièces se ressemblent : variantes de forme, nuances de couleur."
+      solution: "Feuille de route : entraîner un modèle de reconnaissance maison, spécialisé sur les pièces LEGO."
+    - problem: "Croiser un inventaire partiel avec des milliers de sets officiels."
+      solution: "S'appuyer sur les inventaires de sets fournis par l'API Rebrickable plutôt que de maintenir une base maison."
+  result: "En cours. Prochaines étapes : terminer l'application, puis entraîner un modèle de reconnaissance de pièces maison."
+  learnings:
+    - "S'appuyer sur une API de référence plutôt que réinventer la donnée."
+    - "Le développement assisté par IA accélère, à condition de garder la main sur l'architecture."
+
+en:
+  title: "BrickPile: which sets can you build from a pile of LEGO?"
+  impact: "A web/mobile app that scans a pile of LEGO, identifies the parts and lists the official sets you can build."
+  context: "A loose pile of LEGO: no way to know which sets you can rebuild without hours of sorting."
+  goal: "Scan the pile, identify the parts, then match the inventory against the Rebrickable database to suggest buildable sets."
+  done:
+    - "Scan a pile of parts and identify the detected pieces."
+    - "Compute **buildable official sets** from the inventory, using the **Rebrickable API**."
+    - "Search for a part or a set."
+    - "AI-assisted development with **Claude Code**."
+  challenges:
+    - problem: "Many parts look alike: shape variants, close colour shades."
+      solution: "Roadmap: train a custom recognition model specialised in LEGO parts."
+    - problem: "Matching a partial inventory against thousands of official sets."
+      solution: "Rely on the set inventories provided by the Rebrickable API instead of maintaining an in-house database."
+  result: "In progress. Next steps: finish the app, then train a custom part-recognition model."
+  learnings:
+    - "Build on a reference API instead of reinventing the data."
+    - "AI-assisted development speeds things up, as long as you stay in charge of the architecture."

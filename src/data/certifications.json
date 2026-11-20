@@ -1,0 +1,61 @@
+{
+  "_comment": "Certificats. `file` = nom du PDF dans public/certificats/ (sans extension) ; la miniature est public/certificats/thumbs/<file>.webp. Dates lues sur les PDF. RÈGLE : ce sont des certificats de COURS Cisco Networking Academy, jamais la certification officielle CCNA 200-301.",
+  "groups": [
+    {
+      "id": "cisco",
+      "fr": { "title": "Cisco Networking Academy", "note": "Certificats de fin de cours Cisco Networking Academy, suivis via l'ESGI. Ce ne sont pas des certifications officielles Cisco (l'examen CCNA 200-301 est distinct)." },
+      "en": { "title": "Cisco Networking Academy", "note": "Cisco Networking Academy course completion certificates, taken through ESGI. These are not official Cisco certifications (the CCNA 200-301 exam is separate)." },
+      "items": [
+        { "id": "ccna-itn", "org": "Cisco NetAcad · ESGI", "fr": "CCNA : Introduction to Networks", "en": "CCNA: Introduction to Networks", "date": "2026-01-09", "file": "cisco-ccna-itn" },
+        { "id": "ccna-ensa", "org": "Cisco NetAcad · ESGI", "fr": "CCNA : Enterprise Networking, Security & Automation", "en": "CCNA: Enterprise Networking, Security & Automation", "date": "2026-07-31", "file": "cisco-ccna-ensa" },
+        { "id": "nt-exam", "org": "Cisco NetAcad · ESGI", "fr": "Network Technician Pathway (examen)", "en": "Network Technician Pathway (exam)", "date": "2026-03-08", "file": "cisco-network-technician-exam" },
+        { "id": "net-basics", "org": "Cisco NetAcad · ESGI", "fr": "Networking Basics", "en": "Networking Basics", "date": "2026-03-08", "file": "cisco-networking-basics" },
+        {
+          "id": "intro-cyber", "org": "Cisco NetAcad · ESGI", "fr": "Introduction to Cybersecurity", "en": "Introduction to Cybersecurity", "date": "2026-03-08", "file": "cisco-intro-cybersecurity",
+          "extras": [{ "fr": "Badge 2024", "en": "2024 badge", "date": "2024-11-26", "file": "cisco-intro-cybersecurity-badge-2024" }]
+        },
+        { "id": "industrial", "org": "Cisco NetAcad · ESGI", "fr": "Industrial Networking Essentials", "en": "Industrial Networking Essentials", "date": "2026-03-08", "file": "cisco-industrial-networking" },
+        { "id": "digital-safety", "org": "Cisco NetAcad · ESGI", "fr": "Digital Safety and Security Awareness", "en": "Digital Safety and Security Awareness", "date": "2026-03-08", "file": "cisco-digital-safety" },
+        {
+          "id": "intro-iot", "org": "Cisco NetAcad · ESGI", "fr": "Introduction à l'IoT et à la transformation digitale", "en": "Introduction to IoT and Digital Transformation", "date": "2026-03-08", "file": "cisco-intro-iot",
+          "extras": [{ "fr": "Badge 2024", "en": "2024 badge", "date": "2024-11-27", "file": "cisco-intro-iot-badge-2024" }]
+        },
+        { "id": "modern-ai", "org": "Cisco NetAcad · ESGI", "fr": "Introduction to Modern AI", "en": "Introduction to Modern AI", "date": "2026-03-08", "file": "cisco-intro-modern-ai" }
+      ]
+    },
+    {
+      "id": "cnil",
+      "fr": { "title": "CNIL · RGPD", "note": "MOOC « L'atelier RGPD » de la CNIL : 5 modules, 100 % aux 5 évaluations. Utile au quotidien dans un centre de santé, où les données patients sont sensibles." },
+      "en": { "title": "CNIL · GDPR", "note": "CNIL (French data protection authority) MOOC “L'atelier RGPD”: 5 modules, 100% on all 5 assessments. Directly relevant in a healthcare centre handling sensitive patient data." },
+      "items": [
+        {
+          "id": "cnil-rgpd", "org": "CNIL", "fr": "L'atelier RGPD : 5 modules", "en": "L'atelier RGPD (GDPR workshop): 5 modules", "date": "2024-01-30", "dateFrom": "2023-10-31", "file": "cnil-rgpd-module-1", "score": "100 %",
+          "modules": [
+            { "fr": "Module 1 : le RGPD et ses notions clés", "en": "Module 1: GDPR and its key concepts", "date": "2023-10-31", "file": "cnil-rgpd-module-1" },
+            { "fr": "Module 2 : les principes de la protection des données", "en": "Module 2: data protection principles", "date": "2023-10-31", "file": "cnil-rgpd-module-2" },
+            { "fr": "Module 3 : les responsabilités des acteurs", "en": "Module 3: responsibilities of each party", "date": "2024-01-16", "file": "cnil-rgpd-module-3" },
+            { "fr": "Module 4 : le DPO et les outils de la conformité", "en": "Module 4: the DPO and compliance tools", "date": "2024-01-29", "file": "cnil-rgpd-module-4" },
+            { "fr": "Module 5 : les collectivités territoriales", "en": "Module 5: local authorities", "date": "2024-01-30", "file": "cnil-rgpd-module-5" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "languages",
+      "fr": { "title": "Langues", "note": "" },
+      "en": { "title": "Languages", "note": "" },
+      "items": [
+        { "id": "toeic", "org": "ETS", "fr": "TOEIC : 885 / 990", "en": "TOEIC: 885 / 990", "date": "", "dateText": "TODO_SOLAL", "proofFr": "Justificatif : TODO_SOLAL", "proofEn": "Score report: TODO_SOLAL" }
+      ]
+    },
+    {
+      "id": "udemy",
+      "fr": { "title": "Formations Udemy", "note": "Formations suivies en autonomie, avec certificat de fin de formation Udemy. Ce ne sont pas des certifications d'éditeur." },
+      "en": { "title": "Udemy courses", "note": "Self-paced courses with a Udemy certificate of completion. These are not vendor certifications." },
+      "items": [
+        { "id": "udemy-ccna-labs", "org": "Udemy · David Bombal", "fr": "Cisco CCNA Packet Tracer Ultimate Labs : CCNA 200-301 labs", "en": "Cisco CCNA Packet Tracer Ultimate Labs: CCNA 200-301 labs", "date": "2026-06-02", "hours": "17,5 h", "hoursEn": "17.5 h", "file": "udemy-ccna-packet-tracer-labs" },
+        { "id": "udemy-jncia", "org": "Udemy · Ben Jacobson", "fr": "Juniper JNCIA-Junos (JN0-105) Complete Course", "en": "Juniper JNCIA-Junos (JN0-105) Complete Course", "date": "2026-06-07", "hours": "11 h", "hoursEn": "11 h", "file": "udemy-juniper-jncia-junos" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+---
+import profile from '../data/profile.json';
+import { ui, type Lang } from '../i18n/ui';
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = ui[lang];
+const year = new Date().getFullYear();
+---
+
+<footer class="mt-16 border-t border-line">
+  <div class="container-page flex flex-col gap-2 py-8 font-mono text-xs text-dim sm:flex-row sm:items-center sm:justify-between">
+    <p>© {year} {profile.name}</p>
+    <p>{t.footer.built} {t.footer.source}</p>
+  </div>
+</footer>

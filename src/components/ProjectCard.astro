@@ -1,0 +1,52 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { ui, routes, inline, stackLabel, type Lang } from '../i18n/ui';
+import StatusBadge from './StatusBadge.astro';
+import Icon from './Icon.astro';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  lang: Lang;
+}
+const { project, lang } = Astro.props;
+const d = project.data;
+const c = d[lang];
+const t = ui[lang];
+const MAX = 5;
+const shown = d.stack.slice(0, MAX);
+const rest = d.stack.length - shown.length;
+const titleId = `p-${project.id}-${lang}`;
+---
+
+<li data-project data-category={d.category} class="h-full">
+  <article
+    class="card group relative flex h-full flex-col p-5 transition-colors focus-within:border-accent hover:border-line-strong sm:p-6"
+    aria-labelledby={titleId}
+  >
+    <div class="flex flex-wrap items-center justify-between gap-2">
+      <p class="font-mono text-xs text-dim">{t.categories[d.category]}</p>
+      <StatusBadge status={d.status} lang={lang} />
+    </div>
+
+    <h3 id={titleId} class="mt-3 text-lg leading-snug font-semibold text-text">
+      <a href={routes.project(lang, project.id)} class="no-underline after:absolute after:inset-0 after:rounded-xl after:content-[''] group-hover:text-accent-strong focus-visible:outline-none">
+        {c.title}
+      </a>
+    </h3>
+
+    <p class="mt-2 text-[0.9375rem] leading-relaxed text-muted" set:html={inline(c.impact)} />
+
+    <ul class="mt-4 flex flex-wrap gap-1.5" aria-label={t.project.stack}>
+      {shown.map((s) => <li class="badge" set:html={inline(stackLabel(s, lang))} />)}
+      {rest > 0 && <li class="badge text-dim">+{rest}</li>}
+    </ul>
+
+    <div class="mt-auto flex items-center justify-between gap-3 pt-5 text-sm">
+      <span class="font-mono text-xs text-dim">{t.kind[d.kind]}</span>
+      <span class="inline-flex items-center gap-1 font-medium text-accent" aria-hidden="true">
+        {t.seeProject}
+        <Icon name="arrow-right" class="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+      </span>
+    </div>
+  </article>
+</li>

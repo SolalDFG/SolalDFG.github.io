@@ -1,0 +1,30 @@
+---
+import Base from '../layouts/Base.astro';
+import { ui, routes } from '../i18n/ui';
+import Icon from '../components/Icon.astro';
+---
+
+<Base lang="fr" paths={{ fr: '/404.html', en: '/404.html' }} title="404 · Page introuvable · Solal Diedhiou" noindex>
+  <section class="container-page flex flex-col items-start py-20 sm:py-28">
+    <div class="card w-full max-w-2xl overflow-hidden">
+      <div class="flex items-center gap-2 border-b border-line bg-surface-2 px-4 py-2.5">
+        <span class="font-mono text-xs text-dim">solal@homelab: ~</span>
+      </div>
+      <div class="p-5 font-mono text-sm leading-relaxed sm:p-6">
+        <p><span class="text-accent">$</span> <span class="text-text">curl -I $URL</span></p>
+        <p class="mt-1 text-muted">HTTP/2 <span class="font-bold text-accent">404</span> Not Found</p>
+        <p class="mt-4"><span class="text-accent">$</span> <span class="text-text">echo $?</span></p>
+        <p class="mt-1 text-muted">22</p>
+      </div>
+    </div>
+
+    <h1 class="mt-10 text-3xl font-bold tracking-tight text-text sm:text-4xl">{ui.fr.notFound.title}</h1>
+    <p class="mt-2 text-muted">{ui.fr.notFound.text}</p>
+    <p class="mt-1 text-dim" lang="en">{ui.en.notFound.title}. {ui.en.notFound.text}</p>
+
+    <div class="mt-8 flex flex-wrap gap-3">
+      <a href={routes.home('fr')} class="btn btn-primary"><Icon name="arrow-left" class="h-4 w-4" />{ui.fr.notFound.back}</a>
+      <a href={routes.home('en')} class="btn btn-ghost" lang="en">{ui.en.notFound.back}</a>
+    </div>
+  </section>
+</Base>

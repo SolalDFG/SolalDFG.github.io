@@ -1,0 +1,69 @@
+# Projet 7 — Kasgrunt, projet annuel ESGI (projet de GROUPE)
+# TODO_SOLAL : mon rôle exact dans le groupe, taille de l'équipe, statut (terminé ?) et résultat (soutenance, livrables).
+order: 7
+category: infra
+status: done
+kind: group
+diagram: kasgrunt
+stack:
+  - EVE-NG
+  - VLAN
+  - Pare-feux
+  - VPN IPSec
+  - Cluster HA
+  - SAN
+  - Sauvegardes
+  - Active Directory
+  - Téléphonie IP
+  - Supervision · métrologie
+  - SIEM / syslog
+  - WBS · RACI · PERT · Gantt
+
+fr:
+  title: "Kasgrunt : infrastructure complète pour un client fictif"
+  impact: "Projet annuel en groupe : concevoir de A à Z l'infrastructure d'une entreprise, du réseau au SIEM, dans la peau d'un prestataire."
+  context: "Projet annuel de Bachelor à l'ESGI, réalisé en groupe. Mise en situation : l'équipe joue « ESGI Consulting », le prestataire chargé de concevoir toute l'infrastructure du client fictif Kasgrunt."
+  goal: "Livrer une infrastructure complète, sécurisée et supervisée, pilotée avec les outils de gestion de projet d'un vrai prestataire."
+  doneTitle: "Périmètre du projet (travail de groupe)"
+  done:
+    - "**Réseau** maquetté sous EVE-NG : VLAN, pare-feux, VPN IPSec."
+    - "**Virtualisation** en cluster haute disponibilité, stockage **SAN**, **sauvegardes**."
+    - "**Services** : Active Directory, téléphonie IP, messagerie, partage de fichiers."
+    - "**Exploitation** : supervision, métrologie, centralisation des journaux (SIEM / syslog)."
+    - "**Gestion de projet** : WBS, RBS, RACI, PBS, PERT, Gantt."
+  doneNote: "Mon rôle dans le groupe : TODO_SOLAL."
+  # TODO_SOLAL : difficultés génériques, à remplacer par celles vécues par le groupe.
+  challenges:
+    - problem: "Un périmètre très large (réseau, systèmes, services, sécurité) à répartir dans un groupe."
+      solution: "Découpage en WBS/PBS, responsabilités fixées dans une matrice RACI, planning PERT et Gantt."
+    - problem: "Concevoir et tester une infrastructure réseau complète sans matériel physique."
+      solution: "Maquettage sous EVE-NG pour valider la topologie et les flux avant de les documenter."
+  result: "Projet rendu en fin d'année. Résultat détaillé (soutenance, livrables) : TODO_SOLAL."
+  learnings:
+    - "Une infrastructure se pense comme un tout : chaque brique dépend des autres."
+    - "En groupe, la gestion de projet (RACI, Gantt) évite les angles morts et les doublons."
+  diagramCaption: "Schéma de principe simplifié de l'infrastructure proposée (vue fonctionnelle)."
+
+en:
+  title: "Kasgrunt: full infrastructure for a fictional client"
+  impact: "Annual group project: design a company's entire infrastructure, from network to SIEM, acting as an IT services provider."
+  context: "Annual Bachelor project at ESGI, done as a group. Scenario: the team plays “ESGI Consulting”, the provider hired to design the whole infrastructure of the fictional client Kasgrunt."
+  goal: "Deliver a complete, secured and monitored infrastructure, run with the project management tools of a real provider."
+  doneTitle: "Project scope (group work)"
+  done:
+    - "**Network** prototyped on EVE-NG: VLANs, firewalls, IPSec VPN."
+    - "**Virtualisation** on a high-availability cluster, **SAN** storage, **backups**."
+    - "**Services**: Active Directory, IP telephony, email, file sharing."
+    - "**Operations**: monitoring, metrics, centralised logs (SIEM / syslog)."
+    - "**Project management**: WBS, RBS, RACI, PBS, PERT, Gantt."
+  doneNote: "My role in the group: TODO_SOLAL."
+  challenges:
+    - problem: "A very broad scope (network, systems, services, security) to split across a group."
+      solution: "WBS/PBS breakdown, responsibilities set in a RACI matrix, PERT and Gantt planning."
+    - problem: "Designing and testing a full network infrastructure without physical hardware."
+      solution: "Prototyping on EVE-NG to validate topology and flows before documenting them."
+  result: "Delivered at the end of the year. Detailed outcome (defence, deliverables): TODO_SOLAL."
+  learnings:
+    - "An infrastructure has to be designed as a whole: every block depends on the others."
+    - "In a group, project management (RACI, Gantt) prevents blind spots and duplicate work."
+  diagramCaption: "Simplified high-level diagram of the proposed infrastructure (functional view)."

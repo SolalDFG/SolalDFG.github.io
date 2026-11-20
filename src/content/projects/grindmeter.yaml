@@ -1,0 +1,52 @@
+# Projet 3 — Grindmeter (perso, en cours). Dépôt privé : pas de lien GitHub.
+# TODO_SOLAL : langage / framework utilisés (à ajouter dans `stack`), méthode de détection.
+order: 3
+category: dev
+status: in-progress
+kind: personal
+stack:
+  - Windows
+  - "TODO_SOLAL : langage / framework"
+  - Données 100 % locales
+
+fr:
+  title: "Grindmeter : temps de jeu Minecraft, mesuré automatiquement"
+  impact: "Une application Windows qui détecte Minecraft quel que soit le launcher et mesure le temps de jeu, sans envoyer aucune donnée en ligne."
+  context: "Entre le launcher officiel, Modrinth, AZ Launcher et les launchers moddés, aucun outil ne donne une vue unifiée du temps passé sur Minecraft."
+  goal: "Un outil simple, installable en .exe, qui donne des statistiques fiables et respecte la vie privée : toutes les données restent sur la machine."
+  done:
+    - "Détection automatique du lancement de Minecraft, quel que soit le launcher (Modrinth, AZ Launcher, launchers moddés)."
+    - "Mesure du temps de jeu, avec distinction **solo / multijoueur** et **temps par serveur**."
+    - "Statistiques et graphiques."
+    - "Lancement au démarrage de Windows, désactivable."
+    - "Vision produit : distribution en .exe, modèle **freemium** (statistiques de base gratuites, premium à vie à petit prix)."
+  challenges:
+    - problem: "Chaque launcher démarre le jeu à sa façon : on ne peut pas se fier à un seul exécutable."
+      solution: "Une détection centrée sur le jeu lui-même plutôt que sur le launcher. Détails techniques : TODO_SOLAL."
+    - problem: "Monétiser sans collecter de données personnelles."
+      solution: "Freemium sans compte ni serveur : données 100 % locales et premium à vie plutôt qu'un abonnement."
+  result: "En cours de développement. Dépôt privé : code disponible sur demande."
+  learnings:
+    - "Penser produit dès le départ : distribution, modèle économique, vie privée."
+    - "Un outil qui tourne en arrière-plan doit rester discret et désactivable."
+
+en:
+  title: "Grindmeter: Minecraft playtime, tracked automatically"
+  impact: "A Windows app that detects Minecraft whatever the launcher and tracks playtime, without sending any data online."
+  context: "Between the official launcher, Modrinth, AZ Launcher and modded launchers, no tool gives a unified view of time spent in Minecraft."
+  goal: "A simple tool, installed from an .exe, with reliable stats and real privacy: all data stays on the machine."
+  done:
+    - "Automatic detection of Minecraft launches, whatever the launcher (Modrinth, AZ Launcher, modded launchers)."
+    - "Playtime tracking, split by **singleplayer / multiplayer** and **time per server**."
+    - "Statistics and charts."
+    - "Start with Windows, can be turned off."
+    - "Product vision: .exe distribution, **freemium** model (basic stats free, lifetime premium at a small price)."
+  challenges:
+    - problem: "Every launcher starts the game its own way: you can't rely on a single executable."
+      solution: "Detection focused on the game itself rather than the launcher. Technical details: TODO_SOLAL."
+    - problem: "Monetising without collecting personal data."
+      solution: "Freemium with no account and no server: 100% local data, and a lifetime premium instead of a subscription."
+  result: "In development. Private repository: code available on request."
+  learnings:
+    - "Think product from the start: distribution, business model, privacy."
+    - "A background tool has to stay discreet and easy to turn off."

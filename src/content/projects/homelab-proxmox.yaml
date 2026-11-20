@@ -1,0 +1,78 @@
+# Projet 1 — Homelab Proxmox (perso, en production)
+# RÈGLE : aucune IP interne, aucun nom d'outil de téléchargement (« stack multimédia automatisée sous Docker »).
+order: 1
+category: infra
+status: production
+kind: personal
+diagram: homelab
+stack:
+  - Proxmox VE 9.2
+  - ZFS
+  - LXC non privilégiés
+  - Samba
+  - Docker
+  - Jellyfin
+  - Uptime Kuma
+  - Homepage
+  - Tailscale
+  - Pi-hole + Unbound
+  - Raspberry Pi
+
+fr:
+  title: "Homelab Proxmox : hyperviseur et NAS en un seul serveur"
+  impact: "Un seul serveur Proxmox VE héberge le stockage ZFS en miroir et tous mes services, un service par conteneur LXC non privilégié."
+  context: "Il me fallait un NAS pour centraliser les données de la maison et une plateforme pour faire tourner des services en continu. J'ai d'abord récupéré et trié du matériel serveur (Dell PowerEdge R430, Dell Precision 3440) : puissant, mais trop bruyant et trop gourmand pour un logement. J'ai finalement choisi une plateforme AMD silencieuse, le bon compromis bruit / budget."
+  goal: "Un serveur unique, silencieux et sobre, qui fait à la fois NAS et hyperviseur : services isolés, supervisés, et accessibles à distance sans exposer le réseau."
+  done:
+    - "Installé **Proxmox VE 9.2** sur une plateforme AMD silencieuse, après avoir testé puis abandonné TrueNAS."
+    - "Monté le stockage **ZFS** : un pool en miroir NVMe pour les conteneurs, un pool en miroir 2 × 4 To WD Red pour les données, plus des disques externes complémentaires."
+    - "Appliqué la règle **un service = un conteneur LXC non privilégié**, chacun avec une IP fixe réservée hors de la plage DHCP."
+    - "Déployé les services : partages Samba montés comme lecteurs réseau sous Windows, serveur multimédia Jellyfin, stack multimédia automatisée sous Docker isolée dans son propre conteneur, serveur Minecraft (Crafty)."
+    - "Mis en place la supervision avec **Uptime Kuma** et un tableau de bord **Homepage**."
+    - "Ouvert l'accès distant avec **Tailscale** : aucun port ouvert sur la box."
+    - "Déporté le DNS sur un Raspberry Pi dédié : **Pi-hole** (filtrage) + **Unbound** (résolveur récursif)."
+  # TODO_SOLAL : les difficultés 3 et 4 sont déduites de l'architecture, à confirmer ou corriger.
+  challenges:
+    - problem: "TrueNAS + un hyperviseur à côté : deux systèmes à maintenir et des ressources en double."
+      solution: "Abandon de TrueNAS. Proxmox gère directement les pools ZFS et un conteneur Samba sert les partages. Un seul hyperviseur, tout en conteneurs."
+    - problem: "Le matériel serveur récupéré (PowerEdge R430) est bien trop bruyant pour un logement."
+      solution: "Plateforme AMD silencieuse, dimensionnée pour le besoin réel plutôt que pour la puissance brute."
+    - problem: "Conteneurs non privilégiés : les UID/GID sont décalés, l'accès aux données partagées n'est pas automatique."
+      solution: "Montage des datasets ZFS dans les conteneurs avec des droits ajustés, sans repasser en conteneur privilégié."
+    - problem: "Si le DNS tourne sur l'hyperviseur, une maintenance du serveur coupe la résolution pour toute la maison."
+      solution: "DNS sur un Raspberry Pi dédié, indépendant du serveur principal."
+  result: "En production : le serveur tourne en continu et héberge l'ensemble des services de la maison. Chaque service est surveillé par Uptime Kuma et accessible depuis le tableau de bord Homepage."
+  learnings:
+    - "Simplifier plutôt qu'empiler : un hyperviseur bien maîtrisé remplace deux systèmes."
+    - "Les bonnes pratiques d'entreprise (isolation, adressage documenté, supervision) valent aussi à petite échelle."
+    - "Dimensionner selon le besoin : le bruit, la consommation et le budget comptent autant que la puissance."
+  diagramCaption: "Architecture du homelab (schéma de principe, adresses volontairement omises)."
+
+en:
+  title: "Proxmox homelab: hypervisor and NAS in a single server"
+  impact: "One Proxmox VE server runs mirrored ZFS storage and all my services, one service per unprivileged LXC container."
+  context: "I needed a NAS to centralise household data and a platform to run always-on services. I first salvaged and sorted server hardware (Dell PowerEdge R430, Dell Precision 3440): powerful, but far too loud and power-hungry for a flat. I ended up choosing a quiet AMD platform, the right balance between noise and budget."
+  goal: "A single quiet, efficient server acting as both NAS and hypervisor: isolated, monitored services, reachable remotely without exposing the network."
+  done:
+    - "Installed **Proxmox VE 9.2** on a quiet AMD platform, after testing and then dropping TrueNAS."
+    - "Built **ZFS** storage: a mirrored NVMe pool for containers, a mirrored 2 × 4 TB WD Red pool for data, plus extra external drives."
+    - "Applied a **one service = one unprivileged LXC container** rule, each with a static IP reserved outside the DHCP range."
+    - "Deployed the services: Samba shares mapped as network drives on Windows, Jellyfin media server, an automated media stack on Docker isolated in its own container, a Minecraft server (Crafty)."
+    - "Set up monitoring with **Uptime Kuma** and a **Homepage** dashboard."
+    - "Enabled remote access with **Tailscale**: no port opened on the router."
+    - "Moved DNS to a dedicated Raspberry Pi: **Pi-hole** (filtering) + **Unbound** (recursive resolver)."
+  challenges:
+    - problem: "TrueNAS plus a separate hypervisor: two systems to maintain and duplicated resources."
+      solution: "Dropped TrueNAS. Proxmox manages the ZFS pools directly and a Samba container serves the shares. One hypervisor, everything in containers."
+    - problem: "The salvaged server hardware (PowerEdge R430) is far too loud for a home."
+      solution: "A quiet AMD platform, sized for the actual need rather than raw power."
+    - problem: "Unprivileged containers shift UIDs/GIDs, so access to shared data doesn't just work."
+      solution: "ZFS datasets mounted into containers with adjusted permissions, without falling back to privileged containers."
+    - problem: "If DNS runs on the hypervisor, any server maintenance breaks name resolution for the whole house."
+      solution: "DNS on a dedicated Raspberry Pi, independent from the main server."
+  result: "In production: the server runs 24/7 and hosts all household services. Every service is monitored by Uptime Kuma and reachable from the Homepage dashboard."
+  learnings:
+    - "Simplify instead of stacking: one well-understood hypervisor replaces two systems."
+    - "Enterprise good practices (isolation, documented addressing, monitoring) pay off at small scale too."
+    - "Size for the need: noise, power draw and budget matter as much as performance."
+  diagramCaption: "Homelab architecture (high-level diagram, addresses intentionally left out)."

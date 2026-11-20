@@ -1,0 +1,67 @@
+---
+import type { Lang } from '../../i18n/ui';
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const fr = lang === 'fr';
+const T = {
+  title: fr ? 'Architecture Azure de TaskCollab' : 'TaskCollab Azure architecture',
+  desc: fr
+    ? "L'utilisateur se connecte via Microsoft Entra ID. Le navigateur charge le front-end depuis Azure Static Web Apps, qui appelle l'API hébergée sur Azure App Service. L'API lit et écrit dans Azure SQL Database et récupère ses secrets dans Azure Key Vault."
+    : 'The user signs in through Microsoft Entra ID. The browser loads the front end from Azure Static Web Apps, which calls the API hosted on Azure App Service. The API reads and writes to Azure SQL Database and fetches its secrets from Azure Key Vault.',
+  user: fr ? 'Utilisateur' : 'User',
+  browser: fr ? 'navigateur' : 'browser',
+  auth: fr ? 'authentification' : 'sign-in',
+  front: 'front-end',
+  api: 'API / back-end',
+  data: fr ? 'données' : 'data',
+  secrets: fr ? 'secrets' : 'secrets',
+};
+---
+
+<svg class="diagram min-w-[680px]" viewBox="0 0 960 300" role="img" aria-labelledby="dg-tc-t dg-tc-d">
+  <title id="dg-tc-t">{T.title}</title>
+  <desc id="dg-tc-d">{T.desc}</desc>
+
+  <rect class="box" x="20" y="118" width="140" height="60" rx="8"></rect>
+  <text class="t" x="90" y="144" text-anchor="middle">{T.user}</text>
+  <text class="t-xs" x="90" y="164" text-anchor="middle">{T.browser}</text>
+
+  <rect class="zone" x="200" y="10" width="740" height="280" rx="14"></rect>
+  <text class="t-accent" x="920" y="36" text-anchor="end">Microsoft Azure</text>
+
+  <!-- Entra ID -->
+  <rect class="box-accent" x="230" y="30" width="200" height="56" rx="8"></rect>
+  <text class="t-sm" x="330" y="54" text-anchor="middle" font-weight="600">Entra ID</text>
+  <text class="t-xs" x="330" y="73" text-anchor="middle">{T.auth}</text>
+  <path class="wire-dash" d="M90 118 V58 H226"></path>
+
+  <!-- SWA -->
+  <rect class="box" x="230" y="120" width="200" height="56" rx="8"></rect>
+  <text class="t-sm" x="330" y="144" text-anchor="middle" font-weight="600">Static Web Apps</text>
+  <text class="t-xs" x="330" y="163" text-anchor="middle">{T.front}</text>
+  <line class="wire" x1="160" y1="148" x2="224" y2="148"></line>
+  <polygon class="arrow-head" points="222,142 232,148 222,154"></polygon>
+
+  <!-- App Service -->
+  <rect class="box" x="480" y="120" width="200" height="56" rx="8"></rect>
+  <text class="t-sm" x="580" y="144" text-anchor="middle" font-weight="600">App Service</text>
+  <text class="t-xs" x="580" y="163" text-anchor="middle">{T.api}</text>
+  <line class="wire" x1="430" y1="148" x2="474" y2="148"></line>
+  <polygon class="arrow-head" points="472,142 482,148 472,154"></polygon>
+
+  <!-- SQL -->
+  <rect class="box" x="730" y="120" width="190" height="56" rx="8"></rect>
+  <text class="t-sm" x="825" y="144" text-anchor="middle" font-weight="600">Azure SQL Database</text>
+  <text class="t-xs" x="825" y="163" text-anchor="middle">{T.data}</text>
+  <line class="wire" x1="680" y1="148" x2="724" y2="148"></line>
+  <polygon class="arrow-head" points="722,142 732,148 722,154"></polygon>
+
+  <!-- Key Vault -->
+  <rect class="box-accent" x="480" y="214" width="200" height="56" rx="8"></rect>
+  <text class="t-sm" x="580" y="238" text-anchor="middle" font-weight="600">Key Vault</text>
+  <text class="t-xs" x="580" y="257" text-anchor="middle">{T.secrets}</text>
+  <line class="wire-accent" x1="580" y1="176" x2="580" y2="208"></line>
+  <polygon class="arrow-head-accent" points="574,206 580,216 586,206"></polygon>
+</svg>

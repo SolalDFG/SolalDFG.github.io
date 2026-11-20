@@ -1,0 +1,246 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import StatusBadge from '../components/StatusBadge.astro';
+import Icon from '../components/Icon.astro';
+import Homelab from '../components/diagrams/Homelab.astro';
+import Clipping from '../components/diagrams/Clipping.astro';
+import Tp3 from '../components/diagrams/Tp3.astro';
+import Kasgrunt from '../components/diagrams/Kasgrunt.astro';
+import Logs from '../components/diagrams/Logs.astro';
+import TaskCollab from '../components/diagrams/TaskCollab.astro';
+import { getProjects } from '../lib/projects';
+import { ui, routes, anchors, inline, stackLabel, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+  project: CollectionEntry<'projects'>;
+}
+const { lang, project } = Astro.props;
+const d = project.data;
+const c = d[lang];
+const t = ui[lang];
+const tp = t.project;
+
+const all = await getProjects();
+const i = all.findIndex((p) => p.id === project.id);
+const prev = i > 0 ? all[i - 1] : undefined;
+const next = i < all.length - 1 ? all[i + 1] : undefined;
+
+const diagrams = { homelab: Homelab, clipping: Clipping, tp3: Tp3, kasgrunt: Kasgrunt, logs: Logs, taskcollab: TaskCollab } as const;
+const Diagram = d.diagram ? diagrams[d.diagram] : undefined;
+
+const paths = { fr: `/projets/${project.id}/`, en: `/en/projects/${project.id}/` };
+const plain = (s: string) => s.replace(/\*\*|`/g, '');
+const sections: { id: string; title: string }[] = [
+  { id: 'contexte', title: tp.context },
+  { id: 'objectif', title: tp.goal },
+  { id: 'realisation', title: c.doneTitle ?? tp.done },
+  { id: 'stack', title: tp.stack },
+  { id: 'difficultes', title: tp.challenges },
+  { id: 'resultat', title: tp.result },
+  { id: 'retenu', title: tp.learnings },
+];
+const H = Object.fromEntries(sections.map((s, n) => [s.id, { ...s, n: String(n + 1).padStart(2, '0') }]));
+---
+
+<Base lang={lang} paths={paths} title={`${plain(c.title)} · Solal Diedhiou`} description={plain(c.impact)}>
+  <article>
+    <header class="border-b border-line">
+      <div class="container-page max-w-4xl pt-8 pb-10 sm:pt-12 sm:pb-12">
+        <a href={`${routes.home(lang)}#${anchors[lang].projects}`} class="inline-flex items-center gap-1.5 rounded text-sm text-muted no-underline hover:text-accent">
+          <Icon name="arrow-left" class="h-4 w-4" />
+          {tp.back}
+        </a>
+        <div class="mt-6 flex flex-wrap items-center gap-x-3 gap-y-2">
+          <StatusBadge status={d.status} lang={lang} />
+          <span class="font-mono text-xs text-dim">{t.categories[d.category]}</span>
+          <span class="font-mono text-xs text-dim" aria-hidden="true">·</span>
+          <span class="font-mono text-xs text-dim">{t.kind[d.kind]}</span>
+        </div>
+        <h1 class="mt-3 text-3xl leading-tight font-bold tracking-tight text-text sm:text-4xl">{c.title}</h1>
+        <p class="mt-4 max-w-3xl text-lg text-muted" set:html={inline(c.impact)} />
+      </div>
+    </header>
+
+    <div class="container-page max-w-4xl py-10 sm:py-12">
+      <nav aria-label={lang === 'fr' ? 'Sommaire du projet' : 'Project contents'} class="mb-10 hidden sm:block">
+        <ol class="flex flex-wrap gap-2 font-mono text-xs">
+          {
+            sections.map((s, n) => (
+              <li>
+                <a href={`#${s.id}`} class="inline-flex rounded-md border border-line px-2.5 py-1.5 text-muted no-underline hover:border-accent hover:text-accent">
+                  <span class="mr-1.5 text-dim">{String(n + 1).padStart(2, '0')}</span>
+                  {s.title}
+                </a>
+              </li>
+            ))
+          }
+        </ol>
+      </nav>
+
+      <div class="flex flex-col gap-12">
+        <section aria-labelledby="contexte">
+          <h2 id="contexte" class="sec-title"><span class="sec-num">{H.contexte.n}</span>{H.contexte.title}</h2>
+          <p class="prose-p mt-3" set:html={inline(c.context)} />
+        </section>
+
+        <section aria-labelledby="objectif">
+          <h2 id="objectif" class="sec-title"><span class="sec-num">{H.objectif.n}</span>{H.objectif.title}</h2>
+          <p class="prose-p mt-3" set:html={inline(c.goal)} />
+        </section>
+
+        <section aria-labelledby="realisation">
+          <h2 id="realisation" class="sec-title"><span class="sec-num">{H.realisation.n}</span>{H.realisation.title}</h2>
+          <ul class="mt-4 space-y-2.5">
+            {
+              c.done.map((item) => (
+                <li class="flex gap-3 text-muted">
+                  <span class="mt-[0.2rem] text-accent" aria-hidden="true">
+                    <Icon name="check" class="h-4 w-4" />
+                  </span>
+                  <span set:html={inline(item)} />
+                </li>
+              ))
+            }
+          </ul>
+          {c.doneNote && <p class="mt-4 rounded-lg border border-line bg-surface px-4 py-3 text-sm text-muted" set:html={inline(c.doneNote)} />}
+
+          {
+            Diagram && (
+              <figure class="mt-8">
+                <div class="card overflow-x-auto p-3 sm:p-5" tabindex="0" role="region" aria-label={tp.diagram}>
+                  <Diagram lang={lang} />
+                </div>
+                <figcaption class="mt-2 font-mono text-xs text-dim">
+                  {tp.diagram}
+                  {c.diagramCaption ? ` · ${c.diagramCaption}` : ''}
+                </figcaption>
+              </figure>
+            )
+          }
+        </section>
+
+        <section aria-labelledby="stack">
+          <h2 id="stack" class="sec-title"><span class="sec-num">{H.stack.n}</span>{H.stack.title}</h2>
+          <ul class="mt-4 flex flex-wrap gap-2">
+            {d.stack.map((s) => <li class="badge text-[0.8125rem]" set:html={inline(stackLabel(s, lang))} />)}
+          </ul>
+          {
+            d.links.length > 0 && (
+              <div class="mt-5">
+                <p class="font-mono text-xs text-dim">{tp.links}</p>
+                <ul class="mt-2 flex flex-wrap gap-x-5 gap-y-2">
+                  {d.links.map((l) => (
+                    <li>
+                      <a href={l.href} target="_blank" rel="noopener" class="link inline-flex items-center gap-1.5 text-sm">
+                        {l.label}
+                        <Icon name="external" class="h-3.5 w-3.5" />
+                        <span class="sr-only">{lang === 'fr' ? '(nouvel onglet)' : '(new tab)'}</span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )
+          }
+        </section>
+
+        <section aria-labelledby="difficultes">
+          <h2 id="difficultes" class="sec-title"><span class="sec-num">{H.difficultes.n}</span>{H.difficultes.title}</h2>
+          <ul class="mt-4 grid gap-3">
+            {
+              c.challenges.map((ch) => (
+                <li class="card grid gap-3 p-4 sm:grid-cols-2 sm:gap-6 sm:p-5">
+                  <div>
+                    <p class="font-mono text-xs text-dim">{tp.problem}</p>
+                    <p class="mt-1 text-[0.9375rem] text-muted" set:html={inline(ch.problem)} />
+                  </div>
+                  <div class="border-t border-line pt-3 sm:border-t-0 sm:border-l sm:pt-0 sm:pl-6">
+                    <p class="font-mono text-xs text-accent">{tp.solution}</p>
+                    <p class="mt-1 text-[0.9375rem] text-text" set:html={inline(ch.solution)} />
+                  </div>
+                </li>
+              ))
+            }
+          </ul>
+          {
+            c.snippet && (
+              <figure class="mt-6">
+                <pre class="overflow-x-auto rounded-xl border border-line bg-[#070a0e] p-4 font-mono text-[0.8125rem] leading-relaxed text-text" tabindex="0"><code class="border-0 bg-transparent p-0 text-text">{c.snippet.code.trimEnd()}</code></pre>
+                <figcaption class="mt-2 font-mono text-xs text-dim">{c.snippet.caption}</figcaption>
+              </figure>
+            )
+          }
+        </section>
+
+        <section aria-labelledby="resultat">
+          <h2 id="resultat" class="sec-title"><span class="sec-num">{H.resultat.n}</span>{H.resultat.title}</h2>
+          <p class="mt-3 max-w-[68ch] border-l-2 border-accent pl-4 text-text" set:html={inline(c.result)} />
+        </section>
+
+        <section aria-labelledby="retenu">
+          <h2 id="retenu" class="sec-title"><span class="sec-num">{H.retenu.n}</span>{H.retenu.title}</h2>
+          <ul class="mt-4 space-y-2.5">
+            {
+              c.learnings.map((l) => (
+                <li class="flex gap-3 text-muted">
+                  <span class="font-mono text-accent" aria-hidden="true">
+                    →
+                  </span>
+                  <span set:html={inline(l)} />
+                </li>
+              ))
+            }
+          </ul>
+        </section>
+      </div>
+
+      <nav aria-label={lang === 'fr' ? 'Autres projets' : 'Other projects'} class="mt-16 grid gap-3 border-t border-line pt-8 sm:grid-cols-2">
+        {
+          prev ? (
+            <a href={routes.project(lang, prev.id)} class="card group block p-4 no-underline hover:border-accent">
+              <span class="flex items-center gap-1.5 font-mono text-xs text-dim">
+                <Icon name="arrow-left" class="h-3.5 w-3.5" />
+                {tp.prev}
+              </span>
+              <span class="mt-1 block font-medium text-text group-hover:text-accent-strong">{prev.data[lang].title}</span>
+            </a>
+          ) : (
+            <span class="hidden sm:block" />
+          )
+        }
+        {
+          next && (
+            <a href={routes.project(lang, next.id)} class="card group block p-4 text-right no-underline hover:border-accent">
+              <span class="flex items-center justify-end gap-1.5 font-mono text-xs text-dim">
+                {tp.next}
+                <Icon name="arrow-right" class="h-3.5 w-3.5" />
+              </span>
+              <span class="mt-1 block font-medium text-text group-hover:text-accent-strong">{next.data[lang].title}</span>
+            </a>
+          )
+        }
+      </nav>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .sec-title {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    font-size: 1.375rem;
+    line-height: 1.3;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--color-text);
+  }
+  .sec-num {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--color-accent);
+  }
+</style>

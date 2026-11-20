@@ -1,0 +1,100 @@
+---
+import '../styles/global.css';
+import interUrl from '../assets/fonts/inter-latin-var.woff2?url';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import profile from '../data/profile.json';
+import { ui, url, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+  title?: string;
+  description?: string;
+  /** Chemins (sans base) de la page dans chaque langue, pour hreflang et le toggle */
+  paths: { fr: string; en: string };
+  /** Pas d'indexation (404) */
+  noindex?: boolean;
+}
+
+const { lang, title, description, paths, noindex = false } = Astro.props;
+const t = ui[lang];
+const pageTitle = title ?? t.metaTitle;
+const desc = description ?? t.metaDescription;
+const site = Astro.site!;
+const abs = (p: string) => new URL(url(p), site).href;
+const canonical = abs(paths[lang]);
+const ogImage = abs(lang === 'fr' ? '/og-fr.png' : '/og-en.png');
+
+const sameAs = [profile.contact.github, profile.contact.linkedin].filter((v) => v && !v.includes('TODO_SOLAL'));
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: profile.name,
+  url: abs(lang === 'fr' ? '/' : '/en/'),
+  jobTitle: profile.hero[lang].role,
+  description: desc,
+  image: ogImage,
+  address: { '@type': 'PostalAddress', addressRegion: 'Île-de-France', addressCountry: 'FR' },
+  alumniOf: { '@type': 'CollegeOrUniversity', name: 'ESGI' },
+  knowsLanguage: ['fr', 'en'],
+  knowsAbout: ['Linux', 'Cisco networking', 'Proxmox VE', 'Docker', 'Windows', 'Active Directory', 'IT support'],
+  sameAs,
+};
+---
+
+<!doctype html>
+<html lang={t.htmlLang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={desc} />
+    <meta name="author" content={profile.name} />
+    <meta name="theme-color" content="#0b1016" />
+    <meta name="color-scheme" content="dark" />
+    {noindex && <meta name="robots" content="noindex" />}
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="fr" href={abs(paths.fr)} />
+    <link rel="alternate" hreflang="en" href={abs(paths.en)} />
+    <link rel="alternate" hreflang="x-default" href={abs(paths.fr)} />
+
+    <link rel="preload" href={interUrl} as="font" type="font/woff2" crossorigin />
+    <link rel="icon" href={url('/favicon.svg')} type="image/svg+xml" />
+    <link rel="icon" href={url('/favicon.ico')} sizes="32x32" />
+    <link rel="apple-touch-icon" href={url('/apple-touch-icon.png')} />
+    <link rel="manifest" href={url('/site.webmanifest')} />
+
+    <meta property="og:type" content="profile" />
+    <meta property="og:site_name" content={profile.name} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={desc} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={`${profile.name} · ${profile.hero[lang].role}`} />
+    <meta property="og:locale" content={t.ogLocale} />
+    <meta property="og:locale:alternate" content={lang === 'fr' ? ui.en.ogLocale : ui.fr.ogLocale} />
+    <meta property="profile:first_name" content="Solal" />
+    <meta property="profile:last_name" content="Diedhiou" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={desc} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body class="min-h-screen flex flex-col">
+    <a
+      href="#contenu"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded-md focus:bg-accent focus:px-4 focus:py-2 focus:font-semibold focus:text-accent-ink"
+      >{t.skip}</a
+    >
+    <Header lang={lang} paths={paths} />
+    <main id="contenu" class="flex-1" tabindex="-1">
+      <slot />
+    </main>
+    <Footer lang={lang} />
+    <script is:inline defer src={url('/js/filter.js')}></script>
+  </body>
+</html>

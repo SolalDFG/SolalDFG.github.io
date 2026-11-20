@@ -1,0 +1,90 @@
+---
+import profile from '../data/profile.json';
+import { ui, anchors, url, isTodo, type Lang } from '../i18n/ui';
+import SectionHeading from './SectionHeading.astro';
+import Icon from './Icon.astro';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = ui[lang];
+const tc = t.contact;
+const s = profile.seeking[lang];
+const c = profile.contact;
+
+type Row = { icon: 'mail' | 'phone' | 'linkedin' | 'github' | 'file' | 'pin'; label: string; value: string; href?: string; external?: boolean; download?: boolean };
+const rows: Row[] = [
+  { icon: 'mail', label: tc.email, value: c.email, href: isTodo(c.email) ? undefined : `mailto:${c.email}` },
+  { icon: 'phone', label: tc.phone, value: c.phone, href: isTodo(c.phone) ? undefined : `tel:${c.phone.replace(/[^+\d]/g, '')}` },
+  { icon: 'linkedin', label: tc.linkedin, value: isTodo(c.linkedin) ? c.linkedin : c.linkedin.replace(/^https?:\/\/(www\.)?/, ''), href: isTodo(c.linkedin) ? undefined : c.linkedin, external: true },
+  { icon: 'github', label: tc.github, value: `github.com/${c.githubHandle}`, href: c.github, external: true },
+  { icon: 'file', label: tc.cv, value: 'cv.pdf', href: url(profile.cv), download: true },
+  { icon: 'pin', label: tc.location, value: profile.location },
+];
+---
+
+<section class="container-page py-16 sm:py-20">
+  <SectionHeading id={anchors[lang].contact} kicker={t.sections.contact.kicker} title={t.sections.contact.title} intro={tc.lead} />
+
+  <div class="grid gap-4 lg:grid-cols-2">
+    <div class="card p-5 sm:p-6">
+      <h3 class="font-mono text-sm font-semibold text-accent">{tc.seeking}</h3>
+      <ul class="mt-4 space-y-2.5">
+        {
+          s.roles.map((r) => (
+            <li class="flex gap-2.5 text-text">
+              <span class="font-mono text-accent" aria-hidden="true">
+                ▸
+              </span>
+              {r}
+            </li>
+          ))
+        }
+      </ul>
+      <dl class="mt-5 grid grid-cols-[auto_1fr] gap-x-4 gap-y-2 text-sm">
+        <dt class="font-mono text-dim">{lang === 'fr' ? 'contrat' : 'contract'}</dt>
+        <dd class="text-muted">{s.contract}</dd>
+        <dt class="font-mono text-dim">{lang === 'fr' ? 'zone' : 'area'}</dt>
+        <dd class="text-muted">{s.area}</dd>
+        <dt class="font-mono text-dim">{lang === 'fr' ? 'dispo' : 'start'}</dt>
+        <dd class="flex items-center gap-2 text-accent"><span class="pulse-dot" aria-hidden="true"></span>{s.availability}</dd>
+      </dl>
+      <p class="mt-5 border-t border-line pt-4 text-sm text-muted">{s.longTerm}</p>
+    </div>
+
+    <div class="card p-2 sm:p-3">
+      <ul class="divide-y divide-line">
+        {
+          rows.map((r) => (
+            <li class="flex items-center gap-3 px-3 py-3">
+              <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-line bg-surface-2 text-accent">
+                <Icon name={r.icon} class="h-[18px] w-[18px]" />
+              </span>
+              <div class="min-w-0">
+                <p class="font-mono text-xs text-dim">{r.label}</p>
+                {r.href ? (
+                  <a
+                    href={r.href}
+                    class="link break-all"
+                    {...(r.external ? { target: '_blank', rel: 'noopener me' } : {})}
+                    {...(r.download ? { download: 'CV-Solal-Diedhiou.pdf' } : {})}
+                  >
+                    {r.value}
+                    {r.external && <span class="sr-only">{lang === 'fr' ? ' (nouvel onglet)' : ' (new tab)'}</span>}
+                  </a>
+                ) : isTodo(r.value) ? (
+                  <p>
+                    <mark class="todo">{r.value}</mark>
+                  </p>
+                ) : (
+                  <p class="text-text">{r.value}</p>
+                )}
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>

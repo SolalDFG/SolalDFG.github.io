@@ -1,0 +1,63 @@
+---
+import experience from '../data/experience.json';
+import { ui, anchors, inline, type Lang } from '../i18n/ui';
+import SectionHeading from './SectionHeading.astro';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = ui[lang];
+---
+
+<section class="border-y border-line bg-surface/40">
+  <div class="container-page py-16 sm:py-20">
+    <SectionHeading id={anchors[lang].experience} kicker={t.sections.experience.kicker} title={t.sections.experience.title} />
+
+    {
+      experience.items.map((x) => {
+        const c = x[lang];
+        const tags = lang === 'fr' ? x.tags : x.tagsEn;
+        return (
+          <article class="card p-5 sm:p-8" aria-labelledby={`xp-${x.id}`}>
+            <div class="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
+              <div>
+                <h3 id={`xp-${x.id}`} class="text-xl font-semibold text-text">
+                  {c.title}
+                </h3>
+                <p class="mt-1 text-muted">
+                  <span class="font-medium text-text">{x.org}</span> · {x.place}
+                </p>
+              </div>
+              <div class="flex flex-wrap items-center gap-2 md:flex-col md:items-end">
+                <span class="rounded-full border border-accent/50 bg-accent-soft px-2.5 py-0.5 font-mono text-xs text-accent">{c.type}</span>
+                <span class="font-mono text-sm text-muted">{c.period}</span>
+              </div>
+            </div>
+
+            <p class="mt-5 border-l-2 border-accent pl-3 text-text">{c.summary}</p>
+
+            <ul class="mt-5 grid gap-x-8 gap-y-2.5 lg:grid-cols-2">
+              {c.missions.map((m) => (
+                <li class="flex gap-2.5 text-[0.9375rem] leading-relaxed text-muted">
+                  <span class="mt-0.5 font-mono text-accent" aria-hidden="true">
+                    →
+                  </span>
+                  <span set:html={inline(m)} />
+                </li>
+              ))}
+            </ul>
+
+            <p class="mt-5 text-sm text-dim" set:html={inline(c.figures)} />
+
+            <ul class="mt-5 flex flex-wrap gap-1.5" aria-label={lang === 'fr' ? 'Environnement' : 'Environment'}>
+              {tags.map((tag) => (
+                <li class="badge">{tag}</li>
+              ))}
+            </ul>
+          </article>
+        );
+      })
+    }
+  </div>
+</section>

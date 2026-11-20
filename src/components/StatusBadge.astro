@@ -1,0 +1,20 @@
+---
+import { ui, type Lang } from '../i18n/ui';
+interface Props {
+  status: 'production' | 'in-progress' | 'done';
+  lang: Lang;
+}
+const { status, lang } = Astro.props;
+const label = ui[lang].status[status];
+// Une seule couleur d'accent : la différence passe par la forme du marqueur et le remplissage
+const styles = {
+  production: 'border-accent bg-accent-soft text-accent',
+  'in-progress': 'border-accent/50 text-accent-strong',
+  done: 'border-line-strong text-muted',
+} as const;
+const marker = { production: '●', 'in-progress': '◐', done: '✓' } as const;
+---
+
+<span class={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 font-mono text-[0.75rem] font-medium whitespace-nowrap ${styles[status]}`}>
+  <span aria-hidden="true">{marker[status]}</span>{label}
+</span>

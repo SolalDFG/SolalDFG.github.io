@@ -1,0 +1,96 @@
+---
+/* Schéma de principe (vue fonctionnelle), volontairement simplifié. */
+import type { Lang } from '../../i18n/ui';
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const fr = lang === 'fr';
+const T = {
+  title: fr ? 'Infrastructure proposée pour Kasgrunt (vue fonctionnelle)' : 'Proposed infrastructure for Kasgrunt (functional view)',
+  desc: fr
+    ? "Internet arrive sur les pare-feux du site Kasgrunt. Un accès distant est relié par un VPN IPSec. Derrière les pare-feux, le cœur de réseau segmenté en VLAN, maquetté sous EVE-NG, dessert trois blocs : virtualisation (cluster haute disponibilité, stockage SAN, sauvegardes), services (Active Directory, messagerie, partage de fichiers, téléphonie IP) et exploitation (supervision, métrologie, SIEM / syslog). Le projet est piloté avec WBS, RBS, RACI, PBS, PERT et Gantt."
+    : 'Internet reaches the firewalls of the Kasgrunt site. A remote access point is linked through an IPSec VPN. Behind the firewalls, the VLAN-segmented core network, prototyped on EVE-NG, serves three blocks: virtualisation (high-availability cluster, SAN storage, backups), services (Active Directory, email, file sharing, IP telephony) and operations (monitoring, metrics, SIEM / syslog). The project is managed with WBS, RBS, RACI, PBS, PERT and Gantt.',
+  site: fr ? 'Site Kasgrunt (client fictif)' : 'Kasgrunt site (fictional client)',
+  remote: fr ? 'Site / accès distant' : 'Remote site / access',
+  fw: fr ? 'Pare-feux' : 'Firewalls',
+  core: fr ? 'Cœur de réseau · VLAN' : 'Core network · VLANs',
+  eve: fr ? 'maquetté sous EVE-NG' : 'prototyped on EVE-NG',
+  virt: 'Virtualisation',
+  svc: 'Services',
+  ops: fr ? 'Exploitation' : 'Operations',
+  ha: fr ? 'Cluster HA' : 'HA cluster',
+  san: fr ? 'Stockage SAN' : 'SAN storage',
+  bkp: fr ? 'Sauvegardes' : 'Backups',
+  ad: 'Active Directory',
+  mail: fr ? 'Messagerie' : 'Email',
+  files: fr ? 'Partage de fichiers' : 'File sharing',
+  voip: fr ? 'Téléphonie IP' : 'IP telephony',
+  sup: 'Supervision',
+  metro: fr ? 'Métrologie' : 'Metrics',
+  siem: 'SIEM / syslog',
+  pm: fr ? 'Pilotage : WBS · RBS · RACI · PBS · PERT · Gantt' : 'Management: WBS · RBS · RACI · PBS · PERT · Gantt',
+};
+const cols = [
+  { x: 44, title: T.virt, items: [T.ha, T.san, T.bkp] },
+  { x: 254, title: T.svc, items: [T.ad, T.mail, T.files, T.voip] },
+  { x: 464, title: T.ops, items: [T.sup, T.metro, T.siem] },
+];
+---
+
+<svg class="diagram min-w-[680px]" viewBox="0 0 960 520" role="img" aria-labelledby="dg-kas-t dg-kas-d">
+  <title id="dg-kas-t">{T.title}</title>
+  <desc id="dg-kas-d">{T.desc}</desc>
+
+  <!-- Internet + accès distant -->
+  <rect class="box" x="740" y="24" width="200" height="46" rx="23"></rect>
+  <text class="t" x="840" y="52" text-anchor="middle">Internet</text>
+  <rect class="box" x="740" y="190" width="200" height="64" rx="8"></rect>
+  <text class="t" x="840" y="218" text-anchor="middle">{T.remote}</text>
+  <text class="t-xs" x="840" y="238" text-anchor="middle">VPN IPSec</text>
+  <line class="wire" x1="840" y1="70" x2="840" y2="190"></line>
+
+  <!-- Site principal -->
+  <rect class="zone" x="20" y="14" width="680" height="490" rx="14"></rect>
+  <text class="t-accent" x="40" y="42">{T.site}</text>
+
+  <!-- Pare-feux -->
+  <rect class="box-accent" x="250" y="60" width="200" height="50" rx="8"></rect>
+  <text class="t" x="350" y="91" text-anchor="middle">{T.fw}</text>
+  <path class="wire" d="M450 85 H740 V70"></path>
+  <!-- Tunnel IPSec -->
+  <path class="wire-dash" d="M450 100 H600 V222 H740"></path>
+  <text class="t-accent" x="612" y="166">IPSec</text>
+
+  <!-- Cœur de réseau -->
+  <line class="wire" x1="350" y1="110" x2="350" y2="150"></line>
+  <rect class="box" x="210" y="150" width="280" height="60" rx="8"></rect>
+  <text class="t" x="350" y="176" text-anchor="middle">{T.core}</text>
+  <text class="t-xs" x="350" y="196" text-anchor="middle">{T.eve}</text>
+
+  <line class="wire" x1="350" y1="210" x2="350" y2="240"></line>
+  <line class="wire" x1="139" y1="240" x2="559" y2="240"></line>
+
+  {
+    cols.map((c) => (
+      <g>
+        <line class="wire" x1={c.x + 95} y1="240" x2={c.x + 95} y2="262" />
+        <rect class="box" x={c.x} y="262" width="190" height={c.items.length * 36 + 52} rx="8" />
+        <text class="t-accent" x={c.x + 16} y="288">
+          {c.title}
+        </text>
+        {c.items.map((it, i) => (
+          <g>
+            <rect class="box" x={c.x + 12} y={300 + i * 36} width="166" height="28" rx="5" />
+            <text class="t-sm" x={c.x + 24} y={319 + i * 36}>
+              {it}
+            </text>
+          </g>
+        ))}
+      </g>
+    ))
+  }
+
+  <line class="wire" x1="40" y1="468" x2="680" y2="468" stroke-dasharray="2 4"></line>
+  <text class="t-xs" x="40" y="490">{T.pm}</text>
+</svg>

@@ -1,0 +1,79 @@
+# Projet 2 — Pipeline de clipping « Zone du clip » (perso, en production)
+# TODO_SOLAL : statistiques réelles (vues, abonnés, nombre de clips publiés) — ne rien inventer.
+# TODO_SOLAL : langages / outils du pipeline (ex. langage du bot, outil de rendu, transcription) à ajouter dans `stack`.
+order: 2
+category: dev
+status: production
+kind: personal
+diagram: clipping
+stack:
+  - PostgreSQL
+  - Bot Discord
+  - Rendu GPU
+  - Uptime Kuma
+  - Homepage
+  - TikTok · YouTube Shorts · Instagram
+links:
+  - label: "TikTok @zone.du.clip"
+    href: "https://www.tiktok.com/@zone.du.clip"
+  - label: "Instagram zoneduclip"
+    href: "https://www.instagram.com/zoneduclip/"
+  - label: "YouTube @ZoneDuClip"
+    href: "https://www.youtube.com/@ZoneDuClip"
+
+fr:
+  title: "Zone du clip : pipeline de clipping automatisé"
+  impact: "Des streams Twitch, Kick et YouTube transformés automatiquement en clips verticaux sous-titrés, validés par un humain puis publiés sur 3 plateformes."
+  context: "Les longs streams francophones autour de GTA 6 contiennent des moments forts que peu de gens regardent en entier. Les découper, les recadrer en vertical et les sous-titrer à la main prend des heures."
+  goal: "Automatiser toute la chaîne, de la récupération du stream à la publication, en gardant une validation humaine avant chaque mise en ligne et en créditant systématiquement le streamer."
+  done:
+    - "Conçu une architecture distribuée : un **PC avec GPU** sert de worker de rendu, le **NAS** porte le stockage et les services."
+    - "Centralisé l'état du pipeline dans une base **PostgreSQL** (clips, statuts, publications, vues)."
+    - "Automatisé le rendu au format **9:16** : fond flouté, bandeau, sous-titres karaoké, crédit du streamer sur chaque clip."
+    - "Mis en place une **validation humaine via un bot Discord** : chaque clip est approuvé ou rejeté avant publication."
+    - "Publié sur **TikTok, YouTube Shorts et Instagram**, avec un suivi automatique des vues."
+    - "Supervisé l'ensemble avec **Uptime Kuma** et une tuile **Homepage**."
+  # TODO_SOLAL : difficultés déduites de l'architecture, à confirmer ou enrichir avec de vrais problèmes rencontrés.
+  challenges:
+    - problem: "Le rendu vidéo est lourd : sur le NAS, il serait lent et pénaliserait les autres services."
+      solution: "Rendu déporté sur un PC avec GPU ; le NAS garde le stockage, la base et les services."
+    - problem: "Publier sans contrôle, c'est risquer un mauvais découpage ou un contenu inadapté en ligne."
+      solution: "Aucun clip ne part sans validation humaine via le bot Discord."
+    - problem: "Réutiliser le contenu d'autres créateurs impose de respecter leur travail."
+      solution: "Crédit du streamer incrusté systématiquement dans chaque clip."
+    - problem: "Plusieurs machines et services : une panne peut passer inaperçue."
+      solution: "Supervision Uptime Kuma et tuile Homepage pour voir l'état du pipeline d'un coup d'œil."
+  result: "En production : la chaîne tourne et publie sur les trois comptes. Statistiques d'audience : TODO_SOLAL."
+  learnings:
+    - "Séparer calcul et stockage : chaque machine fait ce qu'elle fait de mieux."
+    - "Automatiser n'empêche pas de garder un humain dans la boucle là où l'erreur coûte cher."
+    - "Superviser dès le premier jour, pas après la première panne."
+  diagramCaption: "Flux du pipeline, de la source à la publication."
+
+en:
+  title: "Zone du clip: automated clipping pipeline"
+  impact: "Twitch, Kick and YouTube streams automatically turned into subtitled vertical clips, approved by a human, then published on 3 platforms."
+  context: "Long French-language streams about GTA 6 contain highlights few people watch in full. Cutting them, reframing them vertically and subtitling them by hand takes hours."
+  goal: "Automate the whole chain, from fetching the stream to publishing, while keeping a human approval step before anything goes live and always crediting the streamer."
+  done:
+    - "Designed a distributed architecture: a **GPU-equipped PC** acts as the render worker, the **NAS** handles storage and services."
+    - "Centralised pipeline state in a **PostgreSQL** database (clips, statuses, publications, views)."
+    - "Automated **9:16** rendering: blurred background, banner, karaoke-style subtitles, streamer credit on every clip."
+    - "Built a **human approval step through a Discord bot**: every clip is approved or rejected before publishing."
+    - "Published to **TikTok, YouTube Shorts and Instagram**, with automatic view tracking."
+    - "Monitored everything with **Uptime Kuma** and a **Homepage** tile."
+  challenges:
+    - problem: "Video rendering is heavy: on the NAS it would be slow and starve the other services."
+      solution: "Rendering offloaded to a GPU PC; the NAS keeps storage, database and services."
+    - problem: "Publishing without review risks a bad cut or unsuitable content going live."
+      solution: "No clip goes out without human approval through the Discord bot."
+    - problem: "Reusing other creators' content means respecting their work."
+      solution: "The streamer's credit is burned into every single clip."
+    - problem: "Several machines and services: a failure can go unnoticed."
+      solution: "Uptime Kuma monitoring and a Homepage tile show pipeline health at a glance."
+  result: "In production: the pipeline runs and publishes to all three accounts. Audience figures: TODO_SOLAL."
+  learnings:
+    - "Split compute and storage: each machine does what it does best."
+    - "Automation doesn't mean removing the human where mistakes are costly."
+    - "Monitor from day one, not after the first outage."
+  diagramCaption: "Pipeline flow, from source to publication."

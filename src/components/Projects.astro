@@ -1,0 +1,72 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { ui, anchors, type Lang } from '../i18n/ui';
+import SectionHeading from './SectionHeading.astro';
+import ProjectCard from './ProjectCard.astro';
+
+interface Props {
+  lang: Lang;
+  projects: CollectionEntry<'projects'>[];
+}
+const { lang, projects } = Astro.props;
+const t = ui[lang];
+const cats = ['infra', 'network', 'dev'] as const;
+const counts = Object.fromEntries(cats.map((c) => [c, projects.filter((p) => p.data.category === c).length]));
+const live = lang === 'fr' ? { one: 'projet affiché', many: 'projets affichés' } : { one: 'project shown', many: 'projects shown' };
+---
+
+<section class="container-page scroll-mt-20 py-16 sm:py-20" aria-labelledby={anchors[lang].projects}>
+  <SectionHeading id={anchors[lang].projects} kicker={t.sections.projects.kicker} title={t.sections.projects.title} intro={t.sections.projects.intro} />
+
+  <!-- Filtre : masqué sans JavaScript (toutes les cartes restent visibles) -->
+  <div data-filter hidden class="mb-6" data-live-one={live.one} data-live-many={live.many}>
+    <div role="group" aria-label={t.filters.label} class="flex flex-wrap gap-2">
+      <button type="button" data-cat="all" aria-pressed="true" class="filter-btn">
+        {t.filters.all} <span class="text-dim">{projects.length}</span>
+      </button>
+      {
+        cats.map((c) => (
+          <button type="button" data-cat={c} aria-pressed="false" class="filter-btn">
+            {t.categories[c]} <span class="text-dim">{counts[c]}</span>
+          </button>
+        ))
+      }
+    </div>
+    <p class="sr-only" aria-live="polite" data-filter-status></p>
+  </div>
+
+  <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5" data-project-list>
+    {projects.map((p) => <ProjectCard project={p} lang={lang} />)}
+  </ul>
+</section>
+
+
+<style>
+  .filter-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    min-height: 2.5rem;
+    padding: 0.4rem 0.85rem;
+    border-radius: 9999px;
+    border: 1px solid var(--color-line-strong);
+    background: var(--color-surface);
+    color: var(--color-muted);
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition:
+      border-color 0.15s,
+      color 0.15s,
+      background-color 0.15s;
+  }
+  .filter-btn:hover {
+    border-color: var(--color-accent);
+    color: var(--color-text);
+  }
+  .filter-btn[aria-pressed='true'] {
+    background: var(--color-accent-soft);
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+  }
+</style>

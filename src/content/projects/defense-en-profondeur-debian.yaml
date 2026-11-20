@@ -1,0 +1,81 @@
+# Projet 6 — Défense en profondeur sous Debian (ESGI, module Open Source & Sécurité)
+# TODO_SOLAL : détailler les mesures précises du TP1 (SSH) et du TP2 (/tmp) si tu veux être plus concret.
+order: 6
+category: network
+status: done
+kind: school
+diagram: tp3
+stack:
+  - Debian
+  - OpenSSH
+  - fstab / options de montage
+  - iptables
+  - NAT
+  - traceroute
+  - tcpdump
+
+fr:
+  title: "Défense en profondeur sous Debian"
+  impact: "Durcissement SSH, sécurisation de /tmp et réseau segmenté routé avec iptables : trois TP validés par des tests, y compris après redémarrage."
+  context: "Module Open Source & Sécurité à l'ESGI : appliquer la défense en profondeur sur des systèmes Debian, couche après couche, du service jusqu'au réseau."
+  goal: "Réduire la surface d'attaque de chaque machine, puis segmenter le réseau, en prouvant chaque mesure par un test."
+  done:
+    - "**TP1** : durcissement de la configuration du serveur SSH."
+    - "**TP2** : sécurisation de `/tmp` par des options de montage restrictives."
+    - "Tests de chaque mesure et **persistance validée après redémarrage**."
+    - "**TP3** : infrastructure segmentée de **4 VM** (2 routeurs, 2 hôtes) sur **3 réseaux virtuels** (WAN + 2 LAN), routage et NAT avec iptables."
+    - "Exclusion du trafic inter-LAN du NAT : règle `RETURN` placée **avant** `MASQUERADE` dans la chaîne `POSTROUTING`."
+    - "Validation au **traceroute** (3 sauts, vraies adresses visibles) et au **tcpdump** dans les deux sens."
+  challenges:
+    - problem: "Avec un `MASQUERADE` global, le trafic d'un LAN vers l'autre était lui aussi traduit : l'hôte de destination voyait l'adresse du routeur, pas celle de l'émetteur."
+      solution: "Une règle `RETURN` pour le trafic à destination de l'autre LAN, insérée avant `MASQUERADE` : ce trafic quitte la chaîne nat sans traduction. Seul le trafic vers le WAN est masqué."
+    - problem: "Prouver que le routage est réellement « pur », sans se contenter d'un ping qui passe."
+      solution: "Traceroute en 3 sauts affichant les vraies adresses, et captures tcpdump sur les deux LAN pour vérifier les adresses source dans chaque sens."
+    - problem: "Une mesure de sécurité qui disparaît au redémarrage ne protège rien."
+      solution: "Configuration rendue persistante et revalidée systématiquement après reboot."
+  result: "Terminé. Les trois TP sont validés : mesures testées et persistantes après redémarrage, routage inter-LAN sans NAT démontré au traceroute et au tcpdump."
+  learnings:
+    - "Dans iptables, l'ordre des règles fait le comportement."
+    - "Prouver avec des outils (traceroute, tcpdump) plutôt que supposer."
+    - "La défense en profondeur, c'est plusieurs couches indépendantes : si l'une cède, les autres tiennent."
+  diagramCaption: "Topologie du TP3 : deux LAN reliés par deux routeurs Debian à travers un WAN."
+  snippet:
+    caption: "Principe des règles NAT sur un routeur (adresses remplacées par des variables)"
+    code: |
+      # 1. Trafic vers l'autre LAN : on sort de la chaîne nat sans traduction
+      iptables -t nat -A POSTROUTING -s "$LAN_LOCAL" -d "$LAN_DISTANT" -j RETURN
+      # 2. Tout le reste part vers le WAN masqué derrière l'adresse du routeur
+      iptables -t nat -A POSTROUTING -o "$IF_WAN" -j MASQUERADE
+
+en:
+  title: "Defence in depth on Debian"
+  impact: "SSH hardening, a locked-down /tmp and a segmented network routed with iptables: three labs validated by tests, including after reboot."
+  context: "Open Source & Security course at ESGI: apply defence in depth to Debian systems, layer by layer, from services to the network."
+  goal: "Shrink each machine's attack surface, then segment the network, proving every measure with a test."
+  done:
+    - "**Lab 1**: hardened the SSH server configuration."
+    - "**Lab 2**: secured `/tmp` with restrictive mount options."
+    - "Tested every measure and **validated persistence after reboot**."
+    - "**Lab 3**: segmented infrastructure of **4 VMs** (2 routers, 2 hosts) across **3 virtual networks** (WAN + 2 LANs), routing and NAT with iptables."
+    - "Excluded inter-LAN traffic from NAT: a `RETURN` rule placed **before** `MASQUERADE` in the `POSTROUTING` chain."
+    - "Validated with **traceroute** (3 hops, real addresses visible) and **tcpdump** in both directions."
+  challenges:
+    - problem: "With a blanket `MASQUERADE`, traffic from one LAN to the other was translated too: the destination host saw the router's address, not the sender's."
+      solution: "A `RETURN` rule for traffic headed to the other LAN, inserted before `MASQUERADE`: that traffic leaves the nat chain untranslated. Only WAN-bound traffic is masqueraded."
+    - problem: "Proving routing is truly “pure”, not just that a ping goes through."
+      solution: "Traceroute in 3 hops showing real addresses, plus tcpdump captures on both LANs to check source addresses in each direction."
+    - problem: "A security measure that vanishes on reboot protects nothing."
+      solution: "Configuration made persistent and systematically re-validated after reboot."
+  result: "Completed. All three labs validated: measures tested and persistent across reboots, NAT-free inter-LAN routing demonstrated with traceroute and tcpdump."
+  learnings:
+    - "In iptables, rule order is the behaviour."
+    - "Prove it with tools (traceroute, tcpdump) instead of assuming."
+    - "Defence in depth means independent layers: if one gives way, the others hold."
+  diagramCaption: "Lab 3 topology: two LANs linked by two Debian routers across a WAN."
+  snippet:
+    caption: "NAT rules on one router, in principle (addresses replaced by variables)"
+    code: |
+      # 1. Traffic to the other LAN: leave the nat chain untranslated
+      iptables -t nat -A POSTROUTING -s "$LAN_LOCAL" -d "$LAN_REMOTE" -j RETURN
+      # 2. Everything else goes out to the WAN, masqueraded behind the router
+      iptables -t nat -A POSTROUTING -o "$IF_WAN" -j MASQUERADE

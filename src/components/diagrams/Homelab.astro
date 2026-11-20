@@ -1,0 +1,119 @@
+---
+/* Schéma du homelab. RÈGLE : aucune adresse IP, aucun nom d'outil de téléchargement. */
+import type { Lang } from '../../i18n/ui';
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const fr = lang === 'fr';
+const T = {
+  title: fr ? 'Architecture du homelab Proxmox' : 'Proxmox homelab architecture',
+  desc: fr
+    ? "La box internet relie le réseau local. Sur ce LAN : un PC Windows qui monte les partages Samba, un Raspberry Pi qui fait le DNS (Pi-hole + Unbound), et l'hôte Proxmox VE 9.2. L'hôte fait tourner un conteneur LXC non privilégié par service : Samba, Jellyfin, Docker (stack multimédia), Crafty (Minecraft), Tailscale, Uptime Kuma et Homepage. Le stockage ZFS comprend un miroir NVMe pour les conteneurs, un miroir 2 × 4 To WD Red pour les données et des disques externes. Les appareils distants passent par Tailscale, sans port ouvert sur la box."
+    : 'The internet router connects the local network. On this LAN: a Windows PC mapping the Samba shares, a Raspberry Pi providing DNS (Pi-hole + Unbound), and the Proxmox VE 9.2 host. The host runs one unprivileged LXC container per service: Samba, Jellyfin, Docker (media stack), Crafty (Minecraft), Tailscale, Uptime Kuma and Homepage. ZFS storage includes an NVMe mirror for containers, a 2 × 4 TB WD Red mirror for data, and external drives. Remote devices go through Tailscale, with no port opened on the router.',
+  box: fr ? 'Box internet' : 'Internet router',
+  noport: fr ? 'aucun port ouvert' : 'no open port',
+  lan: fr ? 'LAN · serveurs en IP fixe, hors plage DHCP' : 'LAN · servers on static IPs, outside DHCP range',
+  pc: fr ? 'PC Windows' : 'Windows PC',
+  pcSub: fr ? 'lecteurs réseau SMB' : 'SMB network drives',
+  pi: 'Raspberry Pi',
+  piSub: 'Pi-hole + Unbound',
+  piSub2: fr ? 'DNS de la maison' : 'home DNS',
+  remote: fr ? 'Appareils distants' : 'Remote devices',
+  remoteSub: fr ? 'tunnel chiffré' : 'encrypted tunnel',
+  host: fr ? 'Proxmox VE 9.2 · NAS + hyperviseur' : 'Proxmox VE 9.2 · NAS + hypervisor',
+  rule: fr ? '1 service = 1 conteneur LXC non privilégié' : '1 service = 1 unprivileged LXC container',
+  zfs: fr ? 'Stockage ZFS' : 'ZFS storage',
+  nvme: fr ? 'Miroir NVMe' : 'NVMe mirror',
+  nvmeSub: fr ? 'conteneurs' : 'containers',
+  hdd: fr ? 'Miroir 2 × 4 To WD Red' : '2 × 4 TB WD Red mirror',
+  hddSub: fr ? 'données' : 'data',
+  ext: fr ? 'Disques externes' : 'External drives',
+  extSub: fr ? 'complément' : 'extra',
+};
+const lxc = [
+  { x: 396, y: 282, n: 'Samba', s: fr ? 'partages SMB' : 'SMB shares' },
+  { x: 532, y: 282, n: 'Jellyfin', s: fr ? 'multimédia' : 'media server' },
+  { x: 668, y: 282, n: 'Docker', s: fr ? 'stack multimédia' : 'media stack' },
+  { x: 804, y: 282, n: 'Crafty', s: 'Minecraft' },
+  { x: 396, y: 340, n: 'Tailscale', s: fr ? 'accès distant' : 'remote access', accent: true },
+  { x: 532, y: 340, n: 'Uptime Kuma', s: 'supervision' },
+  { x: 668, y: 340, n: 'Homepage', s: 'dashboard' },
+];
+---
+
+<svg class="diagram min-w-[680px]" viewBox="0 0 960 560" role="img" aria-labelledby="dg-homelab-t dg-homelab-d">
+  <title id="dg-homelab-t">{T.title}</title>
+  <desc id="dg-homelab-d">{T.desc}</desc>
+
+  <!-- Internet + box -->
+  <rect class="box" x="20" y="20" width="160" height="46" rx="23"></rect>
+  <text class="t" x="100" y="48" text-anchor="middle">Internet</text>
+  <line class="wire" x1="100" y1="66" x2="100" y2="106"></line>
+  <rect class="box" x="20" y="106" width="160" height="50" rx="8"></rect>
+  <text class="t" x="100" y="128" text-anchor="middle">{T.box}</text>
+  <text class="t-xs" x="100" y="146" text-anchor="middle">{T.noport}</text>
+
+  <!-- Bus LAN -->
+  <line class="wire" x1="100" y1="156" x2="100" y2="200"></line>
+  <line class="wire-accent" x1="100" y1="200" x2="660" y2="200"></line>
+  <text class="t-xs" x="380" y="190" text-anchor="middle">{T.lan}</text>
+  <line class="wire" x1="100" y1="200" x2="100" y2="236"></line>
+  <line class="wire" x1="280" y1="200" x2="280" y2="236"></line>
+  <line class="wire" x1="660" y1="200" x2="660" y2="236"></line>
+  <circle cx="100" cy="200" r="4" class="arrow-head-accent"></circle>
+  <circle cx="280" cy="200" r="4" class="arrow-head-accent"></circle>
+  <circle cx="660" cy="200" r="4" class="arrow-head-accent"></circle>
+
+  <!-- PC Windows -->
+  <rect class="box" x="20" y="236" width="160" height="56" rx="8"></rect>
+  <text class="t" x="100" y="260" text-anchor="middle">{T.pc}</text>
+  <text class="t-xs" x="100" y="279" text-anchor="middle">{T.pcSub}</text>
+
+  <!-- Raspberry Pi DNS -->
+  <rect class="box" x="200" y="236" width="160" height="72" rx="8"></rect>
+  <text class="t" x="280" y="260" text-anchor="middle">{T.pi}</text>
+  <text class="t-sm" x="280" y="279" text-anchor="middle">{T.piSub}</text>
+  <text class="t-xs" x="280" y="297" text-anchor="middle">{T.piSub2}</text>
+
+  <!-- Accès distant via Tailscale -->
+  <rect class="box" x="20" y="438" width="160" height="56" rx="8"></rect>
+  <text class="t" x="100" y="462" text-anchor="middle">{T.remote}</text>
+  <text class="t-xs" x="100" y="481" text-anchor="middle">Tailscale · WireGuard</text>
+  <path class="wire-dash" d="M180 466 H300 V363 H392"></path>
+  <polygon class="arrow-head-accent" points="392,357 404,363 392,369"></polygon>
+  <text class="t-accent" x="196" y="456">{T.remoteSub}</text>
+
+  <!-- Hôte Proxmox -->
+  <rect class="zone" x="380" y="236" width="560" height="304" rx="12"></rect>
+  <text class="t-accent" x="396" y="264">{T.host}</text>
+
+  {
+    lxc.map((c) => (
+      <g>
+        <rect class={c.accent ? 'box-accent' : 'box'} x={c.x} y={c.y} width="124" height="48" rx="6" />
+        <text class="t-sm" x={c.x + 62} y={c.y + 21} text-anchor="middle" font-weight="600">
+          {c.n}
+        </text>
+        <text class="t-xs" x={c.x + 62} y={c.y + 38} text-anchor="middle">
+          {c.s}
+        </text>
+      </g>
+    ))
+  }
+  <text class="t-xs" x="866" y="360" text-anchor="middle">LXC ×7</text>
+  <text class="t-xs" x="396" y="412">{T.rule}</text>
+
+  <!-- ZFS -->
+  <line class="wire" x1="396" y1="426" x2="924" y2="426"></line>
+  <text class="t-sm" x="396" y="448" font-weight="600">{T.zfs}</text>
+  <rect class="box" x="396" y="460" width="160" height="60" rx="6"></rect>
+  <text class="t-sm" x="476" y="485" text-anchor="middle" font-weight="600">{T.nvme}</text>
+  <text class="t-xs" x="476" y="505" text-anchor="middle">{T.nvmeSub}</text>
+  <rect class="box" x="568" y="460" width="210" height="60" rx="6"></rect>
+  <text class="t-sm" x="673" y="485" text-anchor="middle" font-weight="600">{T.hdd}</text>
+  <text class="t-xs" x="673" y="505" text-anchor="middle">{T.hddSub}</text>
+  <rect class="box" x="790" y="460" width="134" height="60" rx="6"></rect>
+  <text class="t-sm" x="857" y="485" text-anchor="middle" font-weight="600">{T.ext}</text>
+  <text class="t-xs" x="857" y="505" text-anchor="middle">{T.extSub}</text>
+</svg>

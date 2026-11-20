@@ -1,0 +1,19 @@
+{
+  "_comment": "Formation. Les dates et le statut d'obtention sont à compléter (TODO_SOLAL).",
+  "items": [
+    {
+      "id": "esgi-src",
+      "school": "ESGI",
+      "fr": {
+        "title": "Bachelor 3e année Systèmes, Réseaux et Cloud (SRC)",
+        "mode": "En alternance (MGEN)",
+        "status": "Statut d'obtention du diplôme : TODO_SOLAL"
+      },
+      "en": {
+        "title": "Bachelor's degree (3rd year), Systems, Networks & Cloud (SRC)",
+        "mode": "Work-study programme (MGEN)",
+        "status": "Degree status: TODO_SOLAL"
+      }
+    }
+  ]
+}
