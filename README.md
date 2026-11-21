@@ -73,7 +73,7 @@ npm run check:privacy        # échoue si un téléphone, la ville ou le code po
 pdftoppm -png -r 110 -singlefile public/cv.pdf .review/cv   # contrôle visuel
 ```
 
-Le script repère la ligne au format téléphone et la ligne « Ville (code postal) » dans la colonne de gauche, supprime réellement leur texte (`add_redact_annot` + `apply_redactions`), puis réécrit « Île-de-France » à la même place et dans la même police. Si ton nouveau CV a une autre mise en page, vérifie la capture.
+Le script repère la ligne au format téléphone et la ligne « Ville (code postal) » dans la colonne de gauche, supprime réellement leur texte (`add_redact_annot` + `apply_redactions`), remonte d'un cran les lignes suivantes du bloc contact (pas de ligne vide) et réécrit « Île-de-France » dans la même police. Si ton nouveau CV a une autre mise en page, vérifie la capture.
 
 ## Vérifications
 
