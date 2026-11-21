@@ -154,6 +154,8 @@ La config nginx a été validée (`nginx -t`) et testée dans un conteneur nginx
 
 Gratuit, HTTPS inclus, aucune machine à maintenir. Le workflow `.github/workflows/deploy.yml` est prêt.
 
+> **En service depuis le 21/11/2026** : https://solaldfg.github.io (dépôt public `SolalDFG/SolalDFG.github.io`, Pages en mode « GitHub Actions »). Les étapes 1 à 4 ci-dessous sont faites ; chaque `git push` sur `main` redéploie. L'option A reste prête pour plus tard.
+
 **1. Créer le dépôt sur GitHub** (compte `SolalDFG`) :
 
 - Nom **`SolalDFG.github.io`** → site à la racine : `https://solaldfg.github.io/` (recommandé).
