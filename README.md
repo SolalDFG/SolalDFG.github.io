@@ -37,10 +37,10 @@ Tout le texte est dans des fichiers de données. Le build valide leur structure 
 
 | Je veux changer… | Fichier |
 |---|---|
-| Nom, poste, statut, e-mail, téléphone, LinkedIn, badges du hero, « ce que je cherche » | `src/data/profile.json` |
-| Expérience MGEN (missions, dates, chiffres) | `src/data/experience.json` |
-| Compétences et niveaux (`prod`, `projects`, `notions`) | `src/data/skills.json` |
-| Diplôme | `src/data/education.json` |
+| Nom, poste, statut, e-mail, téléphone (vide = ligne masquée), LinkedIn, badges du hero, « ce que je cherche » | `src/data/profile.json` |
+| Expériences (MGEN, stage Bricard : missions, dates, chiffres) | `src/data/experience.json` |
+| Compétences, niveaux (`prod`, `projects`, `notions`) et savoir-être (`soft`) | `src/data/skills.json` |
+| Formations (Bachelor ESGI, BTS SIO) | `src/data/education.json` |
 | Certifications (cartes, dates, PDF associés) | `src/data/certifications.json` |
 | Un projet (textes FR + EN, stack, statut, liens) | `src/content/projects/<slug>.yaml` |
 | Libellés de l'interface (menus, boutons, titres de section) | `src/i18n/ui.ts` |
@@ -57,14 +57,28 @@ Règles pratiques :
 
 | Fichier | Comment |
 |---|---|
-| `public/cv.pdf` | CV de secours **généré automatiquement** depuis les données (`npm run cv`). Remplace-le par ton vrai CV (même nom). |
+| `public/cv.pdf` | Ton **vrai CV, caviardé** : ligne téléphone supprimée, ville remplacée par « Île-de-France ». Caviardage réel (texte retiré du PDF), voir ci-dessous. `npm run cv` génère seulement un CV de secours dans `.review/` et n'écrase jamais ce fichier. |
 | `public/og-fr.png`, `public/og-en.png` | Images de partage (LinkedIn, etc.), régénérées par `npm run og` après une modification du profil. Le même script crée les favicons. |
 | `public/certificats/` | `npm run certs -- chemin/vers/archive.zip` recopie et renomme les PDF, puis génère les miniatures (besoin de `unzip` et `pdftoppm`). Pour un nouveau certificat : ajoute une ligne dans `MAP` (`scripts/certs.mjs`) et une entrée dans `src/data/certifications.json`. |
+
+### Mettre à jour le CV publié
+
+Ne travaille jamais sur l'original : fais une copie, puis
+
+```bash
+python3 -m venv .venv && .venv/bin/pip install pymupdf fonttools
+# police du CV : Lora Regular (Google Fonts, OFL), en .ttf
+.venv/bin/python scripts/redact-cv.py copie-du-cv.pdf Lora-Regular.ttf public/cv.pdf
+npm run check:privacy        # échoue si un téléphone, la ville ou le code postal restent extractibles
+pdftoppm -png -r 110 -singlefile public/cv.pdf .review/cv   # contrôle visuel
+```
+
+Le script repère la ligne au format téléphone et la ligne « Ville (code postal) » dans la colonne de gauche, supprime réellement leur texte (`add_redact_annot` + `apply_redactions`), puis réécrit « Île-de-France » à la même place et dans la même police. Si ton nouveau CV a une autre mise en page, vérifie la capture.
 
 ## Vérifications
 
 ```bash
-npm run build && npm run check:privacy   # IP internes, outils de téléchargement, mentions interdites, adresse d'école (code + dist/)
+npm run build && npm run check:privacy   # IP internes, outils de téléchargement, mentions interdites, adresse d'école, ville, code postal, téléphone (code + dist/ + texte des PDF)
 npm run build && npm run check:links     # linkinator : zéro lien cassé (EXTERNAL=0 pour rester hors ligne)
 npm run build && npm run shots           # captures 375 / 768 / 1440 px FR+EN + test « hero visible sans scroller » → .review/shots/
 npm run build && npm run figures         # captures des schémas SVG → .review/figs/
