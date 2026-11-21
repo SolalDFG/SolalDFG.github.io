@@ -1,69 +1,72 @@
-# Projet 7 — Kasgrunt, projet annuel ESGI (projet de GROUPE)
-# TODO_SOLAL : mon rôle exact dans le groupe, taille de l'équipe, statut (terminé ?) et résultat (soutenance, livrables).
+# Projet 7 — Kasgrunt, projet annuel ESGI (projet de GROUPE, 3 personnes). Rôle et répartition : donnés par Solal.
 order: 7
 category: infra
 status: done
 kind: group
 diagram: kasgrunt
 stack:
+  - Cluster Proxmox HA (3 nœuds)
+  - Ceph
+  - Proxmox Backup Server
+  - Zabbix · Grafana
   - EVE-NG
-  - VLAN
-  - Pare-feux
   - VPN IPSec
-  - Cluster HA
-  - SAN
-  - Sauvegardes
+  - Pare-feux
+  - VLAN
   - Active Directory
-  - Téléphonie IP
-  - Supervision · métrologie
-  - SIEM / syslog
+  - Mattermost
+  - OVH
   - WBS · RACI · PERT · Gantt
 
 fr:
   title: "Kasgrunt : infrastructure complète pour un client fictif"
-  impact: "Projet annuel en groupe : concevoir de A à Z l'infrastructure d'une entreprise, du réseau au SIEM, dans la peau d'un prestataire."
-  context: "Projet annuel de Bachelor à l'ESGI, réalisé en groupe. Mise en situation : l'équipe joue « ESGI Consulting », le prestataire chargé de concevoir toute l'infrastructure du client fictif Kasgrunt."
-  goal: "Livrer une infrastructure complète, sécurisée et supervisée, pilotée avec les outils de gestion de projet d'un vrai prestataire."
-  doneTitle: "Périmètre du projet (travail de groupe)"
+  impact: "Projet annuel en équipe de 3 : chef de projet d'« ESGI Consulting », j'ai aussi monté le cluster Proxmox HA avec Ceph, les sauvegardes et la supervision."
+  context: "Projet annuel de Bachelor à l'ESGI, en équipe de trois. Mise en situation : l'équipe joue « ESGI Consulting », le prestataire chargé de concevoir toute l'infrastructure du client fictif Kasgrunt."
+  goal: "Livrer une infrastructure complète, haute disponibilité, sauvegardée et supervisée, pilotée avec les outils de gestion de projet d'un vrai prestataire."
+  doneTitle: "Qui a fait quoi"
   done:
-    - "**Réseau** maquetté sous EVE-NG : VLAN, pare-feux, VPN IPSec."
-    - "**Virtualisation** en cluster haute disponibilité, stockage **SAN**, **sauvegardes**."
-    - "**Services** : Active Directory, téléphonie IP, messagerie, partage de fichiers."
-    - "**Exploitation** : supervision, métrologie, centralisation des journaux (SIEM / syslog)."
-    - "**Gestion de projet** : WBS, RBS, RACI, PBS, PERT, Gantt."
-  doneNote: "Mon rôle dans le groupe : TODO_SOLAL."
-  # TODO_SOLAL : difficultés génériques, à remplacer par celles vécues par le groupe.
+    - "**Chef de projet** (moi) : découpage WBS, RBS, PBS, matrice RACI, planning PERT et Gantt, coordination de l'équipe."
+    - "**Virtualisation** (moi) : cluster **Proxmox VE de 3 nœuds** sur un serveur OVH, **haute disponibilité** et stockage distribué **Ceph**."
+    - "**Sauvegarde** (moi) : **Proxmox Backup Server** et politique de sauvegarde."
+    - "**Supervision** (moi) : **Zabbix** pour la collecte et les alertes, **Grafana** pour les tableaux de bord."
+    - "**Messagerie d'équipe** (moi) : **Mattermost**."
+    - "**Réseau et sécurité** (un coéquipier) : pare-feux, maquette EVE-NG, VLAN, VPN IPSec."
+    - "**Systèmes et Active Directory** (une coéquipière)."
+  doneNote: "Un projet de groupe : la liste présente l'ensemble et indique qui a porté chaque partie."
+  # TODO_SOLAL : difficultés génériques, à remplacer par celles vécues par l'équipe si tu en as de meilleures.
   challenges:
-    - problem: "Un périmètre très large (réseau, systèmes, services, sécurité) à répartir dans un groupe."
-      solution: "Découpage en WBS/PBS, responsabilités fixées dans une matrice RACI, planning PERT et Gantt."
+    - problem: "Un périmètre très large (réseau, systèmes, virtualisation, supervision) à répartir entre trois personnes."
+      solution: "En tant que chef de projet : découpage en WBS/PBS, responsabilités fixées dans une matrice RACI, planning PERT et Gantt suivi pendant l'année."
     - problem: "Concevoir et tester une infrastructure réseau complète sans matériel physique."
-      solution: "Maquettage sous EVE-NG pour valider la topologie et les flux avant de les documenter."
-  result: "Projet rendu en fin d'année. Résultat détaillé (soutenance, livrables) : TODO_SOLAL."
+      solution: "Maquettage sous EVE-NG pour valider la topologie et les flux, et un serveur OVH pour héberger le cluster Proxmox."
+  result: "Projet terminé et rendu."
   learnings:
     - "Une infrastructure se pense comme un tout : chaque brique dépend des autres."
-    - "En groupe, la gestion de projet (RACI, Gantt) évite les angles morts et les doublons."
+    - "Être chef de projet tout en gardant une grosse partie technique oblige à planifier son propre temps aussi sérieusement que celui de l'équipe."
   diagramCaption: "Schéma de principe simplifié de l'infrastructure proposée (vue fonctionnelle)."
 
 en:
   title: "Kasgrunt: full infrastructure for a fictional client"
-  impact: "Annual group project: design a company's entire infrastructure, from network to SIEM, acting as an IT services provider."
-  context: "Annual Bachelor project at ESGI, done as a group. Scenario: the team plays “ESGI Consulting”, the provider hired to design the whole infrastructure of the fictional client Kasgrunt."
-  goal: "Deliver a complete, secured and monitored infrastructure, run with the project management tools of a real provider."
-  doneTitle: "Project scope (group work)"
+  impact: "Annual project in a team of 3: project manager of “ESGI Consulting”, I also built the Proxmox HA cluster with Ceph, the backups and the monitoring."
+  context: "Annual Bachelor project at ESGI, in a team of three. Scenario: the team plays “ESGI Consulting”, the provider hired to design the whole infrastructure of the fictional client Kasgrunt."
+  goal: "Deliver a complete, highly available, backed-up and monitored infrastructure, run with the project management tools of a real provider."
+  doneTitle: "Who did what"
   done:
-    - "**Network** prototyped on EVE-NG: VLANs, firewalls, IPSec VPN."
-    - "**Virtualisation** on a high-availability cluster, **SAN** storage, **backups**."
-    - "**Services**: Active Directory, IP telephony, email, file sharing."
-    - "**Operations**: monitoring, metrics, centralised logs (SIEM / syslog)."
-    - "**Project management**: WBS, RBS, RACI, PBS, PERT, Gantt."
-  doneNote: "My role in the group: TODO_SOLAL."
+    - "**Project manager** (me): WBS, RBS and PBS breakdown, RACI matrix, PERT and Gantt planning, team coordination."
+    - "**Virtualisation** (me): **3-node Proxmox VE cluster** on an OVH server, **high availability** and **Ceph** distributed storage."
+    - "**Backups** (me): **Proxmox Backup Server** and the backup policy."
+    - "**Monitoring** (me): **Zabbix** for collection and alerts, **Grafana** for dashboards."
+    - "**Team chat** (me): **Mattermost**."
+    - "**Network and security** (a teammate): firewalls, EVE-NG lab, VLANs, IPSec VPN."
+    - "**Systems and Active Directory** (a teammate)."
+  doneNote: "A group project: the list covers the whole scope and says who owned each part."
   challenges:
-    - problem: "A very broad scope (network, systems, services, security) to split across a group."
-      solution: "WBS/PBS breakdown, responsibilities set in a RACI matrix, PERT and Gantt planning."
+    - problem: "A very broad scope (network, systems, virtualisation, monitoring) to split across three people."
+      solution: "As project manager: WBS/PBS breakdown, responsibilities set in a RACI matrix, PERT and Gantt planning tracked through the year."
     - problem: "Designing and testing a full network infrastructure without physical hardware."
-      solution: "Prototyping on EVE-NG to validate topology and flows before documenting them."
-  result: "Delivered at the end of the year. Detailed outcome (defence, deliverables): TODO_SOLAL."
+      solution: "Prototyping on EVE-NG to validate topology and flows, and an OVH server to host the Proxmox cluster."
+  result: "Project completed and delivered."
   learnings:
     - "An infrastructure has to be designed as a whole: every block depends on the others."
-    - "In a group, project management (RACI, Gantt) prevents blind spots and duplicate work."
+    - "Managing the project while owning a large technical part means planning your own time as seriously as the team's."
   diagramCaption: "Simplified high-level diagram of the proposed infrastructure (functional view)."

@@ -1,53 +1,70 @@
-# Projet 4 — BrickPile (perso, en cours)
-# TODO_SOLAL : framework / langage, méthode de reconnaissance actuelle, lien du dépôt s'il est public.
+# Projet 4 — BrickPile (perso, en cours). Dépôt privé : pas de lien GitHub.
+# Source : README, docs/ROADMAP.md, docs/RECOGNITION.md, pyproject.toml et package.json du dépôt (lus le 21/11/2026).
 order: 4
 category: dev
 status: in-progress
 kind: personal
 stack:
+  - Python · FastAPI
+  - React · TypeScript
+  - Modèle maison PyTorch → ONNX
+  - PostgreSQL
+  - Tests e2e Playwright
   - API Rebrickable
-  - Web / mobile
-  - Reconnaissance d'images
+  - OpenCV
+  - CI GitHub Actions
+  - Docker Compose · Caddy
+  - Sauvegardes chiffrées
   - Claude Code
-  - "TODO_SOLAL : framework"
 
 fr:
   title: "BrickPile : quels sets construire avec un tas de LEGO ?"
-  impact: "Une app web/mobile qui scanne un tas de LEGO, identifie les pièces et indique les sets officiels constructibles."
+  statusDetail: "bêta privée en préparation"
+  impact: "Une app web auto-hébergée qui inventorie un tas de LEGO, croise l'inventaire avec Rebrickable et indique les sets officiels constructibles ; reconnaissance des pièces par un modèle entraîné maison."
   context: "Un tas de LEGO en vrac : impossible de savoir quels sets on peut reconstruire sans passer des heures à trier."
-  goal: "Scanner le tas, identifier les pièces, puis croiser l'inventaire avec la base Rebrickable pour proposer les sets constructibles."
+  goal: "Identifier les pièces à partir de photos, puis croiser l'inventaire avec la base Rebrickable pour proposer les sets constructibles, dans une app sécurisée et multi-utilisateur."
   done:
-    - "Scan d'un tas de pièces et identification des pièces détectées."
-    - "Calcul des **sets officiels constructibles** à partir de l'inventaire, via l'**API Rebrickable**."
-    - "Recherche d'une pièce ou d'un set."
-    - "Développement assisté par IA avec **Claude Code**."
-  # TODO_SOLAL : difficultés déduites, à confirmer.
+    - "**Back-end Python** (FastAPI, SQLAlchemy, Alembic, PostgreSQL) : catalogue et inventaires synchronisés avec l'**API Rebrickable**, calcul des **sets constructibles**."
+    - "**Front React / TypeScript** (Vite, TanStack Query, i18next) : application installable sur mobile (PWA), plusieurs langues, mode sombre."
+    - "**Comptes multi-utilisateurs** : inscription sur invitation, double authentification (TOTP), espace d'administration."
+    - "**Modèle de reconnaissance entraîné maison** : rendus 3D synthétiques (Blender, modèles LDraw), entraînement PyTorch, export ONNX, servi par un service d'inférence séparé sans PyTorch."
+    - "**Qualité** : tests **e2e Playwright** sur la stack Docker complète, pytest et Vitest, **CI GitHub Actions** (lint et tests du back-end, de la reconnaissance et du front)."
+    - "**Exploitation** : déploiement Docker Compose derrière Caddy, sauvegardes nocturnes chiffrées avec **restauration testée** dans une base jetable."
   challenges:
-    - problem: "Beaucoup de pièces se ressemblent : variantes de forme, nuances de couleur."
-      solution: "Feuille de route : entraîner un modèle de reconnaissance maison, spécialisé sur les pièces LEGO."
-    - problem: "Croiser un inventaire partiel avec des milliers de sets officiels."
-      solution: "S'appuyer sur les inventaires de sets fournis par l'API Rebrickable plutôt que de maintenir une base maison."
-  result: "En cours. Prochaines étapes : terminer l'application, puis entraîner un modèle de reconnaissance de pièces maison."
+    - problem: "Beaucoup de pièces se ressemblent, et chacune existe dans des dizaines de couleurs."
+      solution: "Le modèle reconnaît la forme ; la couleur est estimée à part (espace Lab). Embeddings + prototypes : ajouter une pièce ne demande pas de réentraîner le réseau."
+    - problem: "Entraîner un modèle sans réutiliser d'images dont on n'a pas les droits."
+      solution: "Jeu d'entraînement fait uniquement de rendus maison à partir des modèles 3D LDraw : aucun contenu Rebrickable."
+    - problem: "Le serveur décode des photos envoyées par d'autres personnes."
+      solution: "Bibliothèques de décodage aux versions épinglées et mises à jour délibérément ; audit de sécurité dont chaque correctif a son test."
+  result: "En cours : l'application est fonctionnelle, la bêta privée (accès par invitation, sur mon infrastructure) est en préparation. Dépôt privé : code disponible sur demande."
   learnings:
     - "S'appuyer sur une API de référence plutôt que réinventer la donnée."
-    - "Le développement assisté par IA accélère, à condition de garder la main sur l'architecture."
+    - "Une sauvegarde n'existe vraiment que si sa restauration a été testée."
+    - "Le développement assisté par IA accélère, à condition de garder la main sur l'architecture et sur les tests."
 
 en:
   title: "BrickPile: which sets can you build from a pile of LEGO?"
-  impact: "A web/mobile app that scans a pile of LEGO, identifies the parts and lists the official sets you can build."
+  statusDetail: "private beta in preparation"
+  impact: "A self-hosted web app that inventories a pile of LEGO, matches it against Rebrickable and lists the official sets you can build; parts are recognised by a model trained in-house."
   context: "A loose pile of LEGO: no way to know which sets you can rebuild without hours of sorting."
-  goal: "Scan the pile, identify the parts, then match the inventory against the Rebrickable database to suggest buildable sets."
+  goal: "Identify parts from photos, then match the inventory against the Rebrickable database to suggest buildable sets, in a secure multi-user app."
   done:
-    - "Scan a pile of parts and identify the detected pieces."
-    - "Compute **buildable official sets** from the inventory, using the **Rebrickable API**."
-    - "Search for a part or a set."
-    - "AI-assisted development with **Claude Code**."
+    - "**Python back end** (FastAPI, SQLAlchemy, Alembic, PostgreSQL): catalogue and inventories synced with the **Rebrickable API**, computation of **buildable sets**."
+    - "**React / TypeScript front end** (Vite, TanStack Query, i18next): installable on mobile (PWA), several languages, dark mode."
+    - "**Multi-user accounts**: invitation-only sign-up, two-factor authentication (TOTP), admin area."
+    - "**Recognition model trained in-house**: synthetic 3D renders (Blender, LDraw models), PyTorch training, ONNX export, served by a separate inference service without PyTorch."
+    - "**Quality**: **Playwright e2e tests** against the full Docker stack, pytest and Vitest, **GitHub Actions CI** (lint and tests for the back end, recognition and front end)."
+    - "**Operations**: Docker Compose deployment behind Caddy, encrypted nightly backups with **tested restores** into a throwaway database."
   challenges:
-    - problem: "Many parts look alike: shape variants, close colour shades."
-      solution: "Roadmap: train a custom recognition model specialised in LEGO parts."
-    - problem: "Matching a partial inventory against thousands of official sets."
-      solution: "Rely on the set inventories provided by the Rebrickable API instead of maintaining an in-house database."
-  result: "In progress. Next steps: finish the app, then train a custom part-recognition model."
+    - problem: "Many parts look alike, and each one comes in dozens of colours."
+      solution: "The model recognises the shape; colour is estimated separately (Lab colour space). Embeddings + prototypes: adding a part does not require retraining the network."
+    - problem: "Training a model without reusing images you have no rights to."
+      solution: "A training set made only of in-house renders from LDraw 3D models: no Rebrickable content."
+    - problem: "The server decodes photos uploaded by other people."
+      solution: "Image-decoding libraries pinned and upgraded deliberately; a security audit where every fix comes with its test."
+  result: "In progress: the app works, and the private beta (invitation only, on my own infrastructure) is being prepared. Private repository: code available on request."
   learnings:
     - "Build on a reference API instead of reinventing the data."
-    - "AI-assisted development speeds things up, as long as you stay in charge of the architecture."
+    - "A backup only really exists once its restore has been tested."
+    - "AI-assisted development speeds things up, as long as you stay in charge of the architecture and the tests."

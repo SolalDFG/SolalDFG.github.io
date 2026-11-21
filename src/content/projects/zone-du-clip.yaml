@@ -1,5 +1,4 @@
 # Projet 2 — Pipeline de clipping « Zone du clip » (perso, en production)
-# TODO_SOLAL : statistiques réelles (vues, abonnés, nombre de clips publiés) — ne rien inventer.
 # TODO_SOLAL : langages / outils du pipeline (ex. langage du bot, outil de rendu, transcription) à ajouter dans `stack`.
 order: 2
 category: dev
@@ -43,7 +42,7 @@ fr:
       solution: "Crédit du streamer incrusté systématiquement dans chaque clip."
     - problem: "Plusieurs machines et services : une panne peut passer inaperçue."
       solution: "Supervision Uptime Kuma et tuile Homepage pour voir l'état du pipeline d'un coup d'œil."
-  result: "En production : la chaîne tourne et publie sur les trois comptes. Statistiques d'audience : TODO_SOLAL."
+  result: "En production : la chaîne tourne et publie sur les trois comptes."
   learnings:
     - "Séparer calcul et stockage : chaque machine fait ce qu'elle fait de mieux."
     - "Automatiser n'empêche pas de garder un humain dans la boucle là où l'erreur coûte cher."
@@ -71,7 +70,7 @@ en:
       solution: "The streamer's credit is burned into every single clip."
     - problem: "Several machines and services: a failure can go unnoticed."
       solution: "Uptime Kuma monitoring and a Homepage tile show pipeline health at a glance."
-  result: "In production: the pipeline runs and publishes to all three accounts. Audience figures: TODO_SOLAL."
+  result: "In production: the pipeline runs and publishes to all three accounts."
   learnings:
     - "Split compute and storage: each machine does what it does best."
     - "Automation doesn't mean removing the human where mistakes are costly."

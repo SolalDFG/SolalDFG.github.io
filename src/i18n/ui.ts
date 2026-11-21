@@ -181,8 +181,11 @@ const STACK_EN: Record<string, string> = {
   'Téléphonie IP': 'IP telephony',
   'Supervision · métrologie': 'Monitoring · metrics',
   'Cluster HA': 'HA cluster',
-  'TODO_SOLAL : langage / framework': 'TODO_SOLAL: language / framework',
-  'TODO_SOLAL : framework': 'TODO_SOLAL: framework',
+  'Cluster Proxmox HA (3 nœuds)': 'Proxmox HA cluster (3 nodes)',
+  'Modèle maison PyTorch → ONNX': 'In-house PyTorch → ONNX model',
+  'Tests e2e Playwright': 'Playwright e2e tests',
+  'Sauvegardes chiffrées': 'Encrypted backups',
+  'CI GitHub Actions': 'GitHub Actions CI',
 };
 export const stackLabel = (s: string, lang: Lang) => (lang === 'en' ? (STACK_EN[s] ?? s) : s);
 

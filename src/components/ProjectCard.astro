@@ -25,7 +25,7 @@ const titleId = `p-${project.id}-${lang}`;
   >
     <div class="flex flex-wrap items-center justify-between gap-2">
       <p class="font-mono text-xs text-dim">{t.categories[d.category]}</p>
-      <StatusBadge status={d.status} lang={lang} />
+      <StatusBadge status={d.status} lang={lang} detail={c.statusDetail} />
     </div>
 
     <h3 id={titleId} class="mt-3 text-lg leading-snug font-semibold text-text">

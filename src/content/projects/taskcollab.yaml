@@ -1,6 +1,5 @@
 # Projet 8 — TaskCollab (fiche courte, centrée sur l'architecture cloud)
-# TODO_SOLAL : contexte (projet d'école ? seul ou en groupe ?), langages/frameworks, lien de démo ou captures.
-# `kind: school` est une hypothèse à confirmer.
+# Projet d'école (confirmé par Solal).
 order: 8
 category: dev
 status: done
@@ -16,7 +15,7 @@ stack:
 fr:
   title: "TaskCollab : application full-stack déployée sur Azure"
   impact: "Une application full-stack sur Azure : front statique, API managée, base SQL, secrets dans Key Vault et connexion via Entra ID."
-  context: "Application collaborative de gestion de tâches. Contexte précis du projet : TODO_SOLAL."
+  context: "Projet d'école : une application collaborative de gestion de tâches, conçue pour être déployée sur des services cloud managés."
   goal: "Déployer une application full-stack sur des services cloud managés, sans aucun secret dans le code."
   done:
     - "Front-end hébergé sur **Azure Static Web Apps**."
@@ -29,7 +28,7 @@ fr:
       solution: "Secrets centralisés dans Key Vault et lus par l'application au moment de l'exécution."
     - problem: "Ne pas développer soi-même la gestion des comptes et des mots de passe."
       solution: "Authentification déléguée à Entra ID."
-  result: "Terminé. Démo, captures et détails techniques : TODO_SOLAL."
+  result: "Projet terminé et rendu."
   learnings:
     - "Les services managés déplacent l'effort de l'installation vers la configuration et la sécurité."
     - "Un secret n'a rien à faire dans un dépôt Git."
@@ -38,7 +37,7 @@ fr:
 en:
   title: "TaskCollab: full-stack app deployed on Azure"
   impact: "A full-stack app on Azure: static front end, managed API, SQL database, secrets in Key Vault and sign-in through Entra ID."
-  context: "Collaborative task management app. Exact project context: TODO_SOLAL."
+  context: "School project: a collaborative task management app, designed to be deployed on managed cloud services."
   goal: "Deploy a full-stack app on managed cloud services, with no secret in the code."
   done:
     - "Front end hosted on **Azure Static Web Apps**."
@@ -51,7 +50,7 @@ en:
       solution: "Secrets centralised in Key Vault and read by the app at runtime."
     - problem: "Not building account and password management yourself."
       solution: "Authentication delegated to Entra ID."
-  result: "Completed. Demo, screenshots and technical details: TODO_SOLAL."
+  result: "Project completed and delivered."
   learnings:
     - "Managed services shift the effort from installing to configuring and securing."
     - "A secret has no business in a Git repository."

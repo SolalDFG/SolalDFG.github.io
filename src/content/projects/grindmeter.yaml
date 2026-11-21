@@ -1,52 +1,71 @@
 # Projet 3 — Grindmeter (perso, en cours). Dépôt privé : pas de lien GitHub.
-# TODO_SOLAL : langage / framework utilisés (à ajouter dans `stack`), méthode de détection.
+# Source : README, pyproject.toml, docstrings de src/mctracker/detect, CI et docs du dépôt mc-tracker (lus le 21/11/2026).
 order: 3
 category: dev
 status: in-progress
 kind: personal
 stack:
+  - Python
   - Windows
-  - "TODO_SOLAL : langage / framework"
+  - pywebview · WebView2
+  - Flask
+  - pytest
+  - psutil
+  - Chart.js
+  - PyInstaller · Inno Setup
+  - CI GitHub Actions
   - Données 100 % locales
 
 fr:
   title: "Grindmeter : temps de jeu Minecraft, mesuré automatiquement"
-  impact: "Une application Windows qui détecte Minecraft quel que soit le launcher et mesure le temps de jeu, sans envoyer aucune donnée en ligne."
-  context: "Entre le launcher officiel, Modrinth, AZ Launcher et les launchers moddés, aucun outil ne donne une vue unifiée du temps passé sur Minecraft."
+  impact: "Une application Windows en Python qui détecte Minecraft Java quel que soit le launcher et mesure le temps de jeu, sans envoyer aucune donnée personnelle."
+  context: "Entre le launcher officiel, Modrinth, CurseForge, Prism ou Lunar, aucun outil ne donne une vue unifiée du temps passé sur Minecraft."
   goal: "Un outil simple, installable en .exe, qui donne des statistiques fiables et respecte la vie privée : toutes les données restent sur la machine."
   done:
-    - "Détection automatique du lancement de Minecraft, quel que soit le launcher (Modrinth, AZ Launcher, launchers moddés)."
-    - "Mesure du temps de jeu, avec distinction **solo / multijoueur** et **temps par serveur**."
-    - "Statistiques et graphiques."
-    - "Lancement au démarrage de Windows, désactivable."
-    - "Vision produit : distribution en .exe, modèle **freemium** (statistiques de base gratuites, premium à vie à petit prix)."
+    - "Détection de Minecraft Java **quel que soit le launcher**, sans jamais lire la ligne de commande du jeu (qui contient le jeton du compte)."
+    - "Temps séparé entre **solo, multijoueur, file d'attente et AFK** ; statistiques par jour, serveur, monde et instance ; export CSV."
+    - "Application Windows : icône dans la zone de notification, fenêtre WebView2, assistant de premier lancement, import de l'historique depuis les anciens logs, interface FR / EN."
+    - "Installeur **sans droits administrateur** (PyInstaller + Inno Setup), démarrage avec Windows désactivable, désinstallation propre."
+    - "Plus de **300 tests pytest** et une **CI GitHub Actions** sur Ubuntu et Windows qui construit aussi l'installeur."
+    - "Vision produit : modèle **freemium** (statistiques gratuites, premium en paiement unique) et site vitrine FR / EN prêt."
   challenges:
-    - problem: "Chaque launcher démarre le jeu à sa façon : on ne peut pas se fier à un seul exécutable."
-      solution: "Une détection centrée sur le jeu lui-même plutôt que sur le launcher. Détails techniques : TODO_SOLAL."
-    - problem: "Monétiser sans collecter de données personnelles."
-      solution: "Freemium sans compte ni serveur : données 100 % locales et premium à vie plutôt qu'un abonnement."
-  result: "En cours de développement. Dépôt privé : code disponible sur demande."
+    - problem: "Chaque launcher démarre le jeu à sa façon, et la ligne de commande contient le jeton du compte : hors de question de la lire."
+      solution: "Le client est reconnu par des preuves qui suivent son lancement : le `latest.log` de l'instance, daté du démarrage du processus, et la fenêtre du jeu."
+    - problem: "Savoir si l'on joue vraiment en multijoueur."
+      solution: "Confirmation par la connexion TCP du processus vers l'adresse du serveur (résolution DNS, enregistrement SRV), en ignorant les ports web."
+    - problem: "Ne pas compter le temps passé loin du clavier."
+      solution: "Détection AFK par l'API Windows (dernière entrée clavier/souris, fenêtre au premier plan), datée du début de l'inactivité."
+    - problem: "Vendre une version premium sans compte ni serveur."
+      solution: "Licence vérifiée hors ligne par signature Ed25519 : aucune donnée ne quitte la machine."
+  result: "En cours : version 0.2, bêta fermée en préparation. Dépôt privé : code disponible sur demande."
   learnings:
     - "Penser produit dès le départ : distribution, modèle économique, vie privée."
+    - "La vie privée se décide dans le code : une donnée jamais lue ne peut pas fuiter."
     - "Un outil qui tourne en arrière-plan doit rester discret et désactivable."
 
 en:
   title: "Grindmeter: Minecraft playtime, tracked automatically"
-  impact: "A Windows app that detects Minecraft whatever the launcher and tracks playtime, without sending any data online."
-  context: "Between the official launcher, Modrinth, AZ Launcher and modded launchers, no tool gives a unified view of time spent in Minecraft."
+  impact: "A Windows app written in Python that detects Minecraft Java whatever the launcher and tracks playtime, without sending any personal data."
+  context: "Between the official launcher, Modrinth, CurseForge, Prism or Lunar, no tool gives a unified view of time spent in Minecraft."
   goal: "A simple tool, installed from an .exe, with reliable stats and real privacy: all data stays on the machine."
   done:
-    - "Automatic detection of Minecraft launches, whatever the launcher (Modrinth, AZ Launcher, modded launchers)."
-    - "Playtime tracking, split by **singleplayer / multiplayer** and **time per server**."
-    - "Statistics and charts."
-    - "Start with Windows, can be turned off."
-    - "Product vision: .exe distribution, **freemium** model (basic stats free, lifetime premium at a small price)."
+    - "Detects Minecraft Java **whatever the launcher**, without ever reading the game's command line (which holds the account token)."
+    - "Time split between **singleplayer, multiplayer, queue and AFK**; stats per day, server, world and instance; CSV export."
+    - "Windows app: notification-area icon, WebView2 window, first-run wizard, history import from old logs, FR / EN interface."
+    - "Installer **without admin rights** (PyInstaller + Inno Setup), optional start with Windows, clean uninstall."
+    - "Over **300 pytest tests** and a **GitHub Actions CI** on Ubuntu and Windows that also builds the installer."
+    - "Product vision: **freemium** model (free stats, one-time-payment premium) and a ready FR / EN landing site."
   challenges:
-    - problem: "Every launcher starts the game its own way: you can't rely on a single executable."
-      solution: "Detection focused on the game itself rather than the launcher. Technical details: TODO_SOLAL."
-    - problem: "Monetising without collecting personal data."
-      solution: "Freemium with no account and no server: 100% local data, and a lifetime premium instead of a subscription."
-  result: "In development. Private repository: code available on request."
+    - problem: "Every launcher starts the game its own way, and the command line holds the account token: reading it is out of the question."
+      solution: "The client is recognised from evidence that follows its launch: the instance's `latest.log`, dated from the process start, and the game window."
+    - problem: "Knowing whether you are really playing multiplayer."
+      solution: "Confirmed by the process's TCP connection to the server address (DNS lookup, SRV record), ignoring web ports."
+    - problem: "Not counting time spent away from the keyboard."
+      solution: "AFK detection through the Windows API (last keyboard/mouse input, foreground window), dated from the start of inactivity."
+    - problem: "Selling a premium version with no account and no server."
+      solution: "Licence verified offline with an Ed25519 signature: no data leaves the machine."
+  result: "In progress: version 0.2, closed beta in preparation. Private repository: code available on request."
   learnings:
     - "Think product from the start: distribution, business model, privacy."
+    - "Privacy is decided in the code: data that is never read cannot leak."
     - "A background tool has to stay discreet and easy to turn off."

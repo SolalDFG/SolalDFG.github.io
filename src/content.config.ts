@@ -9,6 +9,8 @@ import { z } from 'astro/zod';
  */
 const localized = z.object({
   title: z.string(),
+  /** Précision optionnelle du statut, affichée dans le badge (ex. « bêta privée en préparation ») */
+  statusDetail: z.string().optional(),
   /** 1 phrase d'impact affichée sur la carte */
   impact: z.string(),
   context: z.string(),

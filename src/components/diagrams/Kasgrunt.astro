@@ -9,79 +9,102 @@ const fr = lang === 'fr';
 const T = {
   title: fr ? 'Infrastructure proposée pour Kasgrunt (vue fonctionnelle)' : 'Proposed infrastructure for Kasgrunt (functional view)',
   desc: fr
-    ? "Internet arrive sur les pare-feux du site Kasgrunt. Un accès distant est relié par un VPN IPSec. Derrière les pare-feux, le cœur de réseau segmenté en VLAN, maquetté sous EVE-NG, dessert trois blocs : virtualisation (cluster haute disponibilité, stockage SAN, sauvegardes), services (Active Directory, messagerie, partage de fichiers, téléphonie IP) et exploitation (supervision, métrologie, SIEM / syslog). Le projet est piloté avec WBS, RBS, RACI, PBS, PERT et Gantt."
-    : 'Internet reaches the firewalls of the Kasgrunt site. A remote access point is linked through an IPSec VPN. Behind the firewalls, the VLAN-segmented core network, prototyped on EVE-NG, serves three blocks: virtualisation (high-availability cluster, SAN storage, backups), services (Active Directory, email, file sharing, IP telephony) and operations (monitoring, metrics, SIEM / syslog). The project is managed with WBS, RBS, RACI, PBS, PERT and Gantt.',
-  site: fr ? 'Site Kasgrunt (client fictif)' : 'Kasgrunt site (fictional client)',
+    ? "Internet arrive sur les pare-feux de l'infrastructure Kasgrunt. Un accès distant est relié par un VPN IPSec. Derrière les pare-feux, le cœur de réseau segmenté en VLAN, maquetté sous EVE-NG, dessert trois blocs. Virtualisation : un cluster Proxmox VE de trois nœuds hébergé sur un serveur OVH, en haute disponibilité avec un stockage Ceph partagé par les trois nœuds, sauvegardé par Proxmox Backup Server selon une politique de sauvegarde. Services : Active Directory, messagerie d'équipe Mattermost, partage de fichiers, téléphonie IP. Exploitation : supervision Zabbix, tableaux de bord Grafana, SIEM / syslog. Le projet est piloté avec WBS, RBS, RACI, PBS, PERT et Gantt."
+    : "Internet reaches the firewalls of the Kasgrunt infrastructure. A remote access point is linked through an IPSec VPN. Behind the firewalls, the VLAN-segmented core network, prototyped on EVE-NG, serves three blocks. Virtualisation: a three-node Proxmox VE cluster hosted on an OVH server, highly available with Ceph storage shared by the three nodes, backed up by Proxmox Backup Server under a backup policy. Services: Active Directory, Mattermost team chat, file sharing, IP telephony. Operations: Zabbix monitoring, Grafana dashboards, SIEM / syslog. The project is managed with WBS, RBS, RACI, PBS, PERT and Gantt.",
+  site: fr ? 'Infrastructure Kasgrunt (client fictif)' : 'Kasgrunt infrastructure (fictional client)',
   remote: fr ? 'Site / accès distant' : 'Remote site / access',
   fw: fr ? 'Pare-feux' : 'Firewalls',
   core: fr ? 'Cœur de réseau · VLAN' : 'Core network · VLANs',
   eve: fr ? 'maquetté sous EVE-NG' : 'prototyped on EVE-NG',
   virt: 'Virtualisation',
+  ovh: fr ? 'Proxmox VE · serveur OVH' : 'Proxmox VE · OVH server',
+  node: fr ? 'nœud' : 'node',
+  ceph: fr ? 'Stockage Ceph · HA' : 'Ceph storage · HA',
   svc: 'Services',
   ops: fr ? 'Exploitation' : 'Operations',
-  ha: fr ? 'Cluster HA' : 'HA cluster',
-  san: fr ? 'Stockage SAN' : 'SAN storage',
-  bkp: fr ? 'Sauvegardes' : 'Backups',
+  pbs: 'Proxmox Backup Server',
+  policy: fr ? 'Politique de sauvegarde' : 'Backup policy',
   ad: 'Active Directory',
-  mail: fr ? 'Messagerie' : 'Email',
+  chat: 'Mattermost',
   files: fr ? 'Partage de fichiers' : 'File sharing',
   voip: fr ? 'Téléphonie IP' : 'IP telephony',
-  sup: fr ? 'Supervision' : 'Monitoring',
-  metro: fr ? 'Métrologie' : 'Metrics',
+  zbx: fr ? 'Zabbix · alertes' : 'Zabbix · alerts',
+  graf: fr ? 'Grafana · métriques' : 'Grafana · metrics',
   siem: 'SIEM / syslog',
   pm: fr ? 'Pilotage : WBS · RBS · RACI · PBS · PERT · Gantt' : 'Management: WBS · RBS · RACI · PBS · PERT · Gantt',
 };
 const cols = [
-  { x: 40, title: T.virt, items: [T.ha, T.san, T.bkp] },
-  { x: 254, title: T.svc, items: [T.ad, T.mail, T.files, T.voip] },
-  { x: 468, title: T.ops, items: [T.sup, T.metro, T.siem] },
+  { x: 280, title: T.svc, items: [T.ad, T.chat, T.files, T.voip] },
+  { x: 524, title: T.ops, items: [T.zbx, T.graf, T.siem] },
 ];
 ---
 
-<svg class="diagram min-w-[680px]" viewBox="0 0 960 520" role="img" aria-labelledby="dg-kas-t dg-kas-d">
+<svg class="diagram min-w-[720px]" viewBox="0 0 1060 520" role="img" aria-labelledby="dg-kas-t dg-kas-d">
   <title id="dg-kas-t">{T.title}</title>
   <desc id="dg-kas-d">{T.desc}</desc>
 
   <!-- Internet + accès distant -->
-  <rect class="box" x="740" y="24" width="200" height="46" rx="23"></rect>
-  <text class="t" x="840" y="52" text-anchor="middle">Internet</text>
-  <rect class="box" x="740" y="190" width="200" height="64" rx="8"></rect>
-  <text class="t-sm" x="840" y="218" text-anchor="middle" font-weight="600">{T.remote}</text>
-  <text class="t-xs" x="840" y="238" text-anchor="middle">VPN IPSec</text>
-  <line class="wire" x1="840" y1="70" x2="840" y2="190"></line>
+  <rect class="box" x="830" y="24" width="200" height="46" rx="23"></rect>
+  <text class="t" x="930" y="52" text-anchor="middle">Internet</text>
+  <rect class="box" x="830" y="190" width="200" height="64" rx="8"></rect>
+  <text class="t-sm" x="930" y="218" text-anchor="middle" font-weight="600">{T.remote}</text>
+  <text class="t-xs" x="930" y="238" text-anchor="middle">VPN IPSec</text>
+  <line class="wire" x1="930" y1="70" x2="930" y2="190"></line>
 
-  <!-- Site principal -->
-  <rect class="zone" x="20" y="14" width="680" height="490" rx="14"></rect>
+  <!-- Infrastructure du client -->
+  <rect class="zone" x="20" y="14" width="760" height="490" rx="14"></rect>
   <text class="t-accent" x="40" y="42">{T.site}</text>
 
   <!-- Pare-feux -->
-  <rect class="box-accent" x="250" y="60" width="200" height="50" rx="8"></rect>
-  <text class="t" x="350" y="91" text-anchor="middle">{T.fw}</text>
-  <path class="wire" d="M450 85 H740 V70"></path>
+  <rect class="box-accent" x="298" y="60" width="200" height="50" rx="8"></rect>
+  <text class="t" x="398" y="91" text-anchor="middle">{T.fw}</text>
+  <path class="wire" d="M498 85 H830 V70"></path>
   <!-- Tunnel IPSec -->
-  <path class="wire-dash" d="M450 100 H600 V222 H740"></path>
-  <text class="t-accent" x="612" y="166">IPSec</text>
+  <path class="wire-dash" d="M498 100 H690 V222 H830"></path>
+  <text class="t-accent" x="702" y="166">IPSec</text>
 
   <!-- Cœur de réseau -->
-  <line class="wire" x1="350" y1="110" x2="350" y2="150"></line>
-  <rect class="box" x="210" y="150" width="280" height="60" rx="8"></rect>
-  <text class="t" x="350" y="176" text-anchor="middle">{T.core}</text>
-  <text class="t-xs" x="350" y="196" text-anchor="middle">{T.eve}</text>
+  <line class="wire" x1="398" y1="110" x2="398" y2="150"></line>
+  <rect class="box" x="258" y="150" width="280" height="60" rx="8"></rect>
+  <text class="t" x="398" y="176" text-anchor="middle">{T.core}</text>
+  <text class="t-xs" x="398" y="196" text-anchor="middle">{T.eve}</text>
 
-  <line class="wire" x1="350" y1="210" x2="350" y2="240"></line>
-  <line class="wire" x1="140" y1="240" x2="568" y2="240"></line>
+  <line class="wire" x1="398" y1="210" x2="398" y2="240"></line>
+  <line class="wire" x1="154" y1="240" x2="642" y2="240"></line>
+
+  <!-- Virtualisation : cluster de 3 nœuds + Ceph, puis sauvegarde (aucun nom de machine) -->
+  <line class="wire" x1="154" y1="240" x2="154" y2="262"></line>
+  <rect class="box" x="36" y="262" width="236" height="196" rx="8"></rect>
+  <text class="t-accent" x="52" y="288">{T.virt}</text>
+  <text class="t-xs" x="52" y="306">{T.ovh}</text>
+  {
+    [0, 1, 2].map((i) => (
+      <g>
+        <rect class="box-accent" x={48 + i * 73} y="316" width="66" height="30" rx="5" />
+        <text class="t-xs" x={81 + i * 73} y="335" text-anchor="middle">
+          {T.node} {i + 1}
+        </text>
+      </g>
+    ))
+  }
+  <rect class="box" x="48" y="352" width="212" height="26" rx="5"></rect>
+  <text class="t-sm" x="154" y="369" text-anchor="middle">{T.ceph}</text>
+  <rect class="box" x="48" y="386" width="212" height="28" rx="5"></rect>
+  <text class="t-sm" x="58" y="405">{T.pbs}</text>
+  <rect class="box" x="48" y="420" width="212" height="28" rx="5"></rect>
+  <text class="t-sm" x="58" y="439">{T.policy}</text>
 
   {
     cols.map((c) => (
       <g>
-        <line class="wire" x1={c.x + 100} y1="240" x2={c.x + 100} y2="262" />
-        <rect class="box" x={c.x} y="262" width="200" height={c.items.length * 36 + 52} rx="8" />
+        <line class="wire" x1={c.x + 118} y1="240" x2={c.x + 118} y2="262" />
+        <rect class="box" x={c.x} y="262" width="236" height={c.items.length * 36 + 52} rx="8" />
         <text class="t-accent" x={c.x + 16} y="288">
           {c.title}
         </text>
         {c.items.map((it, i) => (
           <g>
-            <rect class="box" x={c.x + 12} y={300 + i * 36} width="176" height="28" rx="5" />
+            <rect class="box" x={c.x + 12} y={300 + i * 36} width="212" height="28" rx="5" />
             <text class="t-sm" x={c.x + 22} y={319 + i * 36}>
               {it}
             </text>
@@ -91,6 +114,6 @@ const cols = [
     ))
   }
 
-  <line class="wire" x1="40" y1="468" x2="680" y2="468" stroke-dasharray="2 4"></line>
-  <text class="t-xs" x="40" y="490">{T.pm}</text>
+  <line class="wire" x1="36" y1="468" x2="764" y2="468" stroke-dasharray="2 4"></line>
+  <text class="t-xs" x="36" y="490">{T.pm}</text>
 </svg>
