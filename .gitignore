@@ -12,3 +12,6 @@ deploy/proxmox/deploy.env
 C:*
 # Brief de mission (contient des informations à ne pas publier)
 PROMPT.md
+# Notes de travail personnelles : gardées en local, hors du dépôt public
+TODO_SOLAL.md
+PLAN.md

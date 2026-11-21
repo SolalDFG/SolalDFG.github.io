@@ -1,4 +1,5 @@
-# Option B (repli) : déploiement sur GitHub Pages à chaque push sur main.
+# Déploiement sur GitHub Pages à chaque push sur main.
+# Actions épinglées par SHA de commit (le tag est en commentaire) : une étiquette déplacée ne change rien ici.
 # Activer une seule fois : dépôt GitHub → Settings → Pages → Source : « GitHub Actions ».
 #
 # Dépôt « SolalDFG.github.io »   → site servi à https://solaldfg.github.io/       (BASE_PATH = /)
@@ -25,9 +26,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1 (Node 24)
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0 (Node 24)
         with:
           node-version: 22
           cache: npm
@@ -61,7 +62,7 @@ jobs:
           sudo apt-get update -qq && sudo apt-get install -y -qq poppler-utils   # pdftotext : texte des PDF vérifié aussi
           npm run check:privacy
 
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0 (upload-artifact v7, Node 24)
         with:
           path: dist
 
@@ -73,4 +74,4 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1 (Node 24)
