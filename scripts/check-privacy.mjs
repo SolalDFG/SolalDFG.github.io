@@ -5,7 +5,7 @@
  *  - aucun nom d'outil de téléchargement
  *  - jamais « CCNA certifié » / « certifié CCNA » / « CCNA certified »
  *  - aucune trace de l'adresse mail d'école (domaine « myskolae »), y compris dans les noms de fichiers et les PDF
- *  - aucune ville ni code postal personnels, aucun numéro de téléphone (code, dist/ et texte extrait des PDF, dont cv.pdf)
+ *  - aucune ville ni code postal personnels, aucun numéro de téléphone, aucun nom de coéquipier (code, dist/ et texte extrait des PDF, dont cv.pdf)
  *   npm run build && npm run check:privacy
  */
 import { readdirSync, readFileSync, statSync } from 'node:fs';
@@ -25,6 +25,7 @@ const RULES = [
   // motifs écrits en morceaux : ce fichier ne doit pas contenir lui-même la ville ni le code postal en clair
   { name: 'ville personnelle', re: new RegExp('neu' + 'illy', 'gi'), pdf: true },
   { name: 'code postal personnel', re: new RegExp('\\b93' + '330\\b', 'g'), pdf: true },
+  { name: 'nom de coéquipier', re: new RegExp('court' + 'iade|jim' + 'enez', 'gi'), pdf: true },
   { name: 'numéro de téléphone', re: /(?<![\d.,:\/-])(?:\+33\s?|0)[1-9](?:[ .-]?\d{2}){4}(?![\d.,])/g, pdf: true },
 ];
 
@@ -77,4 +78,4 @@ if (findings.length) {
   console.error(`✗ ${findings.length} problème(s) :\n  ` + findings.join('\n  '));
   process.exit(1);
 }
-console.log('✓ Aucune IP privée, aucun outil de téléchargement, aucun « CCNA certifié », aucune adresse d’école, ville, code postal ou téléphone (code + dist/ + PDF).');
+console.log('✓ Aucune IP privée, aucun outil de téléchargement, aucun « CCNA certifié », aucune adresse d’école, ville, code postal, téléphone ou nom de coéquipier (code + dist/ + PDF).');

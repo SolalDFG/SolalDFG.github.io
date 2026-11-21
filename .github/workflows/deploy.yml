@@ -57,7 +57,9 @@ jobs:
           BASE_PATH: ${{ steps.site.outputs.base }}
 
       - name: Vérification confidentialité
-        run: npm run check:privacy
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq poppler-utils   # pdftotext : texte des PDF vérifié aussi
+          npm run check:privacy
 
       - uses: actions/upload-pages-artifact@v3
         with:

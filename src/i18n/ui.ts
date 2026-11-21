@@ -182,7 +182,7 @@ const STACK_EN: Record<string, string> = {
   'Supervision · métrologie': 'Monitoring · metrics',
   'Cluster HA': 'HA cluster',
   'Cluster Proxmox HA (3 nœuds)': 'Proxmox HA cluster (3 nodes)',
-  'Modèle maison PyTorch → ONNX': 'In-house PyTorch → ONNX model',
+  'Prototype PyTorch → ONNX': 'PyTorch → ONNX prototype',
   'Tests e2e Playwright': 'Playwright e2e tests',
   'Sauvegardes chiffrées': 'Encrypted backups',
   'CI GitHub Actions': 'GitHub Actions CI',

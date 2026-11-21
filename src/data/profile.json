@@ -1,5 +1,5 @@
 {
-  "_comment": "Identité et contact. Toute valeur contenant TODO_SOLAL est affichée telle quelle (jamais transformée en lien) : remplace-la avant la mise en ligne.",
+  "_comment": "Identité et contact. contact.email est la SEULE définition de l'adresse e-mail du site (contact, mailto, CV de secours). Toute valeur contenant TODO_SOLAL est affichée telle quelle (jamais transformée en lien).",
   "name": "Solal Diedhiou",
   "initials": "SD",
   "location": "Île-de-France",

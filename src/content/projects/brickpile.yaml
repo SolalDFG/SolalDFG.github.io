@@ -7,7 +7,7 @@ kind: personal
 stack:
   - Python · FastAPI
   - React · TypeScript
-  - Modèle maison PyTorch → ONNX
+  - Prototype PyTorch → ONNX
   - PostgreSQL
   - Tests e2e Playwright
   - API Rebrickable
@@ -20,19 +20,19 @@ stack:
 fr:
   title: "BrickPile : quels sets construire avec un tas de LEGO ?"
   statusDetail: "bêta privée en préparation"
-  impact: "Une app web auto-hébergée qui inventorie un tas de LEGO, croise l'inventaire avec Rebrickable et indique les sets officiels constructibles ; reconnaissance des pièces par un modèle entraîné maison."
+  impact: "Une app web auto-hébergée qui inventorie un tas de LEGO, croise l'inventaire avec Rebrickable et indique les sets officiels constructibles ; un prototype de modèle de reconnaissance des pièces, entraîné maison, est en développement."
   context: "Un tas de LEGO en vrac : impossible de savoir quels sets on peut reconstruire sans passer des heures à trier."
   goal: "Identifier les pièces à partir de photos, puis croiser l'inventaire avec la base Rebrickable pour proposer les sets constructibles, dans une app sécurisée et multi-utilisateur."
   done:
     - "**Back-end Python** (FastAPI, SQLAlchemy, Alembic, PostgreSQL) : catalogue et inventaires synchronisés avec l'**API Rebrickable**, calcul des **sets constructibles**."
     - "**Front React / TypeScript** (Vite, TanStack Query, i18next) : application installable sur mobile (PWA), plusieurs langues, mode sombre."
     - "**Comptes multi-utilisateurs** : inscription sur invitation, double authentification (TOTP), espace d'administration."
-    - "**Modèle de reconnaissance entraîné maison** : rendus 3D synthétiques (Blender, modèles LDraw), entraînement PyTorch, export ONNX, servi par un service d'inférence séparé sans PyTorch."
+    - "**Prototype de modèle de reconnaissance entraîné maison** (PyTorch, export ONNX), pas encore en production : entraîné sur des rendus 3D synthétiques (Blender, modèles LDraw), destiné à un service d'inférence séparé sans PyTorch."
     - "**Qualité** : tests **e2e Playwright** sur la stack Docker complète, pytest et Vitest, **CI GitHub Actions** (lint et tests du back-end, de la reconnaissance et du front)."
     - "**Exploitation** : déploiement Docker Compose derrière Caddy, sauvegardes nocturnes chiffrées avec **restauration testée** dans une base jetable."
   challenges:
     - problem: "Beaucoup de pièces se ressemblent, et chacune existe dans des dizaines de couleurs."
-      solution: "Le modèle reconnaît la forme ; la couleur est estimée à part (espace Lab). Embeddings + prototypes : ajouter une pièce ne demande pas de réentraîner le réseau."
+      solution: "Le prototype reconnaît la forme ; la couleur est estimée à part (espace Lab). Embeddings + prototypes : ajouter une pièce ne demande pas de réentraîner le réseau."
     - problem: "Entraîner un modèle sans réutiliser d'images dont on n'a pas les droits."
       solution: "Jeu d'entraînement fait uniquement de rendus maison à partir des modèles 3D LDraw : aucun contenu Rebrickable."
     - problem: "Le serveur décode des photos envoyées par d'autres personnes."
@@ -46,19 +46,19 @@ fr:
 en:
   title: "BrickPile: which sets can you build from a pile of LEGO?"
   statusDetail: "private beta in preparation"
-  impact: "A self-hosted web app that inventories a pile of LEGO, matches it against Rebrickable and lists the official sets you can build; parts are recognised by a model trained in-house."
+  impact: "A self-hosted web app that inventories a pile of LEGO, matches it against Rebrickable and lists the official sets you can build; a prototype part-recognition model, trained in-house, is in development."
   context: "A loose pile of LEGO: no way to know which sets you can rebuild without hours of sorting."
   goal: "Identify parts from photos, then match the inventory against the Rebrickable database to suggest buildable sets, in a secure multi-user app."
   done:
     - "**Python back end** (FastAPI, SQLAlchemy, Alembic, PostgreSQL): catalogue and inventories synced with the **Rebrickable API**, computation of **buildable sets**."
     - "**React / TypeScript front end** (Vite, TanStack Query, i18next): installable on mobile (PWA), several languages, dark mode."
     - "**Multi-user accounts**: invitation-only sign-up, two-factor authentication (TOTP), admin area."
-    - "**Recognition model trained in-house**: synthetic 3D renders (Blender, LDraw models), PyTorch training, ONNX export, served by a separate inference service without PyTorch."
+    - "**Prototype recognition model trained in-house** (PyTorch, ONNX export), not in production yet: trained on synthetic 3D renders (Blender, LDraw models), intended for a separate inference service without PyTorch."
     - "**Quality**: **Playwright e2e tests** against the full Docker stack, pytest and Vitest, **GitHub Actions CI** (lint and tests for the back end, recognition and front end)."
     - "**Operations**: Docker Compose deployment behind Caddy, encrypted nightly backups with **tested restores** into a throwaway database."
   challenges:
     - problem: "Many parts look alike, and each one comes in dozens of colours."
-      solution: "The model recognises the shape; colour is estimated separately (Lab colour space). Embeddings + prototypes: adding a part does not require retraining the network."
+      solution: "The prototype recognises the shape; colour is estimated separately (Lab colour space). Embeddings + prototypes: adding a part does not require retraining the network."
     - problem: "Training a model without reusing images you have no rights to."
       solution: "A training set made only of in-house renders from LDraw 3D models: no Rebrickable content."
     - problem: "The server decodes photos uploaded by other people."
