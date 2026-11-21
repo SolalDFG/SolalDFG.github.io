@@ -87,10 +87,14 @@ const colon = lang === 'fr' ? '\u00a0:' : ':';
                           <p class="mt-3 font-mono text-4xl font-bold text-accent">
                             885<span class="text-xl text-dim">/990</span>
                           </p>
-                          <p class="mt-2 text-sm text-dim">
-                            Date{colon} <span set:html={inline(c.dateText)} />
+                          <p class="mt-2 text-sm text-muted">
+                            {lang === 'fr' ? 'Compréhension orale' : 'Listening'} <strong class="text-text">{c.listening}</strong> · {lang === 'fr' ? 'écrite' : 'Reading'}{' '}
+                            <strong class="text-text">{c.reading}</strong> · {lang === 'fr' ? 'niveau' : 'level'} <strong class="text-accent">{c.cefr}</strong> {lang === 'fr' ? '(CECRL)' : '(CEFR)'}
                           </p>
-                          <p class="text-sm text-dim" set:html={inline(lang === 'fr' ? c.proofFr : c.proofEn)} />
+                          <p class="mt-1 text-sm text-dim">
+                            {lang === 'fr' ? 'Passé le' : 'Taken on'} {formatDate(c.date, lang)} · {lang === 'fr' ? "valable jusqu'en" : 'valid until'} {lang === 'fr' ? c.validFr : c.validEn}
+                          </p>
+                          <p class="text-sm text-dim">{lang === 'fr' ? c.proofFr : c.proofEn}</p>
                         </>
                       ) : !c.date ? null : (
                         <p class="mt-1 text-sm text-muted">

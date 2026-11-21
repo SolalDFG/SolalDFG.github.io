@@ -45,7 +45,7 @@
       "fr": { "title": "Langues & secourisme", "note": "" },
       "en": { "title": "Languages & first aid", "note": "" },
       "items": [
-        { "id": "toeic", "org": "ETS", "fr": "TOEIC : 885 / 990", "en": "TOEIC: 885 / 990", "date": "", "dateText": "TODO_SOLAL", "proofFr": "Justificatif : TODO_SOLAL", "proofEn": "Score report: TODO_SOLAL" },
+        { "id": "toeic", "org": "ETS", "fr": "TOEIC Listening & Reading : 885 / 990", "en": "TOEIC Listening & Reading: 885 / 990", "date": "2026-07-11", "listening": 445, "reading": 440, "cefr": "B2", "validFr": "juillet 2028", "validEn": "July 2028", "proofFr": "Justificatif sur demande", "proofEn": "Score report available on request" },
         { "id": "psc1", "org": "Secourisme", "orgEn": "First aid", "fr": "PSC1 : Prévention et secours civiques de niveau 1", "en": "PSC1: French civil first-aid certificate, level 1", "date": "" }
       ]
     },

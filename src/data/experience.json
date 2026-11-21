@@ -1,5 +1,5 @@
 {
-  "_comment": "Expériences professionnelles. Aucun chiffre inventé : les TODO_SOLAL marquent les endroits où un chiffre réel renforcerait le texte.",
+  "_comment": "Expériences professionnelles. Aucun chiffre inventé : chaque chiffre vient du CV ou de Solal.",
   "items": [
     {
       "id": "mgen",
@@ -10,10 +10,10 @@
       "tags": ["Windows 11", "Postes & périphériques", "Réseau local", "Support N1/N2", "Gestion d'incidents"],
       "tagsEn": ["Windows 11", "Workstations & peripherals", "Local network", "L1/L2 support", "Incident management"],
       "fr": {
-        "title": "Technicien support informatique N1/N2",
+        "title": "Référent SI, technicien support N1/N2",
         "type": "Alternance",
         "period": "oct. 2024 → sept. 2026 · 2 ans",
-        "summary": "Référent IT de fait pour l'ensemble du centre (~150 personnes) : je suis le premier interlocuteur pour tout problème informatique, sur place.",
+        "summary": "Référent informatique de l'ensemble du centre (~150 personnes) : je suis le premier interlocuteur pour tout problème informatique, sur place.",
         "missions": [
           "Traiter les demandes de support N1/N2 des équipes médicales, dentaires et administratives : diagnostic, résolution, escalade documentée quand l'incident dépasse le périmètre local.",
           "Préparer, installer et maintenir les postes de travail Windows 11 et leurs périphériques (imprimantes, scanners, lecteurs de cartes).",
@@ -23,13 +23,13 @@
           "Rédiger des procédures et des fiches pratiques pour rendre les utilisateurs autonomes sur les demandes simples.",
           "Travailler avec les contraintes d'un centre de santé : confidentialité des données patients, interventions sans bloquer les consultations."
         ],
-        "figures": "Chiffres clés : TODO_SOLAL (nombre de postes gérés, volume de demandes par mois, outil de ticketing utilisé)."
+        "figures": "Environ **une dizaine de demandes par jour**, suivies dans l'outil de ticketing interne."
       },
       "en": {
-        "title": "IT Support Technician, L1/L2",
+        "title": "IT Lead, L1/L2 Support Technician",
         "type": "Work-study",
         "period": "Oct 2024 → Sep 2026 · 2 years",
-        "summary": "De facto IT lead for the whole centre (~150 staff): the first on-site contact for any IT issue.",
+        "summary": "IT lead for the whole centre (~150 staff): the first on-site contact for any IT issue.",
         "missions": [
           "Handle L1/L2 support requests from medical, dental and administrative staff: diagnose, fix, and escalate with documentation when an issue goes beyond local scope.",
           "Prepare, deploy and maintain Windows 11 workstations and their peripherals (printers, scanners, card readers).",
@@ -39,7 +39,7 @@
           "Write procedures and quick guides so users can solve simple issues on their own.",
           "Work within healthcare constraints: patient data confidentiality, interventions that never block consultations."
         ],
-        "figures": "Key figures: TODO_SOLAL (number of workstations, monthly request volume, ticketing tool used)."
+        "figures": "Around **ten requests a day**, tracked in the internal ticketing tool."
       }
     },
     {
