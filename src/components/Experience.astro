@@ -14,6 +14,7 @@ const t = ui[lang];
   <div class="container-page py-16 sm:py-20">
     <SectionHeading id={anchors[lang].experience} kicker={t.sections.experience.kicker} title={t.sections.experience.title} />
 
+    <div class="space-y-4">
     {
       experience.items.map((x) => {
         const c = x[lang];
@@ -48,7 +49,7 @@ const t = ui[lang];
               ))}
             </ul>
 
-            <p class="mt-5 text-sm text-dim" set:html={inline(c.figures)} />
+            {'figures' in c && c.figures && <p class="mt-5 text-sm text-dim" set:html={inline(c.figures)} />}
 
             <ul class="mt-5 flex flex-wrap gap-1.5" aria-label={lang === 'fr' ? 'Environnement' : 'Environment'}>
               {tags.map((tag) => (
@@ -59,5 +60,6 @@ const t = ui[lang];
         );
       })
     }
+    </div>
   </div>
 </section>

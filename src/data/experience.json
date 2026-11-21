@@ -41,6 +41,29 @@
         ],
         "figures": "Key figures: TODO_SOLAL (number of workstations, monthly request volume, ticketing tool used)."
       }
+    },
+    {
+      "id": "bricard",
+      "org": "Bricard",
+      "place": "Saint-Thibault-des-Vignes (77)",
+      "start": "2024-06",
+      "end": "2024-07",
+      "tags": ["Parc informatique", "Ticketing", "Déploiement de postes"],
+      "tagsEn": ["IT asset fleet", "Ticketing", "Workstation deployment"],
+      "fr": {
+        "title": "Stage DSI",
+        "type": "Stage",
+        "period": "juin → juil. 2024",
+        "summary": "Stage au sein de la DSI de Bricard (264 salariés).",
+        "missions": ["Maintenance du parc informatique.", "Gestion des tickets de support.", "Déploiement de postes de travail."]
+      },
+      "en": {
+        "title": "IT Department Intern",
+        "type": "Internship",
+        "period": "Jun → Jul 2024",
+        "summary": "Internship in the IT department of Bricard (264 employees).",
+        "missions": ["Maintained the IT asset fleet.", "Handled support tickets.", "Deployed workstations."]
+      }
     }
   ]
 }

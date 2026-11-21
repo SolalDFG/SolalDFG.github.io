@@ -69,4 +69,10 @@ const pips: Record<Level, number> = { prod: 3, projects: 2, notions: 1 };
       ))
     }
   </div>
+
+  <!-- Savoir-être : une ligne sobre, pas une section -->
+  <div class="mt-2 flex flex-col gap-1.5 text-sm sm:flex-row sm:items-baseline sm:gap-3">
+    <h3 class="shrink-0 font-mono text-xs font-semibold text-accent">{lang === 'fr' ? 'Savoir-être' : 'Soft skills'}</h3>
+    <p class="text-muted">{skills.soft[lang].map((s, i) => (i === 0 ? s : s.toLowerCase())).join(', ')}.</p>
+  </div>
 </section>

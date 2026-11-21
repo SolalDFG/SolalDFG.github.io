@@ -1,18 +1,36 @@
 {
-  "_comment": "Formation. Les dates et le statut d'obtention sont à compléter (TODO_SOLAL).",
+  "_comment": "Formation. Source : CV (années, diplôme obtenu, niveau RNCP). `label` remplace l'intitulé par défaut « Diplôme ».",
   "items": [
     {
       "id": "esgi-src",
-      "school": "ESGI",
+      "school": "ESGI Paris",
+      "period": "2024 → 2026",
       "fr": {
-        "title": "Bachelor 3e année Systèmes, Réseaux et Cloud (SRC)",
+        "title": "Bachelor Systèmes, Réseaux et Cloud (SRC)",
         "mode": "En alternance (MGEN)",
-        "status": "Statut d'obtention du diplôme : TODO_SOLAL"
+        "status": "Diplôme obtenu · bac+3, RNCP niveau 6"
       },
       "en": {
-        "title": "Bachelor's degree (3rd year), Systems, Networks & Cloud (SRC)",
+        "title": "Bachelor's degree, Systems, Networks & Cloud (SRC)",
         "mode": "Work-study programme (MGEN)",
-        "status": "Degree status: TODO_SOLAL"
+        "status": "Degree awarded · 3-year bachelor, RNCP level 6"
+      }
+    },
+    {
+      "id": "bts-sio",
+      "school": "CFA Ingetis Paris",
+      "period": "2023 → 2024",
+      "fr": {
+        "label": "Formation",
+        "title": "BTS SIO (Services informatiques aux organisations) : 1re année",
+        "mode": "Avant le Bachelor à l'ESGI",
+        "status": ""
+      },
+      "en": {
+        "label": "Programme",
+        "title": "BTS SIO (IT Services for Organisations, 2-year diploma): 1st year",
+        "mode": "Before the ESGI bachelor",
+        "status": ""
       }
     }
   ]

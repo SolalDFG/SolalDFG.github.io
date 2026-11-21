@@ -5,6 +5,10 @@
     "projects": { "fr": "Projets", "en": "Projects", "hintFr": "TP, projets d'école ou perso", "hintEn": "labs, school or personal projects" },
     "notions": { "fr": "Notions", "en": "Basics", "hintFr": "bases, à approfondir", "hintEn": "fundamentals, still learning" }
   },
+  "soft": {
+    "fr": ["Autonome", "Organisé et rigoureux", "Persévérant", "Réactif", "Esprit d'équipe", "Sens du service"],
+    "en": ["Self-reliant", "Organised and thorough", "Persistent", "Responsive", "Team player", "Service-minded"]
+  },
   "groups": [
     {
       "id": "systems",
@@ -12,9 +16,21 @@
       "en": "Systems",
       "items": [
         { "name": "Linux Debian", "detailFr": "durcissement, rsyslog, systemd timers, cron, bash", "detailEn": "hardening, rsyslog, systemd timers, cron, bash", "level": "prod" },
+        { "name": "Linux Red Hat", "detailFr": "", "detailEn": "", "level": "projects" },
         { "name": "Windows 11", "detailFr": "postes utilisateurs, périphériques, support", "detailEn": "user workstations, peripherals, support", "level": "prod" },
         { "name": "Windows Server / Active Directory", "detailFr": "", "detailEn": "", "level": "projects" },
         { "name": "WSL", "detailFr": "", "detailEn": "", "level": "projects" }
+      ]
+    },
+    {
+      "id": "security",
+      "fr": "Sécurité",
+      "en": "Security",
+      "items": [
+        { "name": "pfSense", "detailFr": "pare-feu", "detailEn": "firewall", "level": "projects" },
+        { "name": "VPN IPsec · WireGuard", "detailFr": "", "detailEn": "", "level": "projects" },
+        { "name": "iptables", "detailFr": "routage, NAT, filtrage", "detailEn": "routing, NAT, filtering", "level": "projects" },
+        { "name": "Durcissement SSH", "nameEn": "SSH hardening", "detailFr": "", "detailEn": "", "level": "projects" }
       ]
     },
     {
@@ -25,9 +41,16 @@
         { "name": "Dépannage réseau local", "nameEn": "Local network troubleshooting", "detailFr": "câblage, brassage, Wi-Fi", "detailEn": "cabling, patching, Wi-Fi", "level": "prod" },
         { "name": "Commutation", "nameEn": "Switching", "detailFr": "VLAN, VTP, STP, EtherChannel LACP, routage inter-VLAN", "detailEn": "VLAN, VTP, STP, EtherChannel LACP, inter-VLAN routing", "level": "projects" },
         { "name": "Routage & services", "nameEn": "Routing & services", "detailFr": "OSPF, NAT/PAT, ACL, DHCP", "detailEn": "OSPF, NAT/PAT, ACL, DHCP", "level": "projects" },
-        { "name": "iptables", "detailFr": "routage, NAT, filtrage", "detailEn": "routing, NAT, filtering", "level": "projects" },
-        { "name": "VPN IPSec", "detailFr": "", "detailEn": "", "level": "projects" },
+        { "name": "Junos (Juniper)", "detailFr": "formation JNCIA-Junos", "detailEn": "JNCIA-Junos course", "level": "notions" },
         { "name": "Cisco Packet Tracer · EVE-NG", "detailFr": "maquettage", "detailEn": "network labs", "level": "projects" }
+      ]
+    },
+    {
+      "id": "cloud",
+      "fr": "Cloud",
+      "en": "Cloud",
+      "items": [
+        { "name": "Microsoft Azure", "detailFr": "App Service, Static Web Apps, Azure SQL, Key Vault, Entra ID", "detailEn": "App Service, Static Web Apps, Azure SQL, Key Vault, Entra ID", "level": "projects" }
       ]
     },
     {
@@ -52,14 +75,6 @@
         { "name": "Homepage", "detailFr": "tableau de bord", "detailEn": "dashboard", "level": "prod" },
         { "name": "Pi-hole + Unbound", "detailFr": "DNS filtrant + résolveur récursif", "detailEn": "filtering DNS + recursive resolver", "level": "prod" },
         { "name": "Tailscale", "detailFr": "accès distant sans port ouvert", "detailEn": "remote access, no open port", "level": "prod" }
-      ]
-    },
-    {
-      "id": "cloud",
-      "fr": "Cloud",
-      "en": "Cloud",
-      "items": [
-        { "name": "Microsoft Azure", "detailFr": "App Service, Static Web Apps, Azure SQL, Key Vault, Entra ID", "detailEn": "App Service, Static Web Apps, Azure SQL, Key Vault, Entra ID", "level": "projects" }
       ]
     },
     {
