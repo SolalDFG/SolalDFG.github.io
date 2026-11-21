@@ -1,12 +1,13 @@
 #!/usr/bin/env node
 /**
- * CV de secours : génère public/cv.pdf (A4, 1 page) à partir des fichiers de src/data et src/content.
+ * CV de secours : génère .review/cv-secours.pdf (A4, 1 page) à partir des fichiers de src/data et src/content.
  *   npm run cv
- * Si tu as ton propre CV, remplace simplement public/cv.pdf (et ne relance plus ce script).
+ * public/cv.pdf est ton vrai CV caviardé (scripts/redact-cv.py) : ce script ne l'écrase jamais.
+ * Pour publier quand même le CV de secours : npm run cv -- --publish
  * Les valeurs TODO_SOLAL apparaissent telles quelles : complète src/data/profile.json avant de régénérer.
  */
 import { chromium } from 'playwright';
-import { readFileSync, readdirSync } from 'node:fs';
+import { readFileSync, readdirSync, mkdirSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { parse } from 'yaml';
 
@@ -52,7 +53,7 @@ ul{padding-left:11px}li{margin:1.6px 0}
 </style></head><body>
 <header><div><h1>${profile.name}</h1><div class="role">${h.role} (${h.level})</div>
 <div class="status">● ${h.status} · ${h.search} · ${h.mobility}</div></div>
-<div class="contact mono">${c.email}<br>${c.phone}<br>${c.linkedin}<br>github.com/${c.githubHandle}<br>${profile.location}</div></header>
+<div class="contact mono">${[c.email, c.phone, c.linkedin, `github.com/${c.githubHandle}`, profile.location].filter(Boolean).join('<br>')}</div></header>
 <div class="proof"><b>${h.proofLead}</b> ${h.proof} Objectif : évoluer vers le réseau, puis la cybersécurité.</div>
 <div class="cols"><div>
 <h2>Expérience</h2>
@@ -84,6 +85,8 @@ const browser = await chromium.launch();
 const page = await browser.newPage();
 await page.setContent(html, { waitUntil: 'load' });
 await page.evaluate(() => document.fonts.ready);
-await page.pdf({ path: 'public/cv.pdf', format: 'A4', printBackground: true, preferCSSPageSize: true });
+const OUT = process.argv.includes('--publish') ? 'public/cv.pdf' : '.review/cv-secours.pdf';
+mkdirSync('.review', { recursive: true });
+await page.pdf({ path: OUT, format: 'A4', printBackground: true, preferCSSPageSize: true });
 await browser.close();
-console.log('✓ public/cv.pdf');
+console.log(`✓ ${OUT}`);
