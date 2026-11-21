@@ -31,7 +31,6 @@ fr:
     - "Mis en place la supervision avec **Uptime Kuma** et un tableau de bord **Homepage**."
     - "Ouvert l'accès distant avec **Tailscale** : aucun port ouvert sur la box."
     - "Déporté le DNS sur un Raspberry Pi dédié : **Pi-hole** (filtrage) + **Unbound** (résolveur récursif)."
-  # TODO_SOLAL : les difficultés 3 et 4 sont déduites de l'architecture, à confirmer ou corriger.
   challenges:
     - problem: "TrueNAS + un hyperviseur à côté : deux systèmes à maintenir et des ressources en double."
       solution: "Abandon de TrueNAS. Proxmox gère directement les pools ZFS et un conteneur Samba sert les partages. Un seul hyperviseur, tout en conteneurs."

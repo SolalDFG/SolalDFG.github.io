@@ -33,7 +33,6 @@ fr:
     - "**Réseau et sécurité** (un coéquipier) : pare-feux, maquette EVE-NG, VLAN, VPN IPSec."
     - "**Systèmes et Active Directory** (une coéquipière)."
   doneNote: "Un projet de groupe : la liste présente l'ensemble et indique qui a porté chaque partie."
-  # TODO_SOLAL : difficultés génériques, à remplacer par celles vécues par l'équipe si tu en as de meilleures.
   challenges:
     - problem: "Un périmètre très large (réseau, systèmes, virtualisation, supervision) à répartir entre trois personnes."
       solution: "En tant que chef de projet : découpage en WBS/PBS, responsabilités fixées dans une matrice RACI, planning PERT et Gantt suivi pendant l'année."

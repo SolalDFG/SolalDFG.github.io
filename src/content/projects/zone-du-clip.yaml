@@ -1,5 +1,4 @@
 # Projet 2 — Pipeline de clipping « Zone du clip » (perso, en production)
-# TODO_SOLAL : langages / outils du pipeline (ex. langage du bot, outil de rendu, transcription) à ajouter dans `stack`.
 order: 2
 category: dev
 status: production
@@ -32,7 +31,6 @@ fr:
     - "Mis en place une **validation humaine via un bot Discord** : chaque clip est approuvé ou rejeté avant publication."
     - "Publié sur **TikTok, YouTube Shorts et Instagram**, avec un suivi automatique des vues."
     - "Supervisé l'ensemble avec **Uptime Kuma** et une tuile **Homepage**."
-  # TODO_SOLAL : difficultés déduites de l'architecture, à confirmer ou enrichir avec de vrais problèmes rencontrés.
   challenges:
     - problem: "Le rendu vidéo est lourd : sur le NAS, il serait lent et pénaliserait les autres services."
       solution: "Rendu déporté sur un PC avec GPU ; le NAS garde le stockage, la base et les services."

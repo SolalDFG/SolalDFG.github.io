@@ -1,5 +1,4 @@
 # Projet 6 — Défense en profondeur sous Debian (ESGI, module Open Source & Sécurité)
-# TODO_SOLAL : détailler les mesures précises du TP1 (SSH) et du TP2 (/tmp) si tu veux être plus concret.
 order: 6
 category: network
 status: done
