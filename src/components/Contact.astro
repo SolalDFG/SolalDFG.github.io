@@ -16,7 +16,8 @@ const c = profile.contact;
 type Row = { icon: 'mail' | 'phone' | 'linkedin' | 'github' | 'file' | 'pin'; label: string; value: string; href?: string; external?: boolean; download?: boolean };
 const rows: Row[] = [
   { icon: 'mail', label: tc.email, value: c.email, href: isTodo(c.email) ? undefined : `mailto:${c.email}` },
-  { icon: 'phone', label: tc.phone, value: c.phone, href: isTodo(c.phone) ? undefined : `tel:${c.phone.replace(/[^+\d]/g, '')}` },
+  // Téléphone : affiché seulement si renseigné dans profile.json (vide = ligne masquée)
+  ...(c.phone ? [{ icon: 'phone' as const, label: tc.phone, value: c.phone, href: isTodo(c.phone) ? undefined : `tel:${c.phone.replace(/[^+\d]/g, '')}` }] : []),
   { icon: 'linkedin', label: tc.linkedin, value: isTodo(c.linkedin) ? c.linkedin : c.linkedin.replace(/^https?:\/\/(www\.)?/, ''), href: isTodo(c.linkedin) ? undefined : c.linkedin, external: true },
   { icon: 'github', label: tc.github, value: `github.com/${c.githubHandle}`, href: c.github, external: true },
   { icon: 'file', label: tc.cv, value: 'cv.pdf', href: url(profile.cv), download: true },

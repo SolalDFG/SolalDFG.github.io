@@ -5,9 +5,11 @@
  *  - aucun nom d'outil de téléchargement
  *  - jamais « CCNA certifié » / « certifié CCNA » / « CCNA certified »
  *  - aucune trace de l'adresse mail d'école (domaine « myskolae »), y compris dans les noms de fichiers et les PDF
+ *  - aucune ville ni code postal personnels, aucun numéro de téléphone (code, dist/ et texte extrait des PDF, dont cv.pdf)
  *   npm run build && npm run check:privacy
  */
 import { readdirSync, readFileSync, statSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
 import { join, relative } from 'node:path';
 
 const ROOTS = ['src', 'public', 'scripts', 'deploy', '.github', 'dist', 'README.md', 'DEPLOY.md', 'PLAN.md', 'TODO_SOLAL.md', 'astro.config.mjs', 'package.json'];
@@ -19,8 +21,23 @@ const RULES = [
   { name: 'IP privée (préfixe)', re: /\b192\.168\.\d{1,3}\.(?:x|X|\*)/g },
   { name: 'outil de téléchargement', re: /\b(?:qbittorrent|radarr|sonarr|prowlarr|lidarr|readarr|bazarr|jackett|flaresolverr|transmission-daemon|deluge|sabnzbd|nzbget|jellyseerr|overseerr|torrent)\w*/gi },
   { name: '« CCNA certifié »', re: /ccna\s+certifi|certifi\w*\s+ccna/gi },
-  { name: 'adresse d’école', re: /my\s*skolae/gi },
+  { name: 'adresse d’école', re: /my\s*skolae/gi, pdf: true },
+  // motifs écrits en morceaux : ce fichier ne doit pas contenir lui-même la ville ni le code postal en clair
+  { name: 'ville personnelle', re: new RegExp('neu' + 'illy', 'gi'), pdf: true },
+  { name: 'code postal personnel', re: new RegExp('\\b93' + '330\\b', 'g'), pdf: true },
+  { name: 'numéro de téléphone', re: /(?<![\d.,:\/-])(?:\+33\s?|0)[1-9](?:[ .-]?\d{2}){4}(?![\d.,])/g, pdf: true },
 ];
+
+// Texte d'un PDF : brut (métadonnées, flux non compressés) + texte extrait par pdftotext
+function pdfText(p) {
+  let txt = readFileSync(p, 'latin1');
+  try {
+    txt += '\n' + execFileSync('pdftotext', ['-q', p, '-'], { encoding: 'utf8', maxBuffer: 1 << 26 });
+  } catch {
+    if (!pdfText.warned) console.warn('⚠ pdftotext absent : texte des PDF non vérifié (sudo apt install poppler-utils)'), (pdfText.warned = true);
+  }
+  return txt;
+}
 
 const TEXT_EXT = /\.(?:astro|ts|mjs|js|json|ya?ml|md|css|html|xml|txt|svg|sh|conf|webmanifest|toml|caddyfile)$/i;
 const findings = [];
@@ -43,9 +60,9 @@ function walk(p) {
   const isText = TEXT_EXT.test(p) || !/\.\w+$/.test(p);
   const isPdf = /\.pdf$/i.test(p);
   if (!isText && !isPdf) return;
-  const content = readFileSync(p, isPdf ? 'latin1' : 'utf8');
+  const content = isPdf ? pdfText(p) : readFileSync(p, 'utf8');
   for (const r of RULES) {
-    if (isPdf && !/skolae/.test(r.re.source)) continue; // dans les PDF : seulement l'adresse d'école
+    if (isPdf && !r.pdf) continue; // dans les PDF : seulement les règles de données personnelles
     r.re.lastIndex = 0;
     let m;
     while ((m = r.re.exec(content))) {
@@ -60,4 +77,4 @@ if (findings.length) {
   console.error(`✗ ${findings.length} problème(s) :\n  ` + findings.join('\n  '));
   process.exit(1);
 }
-console.log('✓ Aucune IP privée, aucun outil de téléchargement, aucun « CCNA certifié », aucune trace d’adresse d’école (code + dist/).');
+console.log('✓ Aucune IP privée, aucun outil de téléchargement, aucun « CCNA certifié », aucune adresse d’école, ville, code postal ou téléphone (code + dist/ + PDF).');
